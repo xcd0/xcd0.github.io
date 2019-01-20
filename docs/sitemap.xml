@@ -3,17 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://xcd0.github.io/categories/</loc>
+    <loc>https://xcd0.github.io/doc/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://xcd0.github.io/tags/</loc>
+    <loc>https://xcd0.github.io/doc/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://xcd0.github.io/</loc>
+    <loc>https://xcd0.github.io/doc/tags/</loc>
     <priority>0</priority>
   </url>
   
