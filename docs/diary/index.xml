@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Documents: light</title>
-    <link>https://xcd0.github.io/docs/</link>
-    <description>Recent content on Documents: light</description>
+    <title>Diary on Documents: light</title>
+    <link>https://xcd0.github.io/docs/diary/</link>
+    <description>Recent content in Diary on Documents: light</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Sun, 20 Jan 2019 17:11:32 +0900</lastBuildDate>
     
-	<atom:link href="https://xcd0.github.io/docs/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://xcd0.github.io/docs/diary/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>

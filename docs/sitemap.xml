@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://xcd0.github.io/docs/diary/</loc>
+    <lastmod>2019-01-20T17:11:32+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://xcd0.github.io/docs/categories/</loc>
     <priority>0</priority>
   </url>
@@ -15,6 +20,22 @@
   <url>
     <loc>https://xcd0.github.io/docs/tags/</loc>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://xcd0.github.io/docs/diary/chapter1/11/</loc>
+  </url>
+  
+  <url>
+    <loc>https://xcd0.github.io/docs/diary/chapter1/12/</loc>
+  </url>
+  
+  <url>
+    <loc>https://xcd0.github.io/docs/diary/chapter1/13/</loc>
+  </url>
+  
+  <url>
+    <loc>https://xcd0.github.io/docs/diary/21/</loc>
   </url>
   
 </urlset>
