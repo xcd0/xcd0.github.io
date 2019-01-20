@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://xcd0.github.io/diary/2019/test2/</loc>
+    <lastmod>2019-01-20T12:09:50+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://xcd0.github.io/diary/2019/testpost/</loc>
     <lastmod>2019-01-20T11:49:38+09:00</lastmod>
   </url>
@@ -14,18 +19,18 @@
   
   <url>
     <loc>https://xcd0.github.io/diary/</loc>
-    <lastmod>2019-01-20T11:49:38+09:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://xcd0.github.io/</loc>
-    <lastmod>2019-01-20T11:49:38+09:00</lastmod>
+    <lastmod>2019-01-20T12:09:50+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://xcd0.github.io/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://xcd0.github.io/</loc>
+    <lastmod>2019-01-20T12:09:50+09:00</lastmod>
     <priority>0</priority>
   </url>
   
