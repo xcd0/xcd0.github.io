@@ -387,3 +387,33 @@ html.dash .content-wrapper {
   width: auto; }
 html.dash #footer {
   position: static; }
+
+.c-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 8px 0 0;
+    padding: 0
+}
+
+.c-links a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid;
+    border-color: #555;
+    border-radius: 50%;
+    color: #555;
+    transition: .2s
+}
+
+.c-links a:hover {
+    background: #555
+}
+
+.c-links__item {
+    margin: 8px 8px 0;
+    list-style: none
+}
