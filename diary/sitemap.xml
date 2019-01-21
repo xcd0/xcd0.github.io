@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://xcd0.github.io/diary/for-light/chapter2/22/</loc>
+    <lastmod>2019-01-21T19:28:03+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://xcd0.github.io/diary/for-light/chapter1/</loc>
     <lastmod>2019-01-20T17:11:32+09:00</lastmod>
   </url>
@@ -18,12 +23,12 @@
   </url>
   
   <url>
-    <loc>https://xcd0.github.io/diary/categories/</loc>
-    <priority>0</priority>
+    <loc>https://xcd0.github.io/diary/</loc>
+    <lastmod>2019-01-20T17:11:32+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://xcd0.github.io/diary/</loc>
+    <loc>https://xcd0.github.io/diary/categories/</loc>
     <priority>0</priority>
   </url>
   
