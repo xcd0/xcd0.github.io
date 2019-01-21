@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>About on Light</title>
+    <link>https://xcd0.github.io/docs/about/</link>
+    <description>Recent content in About on Light</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 20 Jan 2019 17:11:32 +0900</lastBuildDate>
+    
+	<atom:link href="https://xcd0.github.io/docs/about/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>どんなアプリなのかとか導入とか</title>
+      <link>https://xcd0.github.io/docs/about/%E3%81%A8%E3%82%99%E3%82%93%E3%81%AA%E3%82%A2%E3%83%95%E3%82%9A%E3%83%AA%E3%81%AA%E3%81%AE%E3%81%8B%E3%81%A8%E3%81%8B%E8%BB%BD%E3%81%84%E5%B0%8E%E5%85%A5%E3%81%A8%E3%81%8B/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://xcd0.github.io/docs/about/%E3%81%A8%E3%82%99%E3%82%93%E3%81%AA%E3%82%A2%E3%83%95%E3%82%9A%E3%83%AA%E3%81%AA%E3%81%AE%E3%81%8B%E3%81%A8%E3%81%8B%E8%BB%BD%E3%81%84%E5%B0%8E%E5%85%A5%E3%81%A8%E3%81%8B/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
