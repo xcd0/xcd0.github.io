@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
-    <link>http://example.org/</link>
-    <description>Recent content on My New Hugo Site</description>
+    <title>Light</title>
+    <link>https://xcd0.github.io/diary/</link>
+    <description>Recent content on Light</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://xcd0.github.io/diary/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>第1章 計画編 第1節</title>
-      <link>http://example.org/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/11/</link>
+      <link>https://xcd0.github.io/diary/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/11/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/11/</guid>
+      <guid>https://xcd0.github.io/diary/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/11/</guid>
       <description>第1章 計画編 第1節 初めに、神が天と地を創造した。 editer 自作のテキストエディタを作りたいなと常々思っていながら動かないでいたので
 とりあえず設計だけでも始めようかと思い腰を上げてリポジトリ作りました
 そしてちまちまあったりいいなを書き連ねているうちに、
@@ -35,10 +35,10 @@ vimは変な環境だとちょっとビルドが面倒
     
     <item>
       <title>第1章 計画編 第2節</title>
-      <link>http://example.org/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/12/</link>
+      <link>https://xcd0.github.io/diary/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/12/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/12/</guid>
+      <guid>https://xcd0.github.io/diary/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/12/</guid>
       <description>第1章 計画編 第2節 地は形なく、むなしく、やみが淵のおもてにあり、神の霊が水のおもてをおおっていた。 どんなテキストエディタを作りたいのか (ふわっとした仕様) あるといい機能 起動が早い
 既存の端末上で動く
 端末上でなくても動く (GUIアプリも作る)
@@ -72,10 +72,10 @@ GolangのいいGUIライブラリがでたりしたら使っていきたいの�
     
     <item>
       <title>第1章 計画編 第3節</title>
-      <link>http://example.org/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/13/</link>
+      <link>https://xcd0.github.io/diary/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/13/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/13/</guid>
+      <guid>https://xcd0.github.io/diary/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter1/13/</guid>
       <description>第1章 計画編　第3節 神は仰せられた。「光があれ。」すると光があった。 ##　前回のがふざけすぎだったので
 とりあえず名前でも考えました（唐突
 その名も&amp;hellip;光のエディター！！！！！！（
@@ -87,10 +87,10 @@ GolangのいいGUIライブラリがでたりしたら使っていきたいの�
     
     <item>
       <title>第2章 計画編 第1節</title>
-      <link>http://example.org/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter2/21/</link>
+      <link>https://xcd0.github.io/diary/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter2/21/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter2/21/</guid>
+      <guid>https://xcd0.github.io/diary/light-editor%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/chapter2/21/</guid>
       <description>第2章 計画編 第1節 1行目に聖書の引用するのは怒られそうなのでやめました(┐「ε:)</description>
     </item>
     
