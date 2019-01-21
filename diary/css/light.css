@@ -154,25 +154,35 @@ li {/*
   background: #fff;
   margin-top: 0px;
   margin-bottom: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .nav-group-name-top {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 100;
-  padding-top: 15px;
-  padding-bottom: 10px;
+  padding-left: 0px;
   margin-left: 0px;
 }.nav-group-name-top > a {
     color: #333;
 }
 
+.nav-group-task-top {
+  margin-top: 5px;
+  padding-left: 0px;
+  font-size: 0.9em;
+  list-style-type: none;
+  list-style: none;
+}.nav-group-task-top a{
+    color: #888;
+    font-size: 15px;
+    list-style: none;
+}
+
 .nav-group-middle-name {
   font-size: 18px;
   font-weight: 100;
-  padding-top: 0px;
-  padding-bottom: 00px;
   margin-left: 0px;
-  padding-top: 10px;
   padding-bottom: 10px;
 }.nav-group-middle-name > a {
     color: #333;
@@ -182,7 +192,8 @@ li {/*
   font-size: 18px;
   font-weight: 100;
   padding-top: 0px;
-  padding-bottom: 00px;
+  padding-bottom: 0px;
+  padding-left: 0px;
   margin-left: 0px;
 }.nav-group-name > a {
     color: #333;
@@ -191,13 +202,13 @@ li {/*
 .nav-group-task {
   margin-top: 5px;
   margin-bottom: 5px;
+  padding-left: 0px;
   font-size: 0.9em;
   list-style-type: none;
   list-style: none;
-}
-.nav-group-task a{
+}.nav-group-task a{
     color: #888;
-    font-size: 12px;
+    font-size: 13px;
     list-style: none;
 }
 
