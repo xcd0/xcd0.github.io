@@ -123,12 +123,10 @@ header {
 .sidebar-contents {
   border-bottom: 1px solid #e2e2e2;
   background: #fff;
-    padding-bottom: 15px;
+    padding-bottom: 0px;
 }
 
-ul {/*
-  margin: 0;
-  padding: 0;*/
+ul {
   outline: 0;
   background: transparent;
   border: 0;
@@ -136,9 +134,7 @@ ul {/*
   vertical-align: baseline;
 }
 
-li {/*
-  margin: 0;
-  padding: 0;*/
+li {
   outline: 0;
   background: transparent;
   border: 0;
@@ -184,7 +180,7 @@ li {/*
   font-size: 18px;
   font-weight: 100;
   margin-left: 0px;
-  padding-bottom: 5px;
+  padding-bottom: 0px;
 }.nav-group-middle-name > a {
     color: #333;
 }
