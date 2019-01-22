@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Memos on Light</title>
+    <link>https://xcd0.github.io/diary/memo/</link>
+    <description>Recent content in Memos on Light</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 22 Jan 2019 15:19:30 +0900</lastBuildDate>
+    
+	<atom:link href="https://xcd0.github.io/diary/memo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>iCloud DriveとSyncthing</title>
+      <link>https://xcd0.github.io/diary/memo/cloud/01/</link>
+      <pubDate>Tue, 22 Jan 2019 15:19:30 +0900</pubDate>
+      
+      <guid>https://xcd0.github.io/diary/memo/cloud/01/</guid>
+      <description>前書き 私はiCloud Driveを使っています。
+多くの場合クラウドストレージの使用目的は大抵2つで、
+オフラインのストレージの空き容量を増やすことと、
+他の端末とのデータの共有ではないでしょうか。
+普段使わないけど取っておきたいデータ、例えばデータのバックアップや古いデータ、
+はオンラインストレージに、 すぐに使うファイルだけオフライン、いいですよね。
+この記事では今私がやっているクラウドストレージの運用法を書きます。
+オンラインストレージについて オンラインストレージもたくさんありますが、何を基準に選ぶといいでしょうか。
+私の場合Macユーザーなのもあり、
+iPhone、iPad Proのバックアップを保存したいが為に導入した経緯がある為、
+iCloud Driveを使っています。(なりゆき
+大した理由ではないです。
+iCloud Driveの特徴は2TBで契約した時一番安いクラウドストレージですかね_(┐「ε:)_ デメリットはそれなりにあります。
+大きなデメリットは</description>
+    </item>
+    
+  </channel>
+</rss>
