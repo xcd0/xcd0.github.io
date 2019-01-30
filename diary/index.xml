@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>日記 on Light</title>
+    <link>https://xcd0.github.io/diary/</link>
+    <description>Recent content in 日記 on Light</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 20 Jan 2019 17:11:32 +0900</lastBuildDate>
+    
+	<atom:link href="https://xcd0.github.io/diary/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>iCloud DriveとSyncthing</title>
+      <link>https://xcd0.github.io/diary/memo/cloud/01/</link>
+      <pubDate>Tue, 22 Jan 2019 15:19:30 +0900</pubDate>
+      
+      <guid>https://xcd0.github.io/diary/memo/cloud/01/</guid>
+      <description>内容 この記事では、PC間でのデータの共有にオススメなSyncthingというソフトの紹介と、
+それを用いた使い勝手が微妙なオンランストレージの代表としてiCloud Driveを例に、
+よりよいオンラインストレージの活用法を解説します。
+対象  PC複数台でデータの共有を行いたいユーザー。 データのバックアップに関心があるユーザー。 iCloud Driveは制限の多いオンラインストレージの一例でしかない。  こういった工夫が不要のオンラインストレージのユーザーは関係ないです_(┐「ε:)_   前書き 大して重要じゃないので折りたたみます _(┐「ε:)_私はiCloud Driveを使っています。 多くの場合クラウドストレージの使用目的は大抵2つで、 オフラインのストレージの空き容量を増やすことと、 他の端末とのデータの共有ではないでしょうか。 普段使わないけど取っておきたいデータ、例えばデータのバックアップや古いデータ、 はオンラインストレージに、 すぐに使うファイルだけオフライン、いいですよね。 この記事では今私がやっているクラウドストレージの運用法を書きます。  オンラインストレージについて 大して重要じゃないので折りたたみます _(┐「ε:)_オンラインストレージもたくさんありますが、何を基準に選ぶといいでしょうか。 私の場合Macユーザーなのもあり、 iPhone、iPad Proのバックアップを保存したいが為に導入した経緯がある為、 iCloud Driveを使っています。(なりゆき 大した理由ではないです。  iCloud Driveについて iCloud Driveの特徴は大手がやってるオンラインストレージの中で、
+2TBで契約した時一番安いクラウドストレージですかね_(┐「ε:)_
+ただしデメリットはそれなりにあります。
+iCloud Driveのメリットは&amp;rdquo;Macユーザーなら&amp;rdquo;という接頭辞がつきます。
+iCloud Driveの機能とデメリットMacユーザーならMacのデスクトップやドキュメントフォルダを、iCloud Drive上に同期してくれます。 これはiPhoneなどの別の端末からネットワーク越しにこれらのデータにアクセスできるということです。 Windowsでもクライアントアプリを入れれば同期できます。この辺は他のオンラインストレージと一緒ですね。 Androidは知らないですが、 別の手段として全ての端末でiCloud.comからブラウザ経由でアクセスすることができます。 つまり、mac以外でも一応アクセスできるということですね。  ではMacユーザーにとって死角のないサービスなのか、というとそうではありません。
+MacにおけるiClod Driveの死角 ながなが説明 折りたたみ 先ほどデスクトップやドキュメントフォルダを同期できると書きました。
+これには盲点があります。
+これは、デスクトップやドキュメントフォルダの
+&amp;ldquo;ファイル全てが&amp;rdquo;iCloud Driveの管理下に入る、ということです。
+もちろん設定でON/OFFできますが、全て管理下に入れるか入れないかの2択しかできません。
+つまり自由には同期するデータを選べないということです。
+そして更に、先ほど述べたiCloud Driveの
+使わないファイルをアップロードして実体を削除する機能です。</description>
+    </item>
+    
+    <item>
+      <title>第2章 計画編 第2節</title>
+      <link>https://xcd0.github.io/diary/for-light/chapter2/22/</link>
+      <pubDate>Mon, 21 Jan 2019 19:28:03 +0900</pubDate>
+      
+      <guid>https://xcd0.github.io/diary/for-light/chapter2/22/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>第1章 計画編 第1節</title>
+      <link>https://xcd0.github.io/diary/for-light/chapter1/11/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://xcd0.github.io/diary/for-light/chapter1/11/</guid>
+      <description>第1章 計画編 第1節 初めに、神が天と地を創造した。 editer 自作のテキストエディタを作りたいなと常々思っていながら動かないでいたので
+とりあえず設計だけでも始めようかと思い腰を上げてリポジトリ作りました
+そしてちまちまあったりいいなを書き連ねているうちに、
+とうとう当初とは別物になっていってしまいました(┐「ε:)
+エディターとは&amp;hellip;
+背景 端末は便利
+vimはいいぞ
+クロスコンパイルもいいぞ
+vimは変な環境だとちょっとビルドが面倒
+仮想端末は設計が古すぎるので無理に使わなくてもいいとおもう
+同等の機能があるならそれがいいのでは
+1974年に発表されたIntel 8080が使われたVT100は1978年の発売である
+人類はそろそろVT100から解き放たれてもいいのではないだろうか
+当然大量の既存の資産を再発明する必要が出るが、
+時代にあわせてもいい頃合いなのではないだろうか</description>
+    </item>
+    
+    <item>
+      <title>第1章 計画編 第2節</title>
+      <link>https://xcd0.github.io/diary/for-light/chapter1/12/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://xcd0.github.io/diary/for-light/chapter1/12/</guid>
+      <description>第1章 計画編 第2節 地は形なく、むなしく、やみが淵のおもてにあり、神の霊が水のおもてをおおっていた。 どんなテキストエディタを作りたいのか (ふわっとした仕様) あるといい機能 起動が早い
+既存の端末上で動く
+端末上でなくても動く (GUIアプリも作る)
+中で端末が動く (シェルを標準で含む)
+プラグインで拡張できる
+ここまで見ると　それvimじゃん
+ってなるがvimmerだもの仕方がない(┐「ε:)
+windows, mac, linuxでも動く
+クロスコンパイルが簡単
+バイナリひとつで動く
+いいよね　新しい環境でとりあえずバイナリひとつwgetで落としたら動く
+初め 既存の仮想端末とはちがう別の端末を含む（おっこれは本当にエディターなのか）
+テキストエディタではなさそう（
+もはやOS（Emac.. ここで途切れている
+オプション付きのショートカット起動したら
+ファイルエクスプローラーとか起動しそう(
+デスクトップでアイコン1 ぽち　→ テキストエディタ
+デスクトップでアイコン2 ぽち　→ ファイルエクスプローラー
+デスクトップでアイコン3 ぽち　→ ブラウザ
+デスクトップでアイコン4 ぽち　→ 画像、PDF、音楽、動画viwer
+デスクトップでアイコン5 ぽち　→ チャット、ファイル転送
+うん&amp;hellip;テキストエディターとは&amp;hellip;
+まあ夢があっていいよね _(:3 」∠ )_
+重視しないこと　 バイナリのサイズ（もはや大きくなって当然&amp;hellip;
+あんまりにも大きくなったら分割のうえ1番目だけでそれなりに動く、 動いてる間にそれ以外を自動でDLみたいにしてもいいかも
+方針 言語としてはGolangがよさそう (それしかなさげ)
+GolangはGUIライブラリちょっと微妙だったきがする
+Windows, mac, Linuxで起動が早いGUIってあるのかな&amp;hellip;
+GolangのいいGUIライブラリがでたりしたら使っていきたいので</description>
+    </item>
+    
+    <item>
+      <title>第1章 計画編 第3節</title>
+      <link>https://xcd0.github.io/diary/for-light/chapter1/13/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://xcd0.github.io/diary/for-light/chapter1/13/</guid>
+      <description>第1章 計画編　第3節 神は仰せられた。「光があれ。」すると光があった。 ##　前回のがふざけすぎだったので
+とりあえず名前でも考えました（唐突
+その名も&amp;hellip;光のエディター！！！！！！（
+由来はFF14（now playing
+光のお父さんBD買っちゃいました(┐「ε:)
+知らないお友達はここ見てね→光のお父さん まとめ読み | 一撃確殺SS日記
+ヒカセン向けの機能はないです（ まあ名前とかつかっていくかも&amp;hellip;（別にいいよね よしだ？</description>
+    </item>
+    
+    <item>
+      <title>第2章 計画編 第1節</title>
+      <link>https://xcd0.github.io/diary/for-light/chapter2/21/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://xcd0.github.io/diary/for-light/chapter2/21/</guid>
+      <description>第2章 計画編 第1節 1行目に聖書の引用するのは怒られそうなのでやめました(┐「ε:)
+ここ2日間で、Lightのための日記を書いたり、紹介ページを書いたり、ドキュメントを書いたり、するためのページを作っていたという&amp;hellip;
+全く進んでないですね_(┐「ε:)_ まあお膳立ては済みましたし&amp;hellip;
+あとは作るだけですね！！</description>
+    </item>
+    
+  </channel>
+</rss>
