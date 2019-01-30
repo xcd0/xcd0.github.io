@@ -23,24 +23,24 @@ h1, h2, h3 {
 	font-weight: 100;
 	color: black; }
 
-h1 { font-size: 1.8em; }
+h1 { font-size: 2em; }
 
 h2 {
-	font-size: 1.5em;
+	font-size: 1.6em;
 	border-bottom: 1px solid #e2e2e2; }
 
-h3 { font-size: 1.2em; }
+h3 { font-size: 1.4em; }
 
 h4 {
-	font-size: 13px;
+	font-size: 1.2;
 	line-height: 1.5;
 	margin-top: 21px; }
 
 h5 {
-	font-size: 1.1em; }
+	font-size: 1em; }
 
 h6 {
-	font-size: 1.1em;
+	font-size: 0.8em;
 	color: #777; }
 
 .section-name {
