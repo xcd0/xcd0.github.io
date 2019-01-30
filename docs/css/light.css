@@ -522,6 +522,7 @@ html.dash #footer {
 .leftorbottom{
 	width: 90%;
 	margin: auto;
+	margin-top: 0px;
 }
 
 /* Sideways tablet, PC */
