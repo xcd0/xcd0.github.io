@@ -119,8 +119,9 @@ header {
   top: 70px;
   bottom: 0;
   width: 230px;
+  float: left;
   word-wrap: normal; }
-  
+
 .sidebar-contents {
   border-bottom: 1px solid #e2e2e2;
   background: #fff;
@@ -213,7 +214,8 @@ li {
 .main-content {
   background-color: #fff;
   border: 1px solid #e2e2e2;
-  margin-left: 246px;
+  /*margin-left: 246px;*/
+  float: right;
   position: absolute;
   overflow: hidden;
   padding-bottom: 120px;
