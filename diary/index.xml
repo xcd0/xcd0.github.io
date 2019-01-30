@@ -59,7 +59,7 @@ MacにおけるiClod Driveの死角 ながなが説明 折りたたみ 先ほど
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://xcd0.github.io/diary/for-light/chapter1/11/</guid>
-      <description>第1章 計画編 第1節 初めに、神が天と地を創造した。 editer 自作のテキストエディタを作りたいなと常々思っていながら動かないでいたので
+      <description>editer 自作のテキストエディタを作りたいなと常々思っていながら動かないでいたので
 とりあえず設計だけでも始めようかと思い腰を上げてリポジトリ作りました
 そしてちまちまあったりいいなを書き連ねているうちに、
 とうとう当初とは別物になっていってしまいました(┐「ε:)
@@ -82,7 +82,7 @@ vimは変な環境だとちょっとビルドが面倒
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://xcd0.github.io/diary/for-light/chapter1/12/</guid>
-      <description>第1章 計画編 第2節 地は形なく、むなしく、やみが淵のおもてにあり、神の霊が水のおもてをおおっていた。 どんなテキストエディタを作りたいのか (ふわっとした仕様) あるといい機能 起動が早い
+      <description>どんなテキストエディタを作りたいのか (ふわっとした仕様) あるといい機能 起動が早い
 既存の端末上で動く
 端末上でなくても動く (GUIアプリも作る)
 中で端末が動く (シェルを標準で含む)
@@ -110,7 +110,11 @@ windows, mac, linuxでも動く
 方針 言語としてはGolangがよさそう (それしかなさげ)
 GolangはGUIライブラリちょっと微妙だったきがする
 Windows, mac, Linuxで起動が早いGUIってあるのかな&amp;hellip;
-GolangのいいGUIライブラリがでたりしたら使っていきたいので</description>
+GolangのいいGUIライブラリがでたりしたら使っていきたいので
+GUIは後回しがいいのかもしれない
+速度を考えるとどうせ直接叩くことになりそう（
+まあ何年かかるかわからないしね！！
+計画 無計画　\(&amp;lsquo;ω&amp;rsquo;\)\(&amp;lsquo;ω&amp;rsquo;)/(/&amp;lsquo;ω&amp;rsquo;)/</description>
     </item>
     
     <item>
@@ -119,11 +123,11 @@ GolangのいいGUIライブラリがでたりしたら使っていきたいの�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://xcd0.github.io/diary/for-light/chapter1/13/</guid>
-      <description>第1章 計画編　第3節 神は仰せられた。「光があれ。」すると光があった。 ##　前回のがふざけすぎだったので
-とりあえず名前でも考えました（唐突
+      <description>神は仰せられた。「光があれ。」すると光があった。 (創世記1章3節)
+ 前回のがふざけすぎだったので とりあえず名前でも考えました（唐突
 その名も&amp;hellip;光のエディター！！！！！！（
 由来はFF14（now playing
-光のお父さんBD買っちゃいました(┐「ε:)
+光のお父さんBD買っちゃいました_(┐「ε:)_
 知らないお友達はここ見てね→光のお父さん まとめ読み | 一撃確殺SS日記
 ヒカセン向けの機能はないです（ まあ名前とかつかっていくかも&amp;hellip;（別にいいよね よしだ？</description>
     </item>

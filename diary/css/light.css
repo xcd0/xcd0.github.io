@@ -266,12 +266,11 @@ li {
 }
 /* }}} */
 /* main {{{ */
+.main{
+	margin: 0px;
+}
 
 .main-content {
-	/*margin-left: 246px;*/
-	/*overflow: hidden;*/
-	/*padding-bottom: 120px;*/
-	top: 70px;
 }
 	.main-content p, .main-content a, .main-content code, .main-content em, .main-content ul, .main-content table, .main-content blockquote {
 		margin-bottom: 1em; }
@@ -437,6 +436,20 @@ li {
 		font-size: 0.8em; }
 .share-menu {
 	margin-bottom: 20px;
+}
+.div-right{
+	color: #aaa;
+	font-size: 0.8em;
+	width: 300px;
+	margin: 0 auto;
+	margin-right: 0px;
+	margin-top: 20px;
+	z-index: 1;
+}
+
+.div-center{
+	width: 320px;
+	margin: 0 auto;
 }
 
 html.dash header, html.dash #breadcrumbs, html.dash .sidebar {
