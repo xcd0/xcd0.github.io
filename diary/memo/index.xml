@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Memo on Light</title>
+    <link>https://xcd0.github.io/diary/memo/</link>
+    <description>Recent content in Memo on Light</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 22 Jan 2019 15:19:04 +0900</lastBuildDate>
+    
+	<atom:link href="https://xcd0.github.io/diary/memo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+  </channel>
+</rss>
