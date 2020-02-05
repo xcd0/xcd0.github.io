@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>記事 on top</title>
+    <link>https://xcd0.github.io/posts/</link>
+    <description>Recent content in 記事 on top</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Mon, 30 Sep 2019 08:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xcd0.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Test</title>
+      <link>https://xcd0.github.io/posts/test/</link>
+      <pubDate>Wed, 05 Feb 2020 12:49:53 +0900</pubDate>
+      
+      <guid>https://xcd0.github.io/posts/test/</guid>
+      <description>test </description>
+    </item>
+    
+  </channel>
+</rss>

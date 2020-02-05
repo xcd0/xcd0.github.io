@@ -1,0 +1,3 @@
+User-agent: *
+
+Sitemap: https://xcd0.github.iositemap.xml

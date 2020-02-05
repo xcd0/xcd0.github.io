@@ -1,44 +1,32 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Light</title>
+    <title>ホーム on top</title>
     <link>https://xcd0.github.io/</link>
-    <description>Recent content on Light</description>
+    <description>Recent content in ホーム on top</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
+    <lastBuildDate>Sat, 25 Jan 2020 23:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://xcd0.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>First Post</title>
-      <link>https://xcd0.github.io/post/first/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>Test</title>
+      <link>https://xcd0.github.io/posts/test/</link>
+      <pubDate>Wed, 05 Feb 2020 12:49:53 +0900</pubDate>
       
-      <guid>https://xcd0.github.io/post/first/</guid>
-      <description>First post Where you talk about how to install your project
-brew install amazing-tool  </description>
+      <guid>https://xcd0.github.io/posts/test/</guid>
+      <description>test </description>
     </item>
     
     <item>
-      <title>Second Post</title>
-      <link>https://xcd0.github.io/post/second/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <title>ホーム</title>
+      <link>https://xcd0.github.io/sample/</link>
+      <pubDate>Sat, 25 Jan 2020 23:00:00 +0000</pubDate>
       
-      <guid>https://xcd0.github.io/post/second/</guid>
-      <description>Second post Usage maybe?
-DoSomething()  And the output would be:
-Something  </description>
-    </item>
-    
-    <item>
-      <title>Third Post</title>
-      <link>https://xcd0.github.io/post/third/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://xcd0.github.io/post/third/</guid>
-      <description>Third post Get help
- Ask questions here &amp;hellip;. Read this doc file Concat me twitter @ifnottrue  </description>
+      <guid>https://xcd0.github.io/sample/</guid>
+      <description>Hugo IRIS Theme について プロファイル   Key Value     Static Site Generator Hugo   Language Go    キーワード  Golang Static Site Generators   リンク サイト内 All Posts  サイト外 Hugo Homepage Hugo GitHub Hugo Forum Hugo Twitter  プロジェクト オープンソースソフトウェア peaceiris/actions-gh-pages  GitHub Actions for GitHub Pages 🚀 Deploy static files and publish your site easily. Static-Site-Generators-friendly.   Shell ⭐️503 53 Forks      peaceiris/actions-hugo  GitHub Actions for Hugo ⚡️ Setup Hugo quickly and build your site fast.</description>
     </item>
     
   </channel>
