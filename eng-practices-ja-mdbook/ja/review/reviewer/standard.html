@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>コードレビューの基準 - Google Engineering Practices Documentation</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../../../favicon.svg">
+        <link rel="shortcut icon" href="../../../favicon.png">
+        <link rel="stylesheet" href="../../../css/variables.css">
+        <link rel="stylesheet" href="../../../css/general.css">
+        <link rel="stylesheet" href="../../../css/chrome.css">
+        <link rel="stylesheet" href="../../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../../highlight.css">
+        <link rel="stylesheet" href="../../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">和訳</li><li class="chapter-item expanded "><a href="../../../ja/index.html"><strong aria-hidden="true">1.</strong> Googleのエンジニアリングプラクティスドキュメント</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../ja/review/index.html"><strong aria-hidden="true">1.1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="../../../ja/review/developer/index.html"><strong aria-hidden="true">1.2.</strong> CL作成者のコードレビューを乗り越えるためのガイド</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../ja/review/developer/cl-descriptions.html"><strong aria-hidden="true">1.2.1.</strong> 良いCLの説明文を書く</a></li><li class="chapter-item expanded "><a href="../../../ja/review/developer/small-cls.html"><strong aria-hidden="true">1.2.2.</strong> 小さなCLs</a></li><li class="chapter-item expanded "><a href="../../../ja/review/developer/handling-comments.html"><strong aria-hidden="true">1.2.3.</strong> レビューコメントの扱い方</a></li></ol></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/index.html"><strong aria-hidden="true">1.3.</strong> どのようにコードリビューするか</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/standard.html" class="active"><strong aria-hidden="true">1.3.1.</strong> コードレビューの基準</a></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/looking-for.html"><strong aria-hidden="true">1.3.2.</strong> コードレビューで注目すべきポイント</a></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/navigate.html"><strong aria-hidden="true">1.3.3.</strong> レビュー中のCLのナビゲーション</a></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/speed.html"><strong aria-hidden="true">1.3.4.</strong> コードレビューの速度</a></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/comments.html"><strong aria-hidden="true">1.3.5.</strong> コードレビューコメントの書き方</a></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/pushback.html"><strong aria-hidden="true">1.3.6.</strong> コードレビューでの反発の扱い</a></li></ol></li><li class="chapter-item expanded "><a href="../../../ja/review/emergencies.html"><strong aria-hidden="true">1.4.</strong> 緊急事態</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">原文</li><li class="chapter-item expanded "><a href="../../../en/index.html"><strong aria-hidden="true">2.</strong> Google Engineering Practices Documentation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../en/review/index.html"><strong aria-hidden="true">2.1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../../en/review/developer/index.html"><strong aria-hidden="true">2.2.</strong> The CL author's guide to getting through code review</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../en/review/developer/cl-descriptions.html"><strong aria-hidden="true">2.2.1.</strong> Writing good CL descriptions</a></li><li class="chapter-item expanded "><a href="../../../en/review/developer/small-cls.html"><strong aria-hidden="true">2.2.2.</strong> Small CLs</a></li><li class="chapter-item expanded "><a href="../../../en/review/developer/handling-comments.html"><strong aria-hidden="true">2.2.3.</strong> How to handle reviewer comments</a></li></ol></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/index.html"><strong aria-hidden="true">2.3.</strong> How to do a code review</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../en/review/reviewer/standard.html"><strong aria-hidden="true">2.3.1.</strong> The Standard of Code Review</a></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/looking-for.html"><strong aria-hidden="true">2.3.2.</strong> What to look for in a code review</a></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/navigate.html"><strong aria-hidden="true">2.3.3.</strong> Navigating a CL in review</a></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/speed.html"><strong aria-hidden="true">2.3.4.</strong> Speed of Code Reviews</a></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/comments.html"><strong aria-hidden="true">2.3.5.</strong> How to write code review comments</a></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/pushback.html"><strong aria-hidden="true">2.3.6.</strong> Handling pushback in code reviews</a></li></ol></li><li class="chapter-item expanded "><a href="../../../en/review/emergencies.html"><strong aria-hidden="true">2.4.</strong> Emergencies</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Google Engineering Practices Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="コードレビューの基準"><a class="header" href="#コードレビューの基準">コードレビューの基準</a></h1>
+<p>コードレビューの主な目的は、Googleのコードベースの全体的なコードの健全性が時間とともに向上していることを確認することです。コードレビューのすべてのツールとプロセスは、この目的を達成するために設計されています。</p>
+<p>これを達成するためには、いくつかのトレードオフをバランスさせる必要があります。</p>
+<p>まず、開発者は自分のタスクを進めることができなければなりません。コードベースに改善を提出しなければ、コードベースは改善されません。また、レビュアが変更を非常に難しくすると、開発者は将来の改善をする意欲を失います。</p>
+<p>一方、レビュアの責任は、各CLがコードベースの全体的なコードの健全性が時間とともに低下しないようにすることです。これは難しいことです。なぜなら、コードベースはしばしば時間とともにコードの健全性がわずかに低下することで劣化するからです。特に、チームが時間的制約の下にあり、目標を達成するために手を抜かざるを得ないと感じている場合には、さらにそうなります。</p>
+<p>また、レビュアは自分がレビューしているコードに所有権と責任を持っています。彼らはコードベースが一貫性を保ち、保守可能であり、<a href="looking-for.html">&quot;コードレビューで探すべきもの&quot;</a>で言及されている他のすべての要素を確保したいと考えています。</p>
+<p>したがって、コードレビューで期待される標準として次のルールが得られます。</p>
+<p><strong>一般的に、CLがシステム全体のコードの健全性を確実に向上させる状態になった時点で、レビュアはCLの承認を優先すべきです。CLが完璧でなくても構いません。</strong></p>
+<p>これは、すべてのコードレビューガイドラインの中での最も重要な原則です。</p>
+<p>もちろん、これには制約があります。たとえば、レビュアがシステムに追加したくない機能をCLが追加している場合、コードが設計されていても承認を拒否することができます。</p>
+<p>ここで重要なポイントは、「完璧な」コードというものは存在しないということです。ただし、より良いコードは存在します。レビュアは、著者に対してCLのすべての細部を磨くことを要求するべきではありません。代わりに、レビュアは前進する必要性と提案されている変更の重要性をバランスさせるべきです。完璧さを求めるのではなく、レビュアが求めるべきは「継続的な改善」です。システムの保守性、可読性、理解性を全体的に向上させるCLは、数日間遅延させるべきではありません。</p>
+<p>レビュアーは、いつでも何かが改善できるというコメントを自由に残すことができるが、それが非常に重要でない場合は、「Nit: 」のような接頭辞を付けて、著者にそれを無視してもよいと伝えることができます。</p>
+<p>注意：このドキュメントには、システム全体のコードの健全性を明らかに悪化させるようなCLをチェックインすることを正当化するものはありません。それを行うのは、<a href="../emergencies.html">緊急時</a>のみです。</p>
+<h2 id="メンタリング"><a class="header" href="#メンタリング">メンタリング</a></h2>
+<p>コードレビューは、開発者に言語、フレームワーク、または一般的なソフトウェア設計原則について新しいことを教える重要な機能を持つことがあります。開発者が新しいことを学ぶのに役立つコメントを残すことは常に良いことです。知識を共有することは、システムのコード品質を時間とともに向上させる一部です。ただし、コメントが純粋に教育的であり、このドキュメントで説明されている基準を満たすために必須ではない場合は、「Nit: 」という接頭辞を付けるか、それが著者が解決する必要がないことを示す他の方法を使用してください。</p>
+<h2 id="principles"><a class="header" href="#principles">原則</a></h2>
+<ul>
+<li>
+<p>技術的な事実とデータは、意見や個人の好みよりも優先される。</p>
+</li>
+<li>
+<p>スタイルに関する問題では、<a href="http://google.github.io/styleguide/">スタイルガイド</a>が絶対的な権威である。スタイルガイドにない純粋なスタイルのポイント（空白など）は、個人の好みの問題である。スタイルは、既存のスタイルと一貫性があるべきである。既存のスタイルがない場合は、著者のスタイルを受け入れる。</p>
+</li>
+<li>
+<p>**ソフトウェア設計の側面は、ほとんど常に純粋なスタイルの問題や個人の好みだけではありません。**それらは基本原則に基づいており、その原則に基づいて評価するべきです。時にはいくつかの妥当な選択肢があります。著者が（データまたは堅実なエンジニアリング原則に基づいて）いくつかのアプローチが同じくらい妥当であることを示すことができれば、レビュアーは著者の好みを受け入れるべきです。そうでない場合は、ソフトウェア設計の標準的な原則によって選択されます。</p>
+</li>
+<li>
+<p>他のルールが適用されない場合、レビュアーは、システム全体のコードの健全性を悪化させない限り、現在のコードベースに一貫性を求めることができます。</p>
+</li>
+</ul>
+<h2 id="conflicts"><a class="header" href="#conflicts">紛争の解決</a></h2>
+<p>コードレビューにおけるいかなる紛争においても、最初のステップは常に開発者とレビュアーがこのドキュメントや他のドキュメント（<a href="../developer/index.html">CL作成者ガイド</a>および<a href="index.html">レビュアーガイド</a>）の内容に基づいて合意を図ることです。</p>
+<p>合意に達することが特に困難な場合、コードレビューコメントだけで紛争を解決しようとする代わりに、レビュアーと作成者の間で対面会議やビデオ会議を行うことが役立つ場合があります。（ただし、その場合は議論の結果をCLのコメントとして記録しておくことを忘れないでください。将来の読者のために。）</p>
+<p>それでも状況が解決しない場合、最も一般的な解決方法はエスカレーションです。しばしばエスカレーションの経路は、より広範なチームの議論、テクニカルリードの意見、コードのメンテナからの決定の要求、またはエンジニアリングマネージャーの助けを求めることです。<strong>作者とレビュアーが合意に達しないためにCLを放置しないでください。</strong></p>
+<p>次: <a href="looking-for.html">コードレビューで探すべきポイント</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../../ja/review/reviewer/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../../ja/review/reviewer/looking-for.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../../ja/review/reviewer/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../../ja/review/reviewer/looking-for.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../../../elasticlunr.min.js"></script>
+        <script src="../../../mark.min.js"></script>
+        <script src="../../../searcher.js"></script>
+
+        <script src="../../../clipboard.min.js"></script>
+        <script src="../../../highlight.js"></script>
+        <script src="../../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,1940 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Google Engineering Practices Documentation</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">和訳</li><li class="chapter-item expanded "><a href="ja/index.html"><strong aria-hidden="true">1.</strong> Googleのエンジニアリングプラクティスドキュメント</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ja/review/index.html"><strong aria-hidden="true">1.1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="ja/review/developer/index.html"><strong aria-hidden="true">1.2.</strong> CL作成者のコードレビューを乗り越えるためのガイド</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ja/review/developer/cl-descriptions.html"><strong aria-hidden="true">1.2.1.</strong> 良いCLの説明文を書く</a></li><li class="chapter-item expanded "><a href="ja/review/developer/small-cls.html"><strong aria-hidden="true">1.2.2.</strong> 小さなCLs</a></li><li class="chapter-item expanded "><a href="ja/review/developer/handling-comments.html"><strong aria-hidden="true">1.2.3.</strong> レビューコメントの扱い方</a></li></ol></li><li class="chapter-item expanded "><a href="ja/review/reviewer/index.html"><strong aria-hidden="true">1.3.</strong> どのようにコードリビューするか</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ja/review/reviewer/standard.html"><strong aria-hidden="true">1.3.1.</strong> コードレビューの基準</a></li><li class="chapter-item expanded "><a href="ja/review/reviewer/looking-for.html"><strong aria-hidden="true">1.3.2.</strong> コードレビューで注目すべきポイント</a></li><li class="chapter-item expanded "><a href="ja/review/reviewer/navigate.html"><strong aria-hidden="true">1.3.3.</strong> レビュー中のCLのナビゲーション</a></li><li class="chapter-item expanded "><a href="ja/review/reviewer/speed.html"><strong aria-hidden="true">1.3.4.</strong> コードレビューの速度</a></li><li class="chapter-item expanded "><a href="ja/review/reviewer/comments.html"><strong aria-hidden="true">1.3.5.</strong> コードレビューコメントの書き方</a></li><li class="chapter-item expanded "><a href="ja/review/reviewer/pushback.html"><strong aria-hidden="true">1.3.6.</strong> コードレビューでの反発の扱い</a></li></ol></li><li class="chapter-item expanded "><a href="ja/review/emergencies.html"><strong aria-hidden="true">1.4.</strong> 緊急事態</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">原文</li><li class="chapter-item expanded "><a href="en/index.html"><strong aria-hidden="true">2.</strong> Google Engineering Practices Documentation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="en/review/index.html"><strong aria-hidden="true">2.1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="en/review/developer/index.html"><strong aria-hidden="true">2.2.</strong> The CL author's guide to getting through code review</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="en/review/developer/cl-descriptions.html"><strong aria-hidden="true">2.2.1.</strong> Writing good CL descriptions</a></li><li class="chapter-item expanded "><a href="en/review/developer/small-cls.html"><strong aria-hidden="true">2.2.2.</strong> Small CLs</a></li><li class="chapter-item expanded "><a href="en/review/developer/handling-comments.html"><strong aria-hidden="true">2.2.3.</strong> How to handle reviewer comments</a></li></ol></li><li class="chapter-item expanded "><a href="en/review/reviewer/index.html"><strong aria-hidden="true">2.3.</strong> How to do a code review</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="en/review/reviewer/standard.html"><strong aria-hidden="true">2.3.1.</strong> The Standard of Code Review</a></li><li class="chapter-item expanded "><a href="en/review/reviewer/looking-for.html"><strong aria-hidden="true">2.3.2.</strong> What to look for in a code review</a></li><li class="chapter-item expanded "><a href="en/review/reviewer/navigate.html"><strong aria-hidden="true">2.3.3.</strong> Navigating a CL in review</a></li><li class="chapter-item expanded "><a href="en/review/reviewer/speed.html"><strong aria-hidden="true">2.3.4.</strong> Speed of Code Reviews</a></li><li class="chapter-item expanded "><a href="en/review/reviewer/comments.html"><strong aria-hidden="true">2.3.5.</strong> How to write code review comments</a></li><li class="chapter-item expanded "><a href="en/review/reviewer/pushback.html"><strong aria-hidden="true">2.3.6.</strong> Handling pushback in code reviews</a></li></ol></li><li class="chapter-item expanded "><a href="en/review/emergencies.html"><strong aria-hidden="true">2.4.</strong> Emergencies</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Google Engineering Practices Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="googleのエンジニアリングプラクティスドキュメント"><a class="header" href="#googleのエンジニアリングプラクティスドキュメント">Googleのエンジニアリングプラクティスドキュメント</a></h1>
+<p>Googleは、すべての言語とプロジェクトに適用される多くの一般的なエンジニアリングプラクティスを持っています。これらのドキュメントは、私たちが時間をかけて開発してきたさまざまなベストプラクティスの集合的な経験を表しています。オープンソースプロジェクトや他の組織も、この知識を活用できる可能性があるため、できる限り公開するように取り組んでいます。</p>
+<p>現在、以下のドキュメントが含まれています：</p>
+<ul>
+<li><a href="ja/review/index.html">Googleのコードレビューガイドライン</a>（実際には2つの別々のドキュメントです）：
+<ul>
+<li><a href="ja/review/reviewer/index.html">コードレビュアーのガイド</a></li>
+<li><a href="ja/review/developer/index.html">変更作成者のガイド</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="用語"><a class="header" href="#用語">用語</a></h2>
+<p>これらのドキュメントの一部には、Google内部の用語が使用されていますが、外部の読者のためにここで説明します：</p>
+<ul>
+<li><strong>CL</strong>：「changelist」の略で、バージョン管理に提出されたまたはコードレビュー中の、1つの自己完結型の変更を意味します。他の組織では、これを「変更」、「パッチ」、または「プルリクエスト」と呼ぶことがよくあります。</li>
+<li><strong>LGTM</strong>：「Looks Good to Me」の略で、コードレビュアーがCLを承認する際に言う言葉です。</li>
+</ul>
+<h2 id="ライセンス"><a class="header" href="#ライセンス">ライセンス</a></h2>
+<p>このプロジェクトのドキュメントは、<a href="ja/LICENSE">CC-By 3.0ライセンス</a>の下でライセンスされています。このライセンスでは、これらのドキュメントを共有することを奨励しています。詳細については、<a href="https://creativecommons.org/licenses/by/3.0/">https://creativecommons.org/licenses/by/3.0/</a>を参照してください。</p>
+<p><a rel="license" href="https://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a></p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="intro"><a class="header" href="#intro">はじめに</a></h2>
+<p>コードレビューとは、コードの著者以外の人がそのコードを検討するプロセスです。</p>
+<p>Googleでは、コードレビューを通じてコードと製品の品質を維持しています。</p>
+<p>このドキュメントは、Googleのコードレビューのプロセスとポリシーの正式な説明です。</p>
+<p>このページは、コードレビューのプロセスの概要です。このガイドの一部となる他の2つの大きなドキュメントがあります。</p>
+<ul>
+<li><strong><a href="ja/review/reviewer/index.html">コードレビューの方法</a></strong>: コードレビュアーのための詳細なガイドです。</li>
+<li><strong><a href="ja/review/developer/index.html">CL著者ガイド</a></strong>: レビューを受けるCLを作成する開発者のための詳細なガイドです。</li>
+</ul>
+<h2 id="look_for"><a class="header" href="#look_for">コードレビュアーは何を見るのか？</a></h2>
+<p>コードレビューでは以下の点に注意する必要があります：</p>
+<ul>
+<li><strong>デザイン</strong>：コードはシステムに適切に設計されていますか？</li>
+<li><strong>機能性</strong>：コードは作者の意図通りに動作していますか？コードの動作はユーザーにとって良いですか？</li>
+<li><strong>複雑さ</strong>：コードはもっとシンプルにできますか？他の開発者が将来このコードに出くわしたときに簡単に理解して使用できますか？</li>
+<li><strong>テスト</strong>：コードには正しい自動テストがありますか？それらは設計が良いですか？</li>
+<li><strong>命名</strong>：開発者は変数、クラス、メソッドなどに明確な名前を選びましたか？</li>
+<li><strong>コメント</strong>：コメントは明確で有用ですか？</li>
+<li><strong>スタイル</strong>：コードは私たちの<a href="http://google.github.io/styleguide/">スタイルガイド</a>に従っていますか？</li>
+<li><strong>ドキュメンテーション</strong>：開発者は関連するドキュメントも更新しましたか？</li>
+</ul>
+<p>詳細については、**<a href="ja/review/reviewer/index.html">コードレビューの方法</a>**を参照してください。</p>
+<h3 id="best_reviewers"><a class="header" href="#best_reviewers">最適なレビュアーの選択</a></h3>
+<p>一般的には、できるだけ早くレビューに対応できる「最適な」レビュアーを見つけることが望ましいです。</p>
+<p>最適なレビュアーとは、あなたが書いているコードの部分に対して、最も詳細かつ正確なレビューをしてくれる人のことです。通常、これはコードの所有者であり、OWNERSファイルに記載されている人々かもしれません。時には、異なる人々に異なる部分のレビューを依頼することもあります。</p>
+<p>理想的なレビュアーを見つけた場合でも、その人が利用できない場合は、少なくとも変更に関して彼らをCCに追加するべきです。</p>
+<h3 id="in_person"><a class="header" href="#in_person">直接対面でのレビュー（およびペアプログラミング）</a></h3>
+<p>もし、コードの一部を資格のある人とペアプログラミングで行い、そのコードに対して良いコードレビューが行われた場合、そのコードはレビュー済みとみなされます。</p>
+<p>また、対面でのコードレビューも行うことができます。レビュアーが質問をし、変更を行った開発者は問われたときにのみ話すことができます。</p>
+<h2 id="seealso"><a class="header" href="#seealso">関連情報</a></h2>
+<ul>
+<li><a href="ja/review/reviewer/index.html">コードレビューの方法</a>: コードレビュアーのための詳細なガイド。</li>
+<li><a href="ja/review/developer/index.html">CL作成者ガイド</a>: レビューを受けるCLを作成する開発者のための詳細なガイド。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cl作成者のコードレビューを乗り越えるためのガイド"><a class="header" href="#cl作成者のコードレビューを乗り越えるためのガイド">CL作成者のコードレビューを乗り越えるためのガイド</a></h1>
+<p>このセクションのページには、コードレビューを行う開発者のためのベストプラクティスが含まれています。これらのガイドラインは、レビューをより速く、より高品質な結果で終えるのに役立つはずです。すべてを読む必要はありませんが、これらはすべてのGoogleの開発者に適用されることを意図しており、多くの人々が全体を読むことが役立つと感じています。</p>
+<ul>
+<li><a href="ja/review/developer/cl-descriptions.html">良いCLの説明の書き方</a></li>
+<li><a href="ja/review/developer/small-cls.html">小さなCL</a></li>
+<li><a href="ja/review/developer/handling-comments.html">レビューコメントの処理方法</a></li>
+</ul>
+<p>また、コードレビューを行う人には詳細なガイダンスを提供する<a href="ja/review/developer/../reviewer/index.html">コードレビューの方法</a>も参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="良いclの説明文を書く"><a class="header" href="#良いclの説明文を書く">良いCLの説明文を書く</a></h1>
+<p>CLの説明文は、<strong>何が</strong>変更されているのかと、<strong>なぜ</strong>その変更が行われたのかを公に記録するものです。これは、バージョン管理の履歴の一部となり、レビュワー以外の数百人の人々によって何年もの間読まれる可能性があります。</p>
+<p>将来の開発者は、説明文に基づいてCLを検索するでしょう。将来の誰かが、関連性のある変更のかすかな記憶を持っているが、具体的な情報が手元にないために、あなたの変更を探しているかもしれません。重要な情報がコードではなく説明文にある場合、彼らがあなたのCLを見つけるのはずっと難しくなります。</p>
+<h2 id="firstline"><a class="header" href="#firstline">最初の行</a></h2>
+<ul>
+<li>行われていることの短い要約。</li>
+<li>命令として書かれた完全な文。</li>
+<li>空行で区切る。</li>
+</ul>
+<p>CLの説明の<strong>最初の行</strong>は、具体的にCLによって<strong>何が行われているか</strong>の短い要約である。その後に空行を置く。これはバージョン管理の履歴の要約に表示されるため、将来のコード検索者があなたのCLやその説明全体を読まなくても、実際にCLが何をしたのか、他のCLとどのように異なるのかを理解するのに十分な情報であるべきです。つまり、最初の行は単独で成立し、読者がコードの履歴をスキャンするのをはるかに速くすることができるようにする必要があります。</p>
+<p>最初の行を短く、焦点を絞り、要点に留めるようにしてください。読者への明確さと有用性が最優先です。</p>
+<p>伝統的に、CLの説明の最初の行は、命令文（命令文）として書かれた完全な文です。例えば、「FizzBuzz RPCを<strong>削除</strong>し、新しいシステムで<strong>置き換える</strong>」と言う代わりに、「FizzBuzz RPCを<strong>削除して</strong>新しいシステムで<strong>置き換える</strong>」と書きます。ただし、説明の残りを命令文として書く必要はありません。</p>
+<h2 id="informative"><a class="header" href="#informative">本文は情報提供です</a></h2>
+<p><a href="ja/review/developer/cl-descriptions.html#firstline">最初の行</a>は短く、焦点を絞った要約であるべきです。その他の説明では、変更リストを全体的に理解するために読者が必要とする補足情報や詳細を含めるべきです。解決されている問題の簡単な説明や、なぜこれが最善のアプローチなのかを含めることがあります。アプローチの欠点がある場合は、それも述べるべきです。関連する場合、バグ番号やベンチマーク結果、設計文書へのリンクなどの背景情報も含めることができます。</p>
+<p>外部リソースへのリンクを含める場合、アクセス制限や保持ポリシーにより将来の読者には表示されない可能性があることを考慮してください。可能な限り、レビュワーや将来の読者がCLを理解するための十分な文脈を含めてください。</p>
+<p>小さなCLでも細部に注意を払う価値があります。CLを文脈に置いてください。</p>
+<h2 id="bad"><a class="header" href="#bad">不適切なCLの説明</a></h2>
+<p>「バグを修正する」というCLの説明は不十分です。どのバグですか？それを修正するために何をしましたか？
+同様に不適切な説明には以下のものがあります：</p>
+<ul>
+<li>「ビルドを修正する」</li>
+<li>「パッチを追加する」</li>
+<li>「コードをAからBに移動する」</li>
+<li>「フェーズ1」</li>
+<li>「便利な関数を追加する」</li>
+<li>「奇妙なURLを削除する」</li>
+</ul>
+<p>これらのいくつかは実際のCLの説明です。短いですが、十分な有用な情報を提供していません。</p>
+<h2 id="good"><a class="header" href="#good">良いCLの説明例</a></h2>
+<p>以下に、良い説明の例をいくつか示します。</p>
+<p>機能変更</p>
+<p>例：</p>
+<blockquote>
+<p>RPC: RPCサーバーメッセージフリーリストのサイズ制限を削除します。</p>
+<p>FizzBuzzのようなサーバーは非常に大きなメッセージを持っており、再利用することで利益を得ることができます。
+フリーリストを大きくし、フリーリストのエントリを時間をかけて解放するゴルーチンを追加します。
+これにより、アイドル状態のサーバーは最終的にすべてのフリーリストエントリを解放します。</p>
+</blockquote>
+<h3 id="リファクタリング"><a class="header" href="#リファクタリング">リファクタリング</a></h3>
+<p>例：</p>
+<blockquote>
+<p>タスクを構築し、そのTimeStrメソッドとNowメソッドを使用するために、TimeKeeperを使用します。</p>
+<p>タスクにNowメソッドを追加し、borglet()のゲッターメソッドを削除します（これは、OOMCandidateがborgletのNowメソッドを呼び出すためにのみ使用されていました）。これにより、Borgletに委譲するメソッドが置き換えられます。</p>
+<p>タスクがNowを提供できるようにすることは、Borgletへの依存を排除するための一歩です。最終的には、タスクからNowを取得する依存関係を直接TimeKeeperを使用するように変更する必要がありますが、これはリファクタリングを段階的に行うための配慮です。</p>
+<p>Borgletの階層を長期的にリファクタリングする目標を続けます。</p>
+</blockquote>
+<p>最初の行は、CLが何を行い、これが過去からの変更であることを説明しています。説明の残りの部分は、具体的な実装、CLの文脈、解決策が理想的ではないこと、および将来の方向性について説明しています。また、なぜこの変更が行われるのかも説明しています。</p>
+<h3 id="コンテキストが必要な小さなcl"><a class="header" href="#コンテキストが必要な小さなcl">コンテキストが必要な小さなCL</a></h3>
+<p>例：</p>
+<blockquote>
+<p>status.pyのためのPython3のビルドルールを作成します。</p>
+<p>これにより、既にPython3を使用しているコンシューマーは、元のstatusのビルドルールの隣にあるルールに依存することができます。これは、自分自身のツリーのどこかではなく、元のビルドルールの隣に依存することを意味します。これにより、新しいコンシューマーは、可能な限りPython3を使用することが奨励され、現在作業中のいくつかの自動ビルドファイルのリファクタリングツールが大幅に簡素化されます。</p>
+</blockquote>
+<h2 id="tags"><a class="header" href="#tags">タグの使用</a></h2>
+<p>タグは手動で入力されるラベルであり、CL（変更リスト）を分類するために使用できます。これらはツールによってサポートされる場合もありますし、チームの慣習として使用される場合もあります。</p>
+<p>例えば：</p>
+<ul>
+<li>&quot;[tag]&quot;</li>
+<li>&quot;[a longer tag]&quot;</li>
+<li>&quot;#tag&quot;</li>
+<li>&quot;tag:&quot;</li>
+</ul>
+<p>タグの使用は任意です。</p>
+<p>タグを追加する際には、<a href="ja/review/developer/cl-descriptions.html#informative">CLの説明の本文</a>または<a href="ja/review/developer/cl-descriptions.html#firstline">最初の行</a>に配置するかどうかを考慮してください。最初の行でのタグの使用は、内容をわかりにくくする可能性があるため、制限してください。</p>
+<p>タグの使用例（タグありとタグなし）：</p>
+<pre><code class="language-{.good}">// タグは最初の行に短く保つ場合は問題ありません。
+[banana] バナナを食べる前に皮をむいてください。
+
+// タグはコンテンツ内にインラインで配置することもできます。
+バナナを食べる前に #banana をむいてください。
+
+// タグは任意です。
+バナナを食べる前に皮をむいてください。
+
+// タグが短く保たれている場合、複数のタグを使用することもできます。
+#banana #apple: 果物のかごを組み立てる。
+
+// タグはCLの説明のどこにでも配置できます。
+&gt; 果物のかごを組み立てる。
+&gt;
+&gt; #banana #apple
+</code></pre>
+<pre><code class="language-{.bad}">// タグが多すぎる（または長すぎる）と最初の行が混雑します。
+//
+// 代わりに、タグを説明の本文に移動したり、短縮したりできるかどうかを検討してください。
+[banana peeler factory factory][apple picking service] 果物のかごを組み立てる。
+</code></pre>
+<h2 id="生成されたclの説明"><a class="header" href="#生成されたclの説明">生成されたCLの説明</a></h2>
+<p>一部のCLはツールによって生成されます。できる限り、その説明もここでのアドバイスに従うべきです。つまり、最初の行は短く、焦点を絞り、単独で成立し、CLの説明本文には、レビュワーや将来のコード検索者が各CLの効果を理解するのに役立つ情報を含めるべきです。</p>
+<h2 id="clを提出する前に説明を確認してください"><a class="header" href="#clを提出する前に説明を確認してください">CLを提出する前に説明を確認してください</a></h2>
+<p>CLはレビュー中に大きな変更が加えられることがあります。CLを提出する前に、CLの説明を再確認して、説明がCLの内容を正確に反映していることを確認することが価値があります。</p>
+<p>次: <a href="ja/review/developer/small-cls.html">小さなCL</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="小さなcls"><a class="header" href="#小さなcls">小さなCLs</a></h1>
+<p>なぜ小さなCLを書くのか？</p>
+<p>小さくてシンプルなCLの方が以下のような利点があります：</p>
+<ul>
+<li><strong>迅速にレビューされる</strong>：レビュアーは小さなCLを数回に分けて5分ずつ見つける方が、1つの大きなCLを30分のブロックに割り当てるよりも簡単です。</li>
+<li><strong>徹底的にレビューされる</strong>：大きな変更では、詳細なコメントが行ったり来たりすることで、レビュアーや著者はイライラし、重要なポイントが見落とされたり落とされたりすることがあります。</li>
+<li><strong>バグを導入する可能性が低い</strong>：変更が少ないため、CLの影響を効果的に推論し、バグが導入されていないかを確認することが容易です。</li>
+<li><strong>却下された場合の無駄な作業が少ない</strong>：巨大なCLを書いて、レビュアーが全体的な方向性が間違っていると言った場合、多くの作業が無駄になります。</li>
+<li><strong>マージが容易</strong>：大きなCLで作業するのは時間がかかるため、マージする際に多くの競合が発生し、頻繁にマージする必要があります。</li>
+<li><strong>設計が容易</strong>：小さな変更の設計とコードの品質を磨く方が、大きな変更の詳細を洗練するよりも簡単です。</li>
+<li><strong>レビューにブロックされることが少ない</strong>：全体的な変更の自己完結した部分を送信することで、現在のCLがレビューされるのを待ちながらコーディングを続けることができます。</li>
+<li><strong>ロールバックが簡単</strong>：大きなCLは、初期のCLの提出とロールバックCLの間に更新されるファイルに触れる可能性が高く、ロールバックが複雑になります（中間のCLもロールバックする必要があるかもしれません）。</li>
+</ul>
+<p>なお、**レビュアーはCLが大きすぎるために変更を拒否する権限を持っています。**通常、彼らはあなたの貢献に感謝し、それを一連の小さな変更にするように要求するでしょう。すでに書いた変更を分割するのは大変な作業であり、また、レビュアーが受け入れるべき理由について議論する時間がかかるかもしれません。</p>
+<h1 id="hello-how-can-i-assist-you-today"><a class="header" href="#hello-how-can-i-assist-you-today">Hello, how can I assist you today?</a></h1>
+<h2 id="what_is_small"><a class="header" href="#what_is_small">Smallとは何ですか？</a></h2>
+<p>一般的に、CLの適切なサイズは<strong>1つの自己完結した変更</strong>です。つまり、以下のような特徴を持ちます。</p>
+<ul>
+<li>CLは、<strong>1つのこと</strong>に対処する最小限の変更を行います。通常、機能全体ではなく、機能の一部に対して行われます。一般的には、CLが大きすぎるよりも小さすぎるCLを書く方が良いです。受託者と協力して、受け入れ可能なサイズを見つけましょう。</li>
+<li>CLには、<a href="ja/review/developer/small-cls.html#test_code">関連するテストコード</a>が含まれている必要があります。</li>
+<li>CLについて理解するためにレビュアーが必要とする情報は、CL自体、CLの説明、既存のコードベース、または既にレビューされたCLに含まれています。</li>
+<li>CLがチェックインされた後も、システムはユーザーと開発者の両方にとってうまく機能し続けます。</li>
+<li>CLの影響が理解しにくいほど小さすぎるわけではありません。新しいAPIを追加する場合は、同じCL内でAPIの使用例を含めることで、レビュアーがAPIの使用方法をより理解しやすくすることができます。これにより、未使用のAPIをチェックインすることも防げます。</li>
+</ul>
+<p>「大きすぎる」とは具体的な基準はありませんが、通常、100行程度のCLは適切なサイズであり、1000行は通常、大きすぎるとされます。ただし、これはレビュアーの判断に委ねられます。変更が広範囲にわたるファイル数も「サイズ」に影響を与えます。1つのファイルで200行の変更は問題ないかもしれませんが、50のファイルに分散されると通常、大きすぎるとされます。</p>
+<p>自分がコードを書き始めた瞬間からコードに深く関与しているかもしれませんが、レビュアーにはその文脈がないことを念頭に置いてください。あなたにとっては受け入れ可能なサイズのCLでも、レビュアーにとっては圧倒的なものに見えるかもしれません。迷った場合は、思ったよりも小さなCLを書くようにしましょう。レビュアーは、あまり小さすぎるCLを受け取ったとは滅多に文句を言いません。</p>
+<h2 id="large_okay"><a class="header" href="#large_okay">大規模な変更が許容される場合</a></h2>
+<p>大規模な変更が問題にならない場合はいくつかあります。</p>
+<ul>
+<li>ファイル全体の削除は、レビュアーがレビューするのにあまり時間がかからないため、1行の変更として数えることができます。</li>
+<li>時には、完全に信頼できる自動リファクタリングツールによって生成された大規模な変更があります。レビュアーの仕事は、変更が本当に必要であることを確認し、承認することです。これらの変更は大きくなることがありますが、上記の注意事項（マージやテストなど）は依然として適用されます。</li>
+</ul>
+<h2 id="efficiently"><a class="header" href="#efficiently">効率的に小さなCLを書く方法</a></h2>
+<p>もし小さなCLを書いてからレビュワーに承認されるのを待ってから次のCLを書くとすると、多くの時間を無駄にすることになります。ですので、レビュー待ちの間にブロックされない方法を見つける必要があります。これには、同時に複数のプロジェクトに取り組む、即座に利用可能なレビュワーを見つける、対面でのレビュー、ペアプログラミング、またはCLを分割して即座に作業を続ける方法などが含まれるかもしれません。</p>
+<h2 id="splitting"><a class="header" href="#splitting">CLの分割</a></h2>
+<p>相互に依存関係がある可能性のある複数のCLを持つ作業を開始する際には、コーディングに入る前に、高レベルでCLを分割して組織する方法を考えることがしばしば役立ちます。</p>
+<p>CLの作成者として、CLを管理・組織するためにも便利ですし、コードレビュアーにとっても作業を容易にし、コードレビューを効率化することができます。</p>
+<p>以下に、作業を異なるCLに分割するためのいくつかの戦略を示します。</p>
+<h3 id="stacking"><a class="header" href="#stacking">重ねて変更を積み重ねる</a></h3>
+<p>自分自身をブロックせずにCLを分割する方法の一つは、小さなCLを書いて、レビューに送り、すぐに最初のCLを基にした別のCLを書き始めることです。ほとんどのバージョン管理システムは、何らかの方法でこれを行うことができます。</p>
+<h3 id="splitting-files"><a class="header" href="#splitting-files">ファイルごとの分割</a></h3>
+<p>CLを分割する別の方法は、異なるレビュワーが必要ながらもそれ以外は独立した変更を必要とするファイルのグループによって行うことです。</p>
+<p>例えば、プロトコルバッファの修正のための1つのCLと、そのプロトを使用するコードの変更のための別のCLを送信します。コードのCLを送信する前にプロトのCLを提出する必要がありますが、両方のCLは同時にレビューできます。これを行う場合、自分が書いた他のCLについて両方のレビュワーに通知することが望ましいかもしれません。これにより、変更の文脈を持っていることができます。</p>
+<p>別の例として、コードの変更のための1つのCLと、そのコードを使用する設定や実験のための別のCLを送信します。必要に応じて、設定/実験ファイルはコードの変更よりも早く本番環境にプッシュされることがあるため、必要に応じて簡単に元に戻すこともできます。</p>
+<h3 id="splitting-horizontally"><a class="header" href="#splitting-horizontally">水平分割</a></h3>
+<p>テックスタックの各層間の変更を分離するのに役立つ共有コードやスタブを作成することを考えてみてください。これにより、開発を迅速化するだけでなく、各層間の抽象化も促進されます。</p>
+<p>例えば、クライアント、API、サービス、データモデルの各層を持つ電卓アプリを作成したとします。共有のプロト署名を使用することで、サービスとデータモデルの層を互いに分離することができます。同様に、APIスタブを使用することで、クライアントコードとサービスコードの実装を分割し、それぞれが独立して進めるようにすることができます。同様のアイデアは、より詳細な関数やクラスレベルの抽象化にも適用することができます。</p>
+<h3 id="splitting-vertically"><a class="header" href="#splitting-vertically">垂直に分割する</a></h3>
+<p>階層的で水平なアプローチとは異なり、コードを小さなフルスタックの垂直な機能に分割することもできます。これらの機能のそれぞれは独立した並行実装トラックとなります。これにより、一部のトラックがレビューやフィードバック待ちの間も前進することができます。</p>
+<p><a href="ja/review/developer/small-cls.html#splitting-horizontally">水平に分割する</a>での計算機の例に戻りましょう。今度は、乗算や除算などの新しい演算子をサポートしたいとします。これを、乗算と除算を別々の垂直な機能やサブフィーチャーとして実装することで分割することができます。ただし、共有のボタンスタイリングや共有のバリデーションロジックなど、一部の重複があるかもしれません。</p>
+<h3 id="splitting-grid"><a class="header" href="#splitting-grid">水平および垂直に分割する</a></h3>
+<p>さらに進んで、これらのアプローチを組み合わせて、次のような実装計画を作成することができます。各セルは独立したCLです。
+モデル（一番下）からクライアントまで進めるようにします。</p>
+<div class="table-wrapper"><table><thead><tr><th>レイヤー</th><th>機能：乗算</th><th>機能：除算</th></tr></thead><tbody>
+<tr><td>クライアント</td><td>追加ボタン</td><td>追加ボタン</td></tr>
+<tr><td>API</td><td>エンドポイントを追加</td><td>エンドポイントを追加</td></tr>
+<tr><td>サービス</td><td>変換を実装</td><td>乗算と共有変換ロジックを</td></tr>
+<tr><td>:         :                           : 追加する :</td><td></td><td></td></tr>
+<tr><td>モデル</td><td>プロト定義を追加</td><td>プロト定義を追加</td></tr>
+</tbody></table>
+</div>
+<h2 id="refactoring"><a class="header" href="#refactoring">リファクタリングを分離する</a></h2>
+<p>リファクタリングは、通常、機能の変更やバグ修正とは別のCLで行うのが最善です。例えば、クラスの移動や名前の変更は、そのクラスのバグ修正とは別のCLで行うべきです。各CLごとに導入される変更をレビュワーが理解しやすくするためには、分離する方がはるかに簡単です。</p>
+<p>ただし、ローカル変数名の修正などの小さなクリーンアップは、機能の変更やバグ修正のCL内に含めることもできます。ただし、現在のCLに含めるとレビューがより困難になると判断される場合は、開発者とレビュワーの判断に委ねられます。</p>
+<h2 id="test_code"><a class="header" href="#test_code">関連するテストコードを同じCLにまとめる</a></h2>
+<p>CLには関連するテストコードを含めるべきです。ここでの「小ささ」とは、CLが焦点を絞っていることを指し、行数の単純な関数ではありません。</p>
+<p>すべてのGoogleの変更にはテストが必要です。</p>
+<p>ロジックを追加または変更するCLには、新しい動作に対応する新しいまたは更新されたテストが必要です。純粋なリファクタリングCL（動作を変更する意図のないもの）もテストでカバーする必要があります。理想的には、これらのテストはすでに存在しているはずですが、存在しない場合は追加する必要があります。</p>
+<ul>
+<li>独立したテストの変更は、まず別々のCLに入れることができます。<a href="ja/review/developer/small-cls.html#refactoring">リファクタリングのガイドライン</a>と同様です。これには以下が含まれます：
+<ul>
+<li>既存の提出済みコードを新しいテストで検証すること。
+<ul>
+<li>重要なロジックがテストでカバーされていることを確認します。</li>
+<li>影響を受けるコードの後続のリファクタリングに対する信頼性を高めます。たとえば、テストされていないコードをリファクタリングしたい場合、リファクタリングCLを提出する前にテストCLを提出することで、リファクタリング前後でテストされた動作が変わらないことを検証できます。</li>
+</ul>
+</li>
+<li>テストコードのリファクタリング（例：ヘルパー関数の導入）。</li>
+<li>大規模なテストフレームワークコードの導入（例：統合テスト）。</li>
+</ul>
+</li>
+</ul>
+<h2 id="break"><a class="header" href="#break">ビルドを壊さないでください</a></h2>
+<p>もし複数のCLが互いに依存している場合、各CLが提出された後もシステム全体が正常に動作し続けるようにする必要があります。そうしないと、CLを提出するたびに他の開発者全員のビルドが数分間（もしくは後のCLの提出で何か予期せぬ問題が発生した場合はそれ以上の時間）壊れてしまう可能性があります。</p>
+<h2 id="cant"><a class="header" href="#cant">十分に小さくすることはできません</a></h2>
+<p>CLが大きくならざるを得ない状況に遭遇することがあります。しかし、これは非常に稀です。小さなCLを書くことに慣れた著者は、ほとんどの場合、機能を一連の小さな変更に分解する方法を見つけることができます。</p>
+<p>大きなCLを書く前に、リファクタリング専用のCLを前に置くことで、よりクリーンな実装の道を開くことができるかどうかを考えてみてください。チームメンバーと話し合い、機能を小さなCLに実装する方法についての意見を聞いてみてください。</p>
+<p>これらのオプションがすべて失敗した場合（非常に稀ですが）、事前にレビュワーの承諾を得て大きなCLをレビューするようにしてください。これにより、彼らは何が来るかについて警告されます。この状況では、長い時間をかけてレビュープロセスを進めることを予想し、バグを導入しないように注意し、テストの作成に特に注意してください。</p>
+<p>次: <a href="ja/review/developer/handling-comments.html">レビューコメントの処理方法</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="レビューコメントの扱い方"><a class="header" href="#レビューコメントの扱い方">レビューコメントの扱い方</a></h1>
+<p>CL（変更リスト）をレビューに送信すると、レビュアーから複数のコメントが返ってくることがあります。以下に、レビューコメントの扱いについて知っておくと役立つ情報をいくつか紹介します。</p>
+<h2 id="personal"><a class="header" href="#personal">個人的に受け取らないでください</a></h2>
+<p>レビューの目的は、コードベースと製品の品質を維持することです。
+レビュアーがあなたのコードに対して批判を行うときは、それをあなたやあなたの能力に対する個人攻撃ではなく、あなたやコードベース、Googleを助けるための試みと考えてください。</p>
+<p>時にはレビュアーはイライラしており、コメントでそのイライラを表現することがあります。これはレビュアーとしては良い慣行ではありませんが、開発者としてはそれに備えておくべきです。自分に対してレビュアーが何を伝えようとしているのか、&quot;レビュアーが実際に言っていること&quot;として行動してください。</p>
+<p><strong>コードレビューコメントに対して怒りで応答しないでください。</strong> それはプロのエチケットの重大な違反であり、コードレビューツールに永遠に残ります。もし怒りやイライラで親切に応答することができない場合は、しばらくコンピュータから離れるか、他の作業に取り組んで落ち着くまで待ってから丁寧に返信してください。</p>
+<p>一般的に、レビュアーが建設的で礼儀正しい方法でフィードバックを提供していない場合は、直接話し合うことを説明してください。もし直接話すことができない場合やビデオ通話で話すことができない場合は、プライベートなメールで彼らに説明してください。嫌な点や異なる方法をお願いすることを親切に説明してください。もし彼らがこのプライベートな話し合いにも建設的でないように応答したり、意図した効果が得られない場合は、適切な場合には上司にエスカレーションしてください。</p>
+<h2 id="code"><a class="header" href="#code">コードの修正</a></h2>
+<p>もしレビュアーがあなたのコードの何かを理解できないと言った場合、最初にするべきはコード自体を明確にすることです。もしコードを明確にすることができない場合、コードの存在理由を説明するコメントを追加してください。コメントが無意味に思える場合にのみ、コードレビューツールでの説明が適切な対応です。</p>
+<p>もしレビュアーがあなたのコードの一部を理解できなかった場合、将来のコード読者も同様に理解できない可能性があります。コードレビューツールでの返答は将来のコード読者には役立ちませんが、コードを明確にするかコメントを追加することは役立ちます。</p>
+<h2 id="think"><a class="header" href="#think">協力的に考える</a></h2>
+<p>CLを書くのは大変な作業です。レビューのために送信し、完成したと感じ、さらなる作業は必要ないと確信することは、しばしば非常に満足感を得ることです。特に、自分が意見に同意しない場合、変更を求めるコメントを受け取ることは、イライラすることがあります。</p>
+<p>このような時には、一歩引いて考えてみてください。レビュアーがコードベースやGoogleに役立つ有益なフィードバックを提供しているかどうかを考えてみてください。自分自身に最初に問いかけるべき質問は常に「レビュアーが何を求めているのか理解できているか？」です。</p>
+<p>その質問に答えられない場合は、レビュアーに明確化を求めてください。</p>
+<p>そして、コメントを理解しているが、それに同意しない場合は、協力的に考えることが重要です。攻撃的な態度や防御的な態度ではなく、協力的に考えることが重要です。</p>
+<p>悪い例: 「いや、それはやらない。」</p>
+<p>良い例: 「私はXを選んだ理由は、[これらの利点/欠点]と[これらのトレードオフ]です。私の理解では、Yを使用すると[これらの理由]で悪化すると考えています。Yが元のトレードオフにより適しているということですか？トレードオフを異なる視点で考慮すべきですか？それとも他の何かですか？」</p>
+<p>覚えておいてください、常に <b> <a href="https://chromium.googlesource.com/chromium/src/+/master/docs/cr_respect.md">礼儀と尊重</a>が最優先 </b> です。レビュアーと意見が異なる場合でも、協力する方法を見つけてください：明確化を求める、利点と欠点を議論する、コードベース、ユーザー、またはGoogleにとって自分の方法がより良い理由を説明するなど。</p>
+<p>時には、レビュアーが知らないユーザーやコードベース、またはCLについての情報を持っているかもしれません。適切な場所でコードを修正し、レビュアーとの議論に参加し、より多くの文脈を提供してください。通常、技術的な事実に基づいて、自分とレビュアーの間で合意に達することができます。</p>
+<h2 id="conflicts"><a class="header" href="#conflicts">紛争の解決</a></h2>
+<p>紛争を解決するための最初のステップは、常にレビュアーとの合意を図ることです。合意に達しない場合は、<a href="ja/review/developer/../reviewer/standard.html">コードレビューの基準</a>を参照してください。この基準では、そのような状況で従うべき原則が示されています。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コードレビューの方法"><a class="header" href="#コードレビューの方法">コードレビューの方法</a></h1>
+<p>このセクションのページでは、長年の経験に基づいて、コードレビューの最良の方法に関する推奨事項が記載されています。これらはすべて、1つの完全なドキュメントを多くのセクションに分割したものです。すべてを読む必要はありませんが、多くの人々が、自分自身やチームにとって非常に役立つと感じています。</p>
+<ul>
+<li><a href="ja/review/reviewer/standard.html">コードレビューの標準</a></li>
+<li><a href="ja/review/reviewer/looking-for.html">コードレビューで探すべきもの</a></li>
+<li><a href="ja/review/reviewer/navigate.html">レビュー中のCLのナビゲーション</a></li>
+<li><a href="ja/review/reviewer/speed.html">コードレビューのスピード</a></li>
+<li><a href="ja/review/reviewer/comments.html">コードレビューコメントの書き方</a></li>
+<li><a href="ja/review/reviewer/pushback.html">コードレビューでの反対意見の扱い方</a></li>
+</ul>
+<p>また、<a href="ja/review/reviewer/../developer/index.html">CL作成者ガイド</a>も参照してください。これは、CLがレビューを受けている開発者に詳細なガイダンスを提供しています。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コードレビューの基準"><a class="header" href="#コードレビューの基準">コードレビューの基準</a></h1>
+<p>コードレビューの主な目的は、Googleのコードベースの全体的なコードの健全性が時間とともに向上していることを確認することです。コードレビューのすべてのツールとプロセスは、この目的を達成するために設計されています。</p>
+<p>これを達成するためには、いくつかのトレードオフをバランスさせる必要があります。</p>
+<p>まず、開発者は自分のタスクを進めることができなければなりません。コードベースに改善を提出しなければ、コードベースは改善されません。また、レビュアが変更を非常に難しくすると、開発者は将来の改善をする意欲を失います。</p>
+<p>一方、レビュアの責任は、各CLがコードベースの全体的なコードの健全性が時間とともに低下しないようにすることです。これは難しいことです。なぜなら、コードベースはしばしば時間とともにコードの健全性がわずかに低下することで劣化するからです。特に、チームが時間的制約の下にあり、目標を達成するために手を抜かざるを得ないと感じている場合には、さらにそうなります。</p>
+<p>また、レビュアは自分がレビューしているコードに所有権と責任を持っています。彼らはコードベースが一貫性を保ち、保守可能であり、<a href="ja/review/reviewer/looking-for.html">&quot;コードレビューで探すべきもの&quot;</a>で言及されている他のすべての要素を確保したいと考えています。</p>
+<p>したがって、コードレビューで期待される標準として次のルールが得られます。</p>
+<p><strong>一般的に、CLがシステム全体のコードの健全性を確実に向上させる状態になった時点で、レビュアはCLの承認を優先すべきです。CLが完璧でなくても構いません。</strong></p>
+<p>これは、すべてのコードレビューガイドラインの中での最も重要な原則です。</p>
+<p>もちろん、これには制約があります。たとえば、レビュアがシステムに追加したくない機能をCLが追加している場合、コードが設計されていても承認を拒否することができます。</p>
+<p>ここで重要なポイントは、「完璧な」コードというものは存在しないということです。ただし、より良いコードは存在します。レビュアは、著者に対してCLのすべての細部を磨くことを要求するべきではありません。代わりに、レビュアは前進する必要性と提案されている変更の重要性をバランスさせるべきです。完璧さを求めるのではなく、レビュアが求めるべきは「継続的な改善」です。システムの保守性、可読性、理解性を全体的に向上させるCLは、数日間遅延させるべきではありません。</p>
+<p>レビュアーは、いつでも何かが改善できるというコメントを自由に残すことができるが、それが非常に重要でない場合は、「Nit: 」のような接頭辞を付けて、著者にそれを無視してもよいと伝えることができます。</p>
+<p>注意：このドキュメントには、システム全体のコードの健全性を明らかに悪化させるようなCLをチェックインすることを正当化するものはありません。それを行うのは、<a href="ja/review/reviewer/../emergencies.html">緊急時</a>のみです。</p>
+<h2 id="メンタリング"><a class="header" href="#メンタリング">メンタリング</a></h2>
+<p>コードレビューは、開発者に言語、フレームワーク、または一般的なソフトウェア設計原則について新しいことを教える重要な機能を持つことがあります。開発者が新しいことを学ぶのに役立つコメントを残すことは常に良いことです。知識を共有することは、システムのコード品質を時間とともに向上させる一部です。ただし、コメントが純粋に教育的であり、このドキュメントで説明されている基準を満たすために必須ではない場合は、「Nit: 」という接頭辞を付けるか、それが著者が解決する必要がないことを示す他の方法を使用してください。</p>
+<h2 id="principles"><a class="header" href="#principles">原則</a></h2>
+<ul>
+<li>
+<p>技術的な事実とデータは、意見や個人の好みよりも優先される。</p>
+</li>
+<li>
+<p>スタイルに関する問題では、<a href="http://google.github.io/styleguide/">スタイルガイド</a>が絶対的な権威である。スタイルガイドにない純粋なスタイルのポイント（空白など）は、個人の好みの問題である。スタイルは、既存のスタイルと一貫性があるべきである。既存のスタイルがない場合は、著者のスタイルを受け入れる。</p>
+</li>
+<li>
+<p>**ソフトウェア設計の側面は、ほとんど常に純粋なスタイルの問題や個人の好みだけではありません。**それらは基本原則に基づいており、その原則に基づいて評価するべきです。時にはいくつかの妥当な選択肢があります。著者が（データまたは堅実なエンジニアリング原則に基づいて）いくつかのアプローチが同じくらい妥当であることを示すことができれば、レビュアーは著者の好みを受け入れるべきです。そうでない場合は、ソフトウェア設計の標準的な原則によって選択されます。</p>
+</li>
+<li>
+<p>他のルールが適用されない場合、レビュアーは、システム全体のコードの健全性を悪化させない限り、現在のコードベースに一貫性を求めることができます。</p>
+</li>
+</ul>
+<h2 id="conflicts"><a class="header" href="#conflicts">紛争の解決</a></h2>
+<p>コードレビューにおけるいかなる紛争においても、最初のステップは常に開発者とレビュアーがこのドキュメントや他のドキュメント（<a href="ja/review/reviewer/../developer/index.html">CL作成者ガイド</a>および<a href="ja/review/reviewer/index.html">レビュアーガイド</a>）の内容に基づいて合意を図ることです。</p>
+<p>合意に達することが特に困難な場合、コードレビューコメントだけで紛争を解決しようとする代わりに、レビュアーと作成者の間で対面会議やビデオ会議を行うことが役立つ場合があります。（ただし、その場合は議論の結果をCLのコメントとして記録しておくことを忘れないでください。将来の読者のために。）</p>
+<p>それでも状況が解決しない場合、最も一般的な解決方法はエスカレーションです。しばしばエスカレーションの経路は、より広範なチームの議論、テクニカルリードの意見、コードのメンテナからの決定の要求、またはエンジニアリングマネージャーの助けを求めることです。<strong>作者とレビュアーが合意に達しないためにCLを放置しないでください。</strong></p>
+<p>次: <a href="ja/review/reviewer/looking-for.html">コードレビューで探すべきポイント</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コードレビューで注目すべきポイント"><a class="header" href="#コードレビューで注目すべきポイント">コードレビューで注目すべきポイント</a></h1>
+<p>注意：これらのポイントを考慮する際には、常に<a href="ja/review/reviewer/standard.html">コードレビューの標準</a>を参考にしてください。</p>
+<h2 id="デザイン"><a class="header" href="#デザイン">デザイン</a></h2>
+<p>レビューで最も重要なのは、CLの全体的なデザインです。
+CL内のさまざまなコードの相互作用は意味をなしていますか？この変更は、コードベースではなくライブラリに属していますか？システム全体との統合はうまくいっていますか？この機能を追加するのに適切な時期ですか？</p>
+<h2 id="機能性"><a class="header" href="#機能性">機能性</a></h2>
+<p>このCLは、開発者が意図した通りの動作をしていますか？開発者が意図したことは、このコードのユーザーにとって良いものですか？「ユーザー」とは、通常、エンドユーザー（変更の影響を受ける場合）と開発者（将来このコードを「使用」する必要がある）の両方を指します。</p>
+<p>ほとんどの場合、開発者はCLを十分にテストして、コードレビューに到達するまでに正しく動作するようにすることが期待されます。ただし、レビュアーとしては、エッジケースを考え、並行性の問題を探し、ユーザーのように考え、コードを読むだけで見えるバグがないか確認する必要があります。</p>
+<p>CLの動作を検証することもできますが、レビュアーがCLの動作をチェックするのは、<strong>UIの変更</strong>など、ユーザーに影響を与える変更の場合が最も重要です。コードを読むだけでは、どのような変更がユーザーにどのような影響を与えるかを理解するのは難しいです。そのような変更の場合、開発者にデモをしてもらうか、CLにパッチを当てて試すことができない場合は、機能のデモをしてもらうことができます。</p>
+<p>また、コードレビュー中に特に機能性について考える必要があるのは、CLに理論的にデッドロックや競合状態を引き起こす可能性のある<strong>並行プログラミング</strong>が行われている場合です。これらの問題は、コードを実行するだけでは検出するのが非常に難しく、問題が導入されていないことを確認するために、開発者とレビュアーの両方が注意深く考える必要があります。（競合状態やデッドロックが発生する可能性のある並行性モデルを使用しないことは、コードレビューやコードの理解を非常に複雑にする可能性があるため、非常に重要な理由です。）</p>
+<h2 id="複雑さ"><a class="header" href="#複雑さ">複雑さ</a></h2>
+<p>CLは必要以上に複雑ですか？CLの各レベルで確認してください。個々の行は複雑すぎますか？関数は複雑すぎますか？クラスは複雑すぎますか？「複雑すぎる」とは通常、「コード読み手がすぐに理解できない」という意味です。また、「開発者がこのコードを呼び出したり変更しようとすると、バグを発生させる可能性が高い」という意味もあります。</p>
+<p>特定のタイプの複雑さは「過剰設計」です。開発者がコードを必要以上に一般化したり、現在のシステムで必要のない機能を追加したりしている場合です。レビュアーは特に過剰設計に対して警戒すべきです。開発者に対して、現在解決する必要のある問題を解決するように促し、将来解決するかもしれない問題ではなく、現在の問題を解決するようにしましょう。将来の問題は、実際の形状と要件を物理的な宇宙で確認できるようになった時に解決すべきです。</p>
+<h2 id="テスト"><a class="header" href="#テスト">テスト</a></h2>
+<p>変更に適した単体テスト、統合テスト、エンドツーエンドテストを要求してください。一般的には、テストは本番コードと同じCLに追加する必要がありますが、CLが<a href="ja/review/reviewer/../emergencies.html">緊急事態</a>を処理している場合を除きます。</p>
+<p>CL内のテストが正確で、意味のある、有用なものであることを確認してください。テストは自己テストを行いませんし、テストのためにテストを書くことはほとんどありません。人間がテストが有効であることを確認する必要があります。</p>
+<p>コードが壊れたときにテストは実際に失敗しますか？コードが変更された場合、テストは誤った結果を出力し始めますか？各テストは単純で有用なアサーションを行っていますか？テストは異なるテストメソッド間で適切に分離されていますか？</p>
+<p>テストもメンテナンスが必要なコードですので、メインのバイナリの一部ではないためにテストに複雑さを受け入れないでください。</p>
+<h2 id="名前付け"><a class="header" href="#名前付け">名前付け</a></h2>
+<p>開発者はすべての要素に適切な名前を選びましたか？適切な名前は、アイテムの内容や機能を完全に伝えるのに十分な長さであり、読みにくくなるほど長くなっていませんか？</p>
+<h2 id="コメント"><a class="header" href="#コメント">コメント</a></h2>
+<p>開発者は理解しやすい英語で明確なコメントを書いていますか？すべてのコメントが実際に必要ですか？通常、コメントはコードが存在する理由を説明するために使用され、コードが何をしているかを説明するためには使用されません。コード自体が十分に明確でない場合は、コードをよりシンプルにする必要があります。ただし、正規表現や複雑なアルゴリズムなどの場合は、自身のコードに含まれていない情報を説明するコメントが非常に役立つことがあります。ただし、ほとんどの場合、コメントは意思決定の背後にある理由など、コード自体に含まれない情報のために使用されます。</p>
+<p>また、この変更リストの前にあったコメントも参考になる場合があります。今は削除できるTODOコメントや、この変更を行わないように忠告するコメントなどがあるかもしれません。</p>
+<p>コメントは、クラス、モジュール、または関数のドキュメントとは異なり、コードの目的、使用方法、使用時の動作などを表現するべきです。</p>
+<h2 id="スタイル"><a class="header" href="#スタイル">スタイル</a></h2>
+<p>Googleでは、主要な言語だけでなく、ほとんどのマイナーな言語に対しても<a href="http://google.github.io/styleguide/">スタイルガイド</a>があります。適切なスタイルガイドに従ってCLを作成してください。</p>
+<p>スタイルガイドにないスタイルの改善をしたい場合は、「Nit:」という接頭辞をコメントに付けて、開発者にそれがコードを改善するための細かい指摘であることを伝えてください。個人的なスタイルの好みだけでCLの提出をブロックしないでください。</p>
+<p>CLの作者は、主要なスタイルの変更を他の変更と組み合わせてはいけません。CLで何が変更されているかがわかりにくくなり、マージやロールバックが複雑になり、他の問題を引き起こします。たとえば、ファイル全体の書式を変更したい場合は、まず書式変更のみを含んだ別のCLを送り、その後に機能的な変更を含んだ別のCLを送ってください。</p>
+<h2 id="一貫性"><a class="header" href="#一貫性">一貫性</a></h2>
+<p>既存のコードがスタイルガイドと一貫していない場合はどうなりますか？<a href="ja/review/reviewer/standard.html#principles">コードレビューの原則</a>によれば、スタイルガイドが絶対的な権威です。つまり、スタイルガイドで要求されているものは、CL（変更リスト）はガイドラインに従うべきです。</p>
+<p>一部の場合、スタイルガイドは要件ではなく、推奨事項を示しています。これらの場合、新しいコードが推奨事項に従うべきか、周囲のコードに一貫性を持たせるべきかは判断に委ねられます。ローカルな一貫性が混乱を招く場合を除き、スタイルガイドに従うことを優先しましょう。</p>
+<p>他のルールが適用されない場合は、著者は既存のコードと一貫性を保つべきです。</p>
+<p>いずれの場合でも、著者に対してバグの報告と既存のコードの整理のためのTODOの追加を促してください。</p>
+<h2 id="ドキュメンテーション"><a class="header" href="#ドキュメンテーション">ドキュメンテーション</a></h2>
+<p>もしCLがユーザーがコードをビルド、テスト、操作、リリースする方法に変更を加える場合、関連するドキュメンテーション（README、g3docページ、生成されたリファレンスドキュメントなど）も更新されているか確認してください。もしCLがコードを削除または非推奨化する場合、ドキュメンテーションも削除すべきかどうか考えてください。
+もしドキュメンテーションが不足している場合は、それを要求してください。</p>
+<h2 id="every-line"><a class="header" href="#every-line">すべての行</a></h2>
+<p>一般的な場合、レビューすることに割り当てられた<em>すべて</em>のコードの行を見てください。データファイルや生成されたコード、大きなデータ構造などは、時々スキャンすることができますが、人間が書いたクラス、関数、またはコードブロックをスキャンして、その中身が問題ないと仮定しないでください。
+明らかに、あるコードは他のコードよりも注意深く調査する価値がありますが、それはあなたが判断しなければならないことです。少なくとも、すべてのコードが何をしているのかを<em>理解</em>していることを確認してください。</p>
+<p>もしコードを読むのが難しく、それがレビューを遅らせている場合は、開発者にそれを伝えて、レビューする前にそれを明確にしてもらうように待ってください。Googleでは、優れたソフトウェアエンジニアを採用しています。あなたもその一人です。もしコードが理解できない場合、他の開発者も理解できない可能性が非常に高いです。ですので、開発者にそれを明確にしてもらうことで、将来の開発者がこのコードを理解するのを助けることにもなります。</p>
+<p>もしコードが理解できるけれども、レビューの一部を適任と感じない場合は、<a href="ja/review/reviewer/looking-for.html#every-line-exceptions">レビュアーがいることを確認してください</a>。特にプライバシーやセキュリティ、並行性、アクセシビリティ、国際化などの複雑な問題については、適任なレビュアーがいることを確認してください。</p>
+<h3 id="every-line-exceptions"><a class="header" href="#every-line-exceptions">例外</a></h3>
+<p>もし、すべての行をレビューすることが意味をなさない場合はどうなりますか？ 例えば、あなたがCLの複数のレビュワーのうちの一人であり、次のような要求がある場合です。</p>
+<ul>
+<li>大きな変更の一部である特定のファイルのみをレビューするように求められる場合。</li>
+<li>高レベルの設計、プライバシーやセキュリティの影響など、CLの特定の側面のみをレビューするように求められる場合。</li>
+</ul>
+<p>これらの場合、レビューした部分をコメントで明記してください。<a href="ja/review/reviewer/speed.html#lgtm-with-comments">コメント付きのLGTM</a>を優先してください。</p>
+<p>もし、他のレビュワーがCLの他の部分をレビューしたことを確認した後にLGTMを与えたい場合は、それを明示的にコメントで記述して、期待値を設定してください。CLが望ましい状態に達したら、<a href="ja/review/reviewer/speed.html#responses">迅速に応答</a>することを目指してください。</p>
+<h2 id="文脈"><a class="header" href="#文脈">文脈</a></h2>
+<p>CLを広い文脈で見ることは、しばしば役立ちます。通常、コードレビューツールは、変更される部分の周りの数行のコードしか表示しません。実際に変更が意味をなしているかどうかを確認するには、ファイル全体を見る必要があることもあります。たとえば、追加されるのはわずか4行のコードだけかもしれませんが、ファイル全体を見ると、その4行が50行のメソッドにあることがわかり、このメソッドをより小さなメソッドに分割する必要があることがわかります。</p>
+<p>また、CLをシステム全体の文脈で考えることも有用です。このCLはシステムのコードの健全性を向上させているのか、システム全体をより複雑にしたり、テストが少なくなったりしているのか、などを考えると良いでしょう。**システムのコードの健全性を損なうCLは受け入れないでください。**ほとんどのシステムは、多くの小さな変更を通じて複雑になっていくため、新しい変更においても小さな複雑さを防ぐことが重要です。</p>
+<h2 id="good-things"><a class="header" href="#good-things">良いこと</a></h2>
+<p>もしCLで素敵なものを見つけたら、開発者に伝えてください。特に、彼らがあなたのコメントに素晴らしい方法で対応した場合は。コードレビューはしばしばミスに焦点を当てますが、良い実践に対する励ましと感謝も提供すべきです。開発者に何が間違っているかを伝えるよりも、彼らが何を正しく行ったかを伝える方が、メンタリングの観点からはさらに価値があります。</p>
+<h2 id="概要"><a class="header" href="#概要">概要</a></h2>
+<p>コードレビューを行う際には、以下の点に注意してください：</p>
+<ul>
+<li>コードがよく設計されていること。</li>
+<li>機能がコードのユーザーにとって良いものであること。</li>
+<li>UIの変更が合理的で見栄えが良いこと。</li>
+<li>並行プログラミングが安全に行われていること。</li>
+<li>コードが必要以上に複雑でないこと。</li>
+<li>開発者が将来必要になるかもしれないものを実装していないこと。</li>
+<li>コードに適切な単体テストがあること。</li>
+<li>テストがよく設計されていること。</li>
+<li>開発者がすべての要素にわかりやすい名前を付けていること。</li>
+<li>コメントが明確で有用であり、主に「なぜ」を説明していること。</li>
+<li>コードが適切にドキュメント化されていること（一般的にはg3docで）。</li>
+<li>コードがスタイルガイドに準拠していること。</li>
+</ul>
+<p>レビューを依頼されたコードの<strong>すべての行</strong>を確認し、<strong>文脈</strong>を考慮し、コードの健全性を<strong>向上</strong>させ、開発者が行った<strong>良い点</strong>を褒めるようにしてください。</p>
+<p>次: <a href="ja/review/reviewer/navigate.html">レビュー中のCLのナビゲーション</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="レビュー中のclのナビゲーション"><a class="header" href="#レビュー中のclのナビゲーション">レビュー中のCLのナビゲーション</a></h1>
+<h2 id="概要-1"><a class="header" href="#概要-1">概要</a></h2>
+<p>複数のファイルにまたがるレビューを効率的に管理するための方法は何でしょうか？</p>
+<ol>
+<li>変更内容は理解できますか？<a href="ja/review/reviewer/../developer/cl-descriptions.html">説明</a>は適切ですか？</li>
+<li>変更の最も重要な部分を最初に見てください。全体的には設計が良いですか？</li>
+<li>適切な順序でCLの残りの部分を見てください。</li>
+</ol>
+<h2 id="step_one"><a class="header" href="#step_one">ステップ1: 変更の広い視点を持つ</a></h2>
+<p>まず、<a href="ja/review/reviewer/../developer/cl-descriptions.html">CLの説明</a>を見て、このCLが一般的に意味をなしているかどうかを確認してください。この変更が最初から行われるべきではなかった場合は、なぜこの変更が行われるべきではないのかについてすぐに説明してください。このような変更を拒否する際には、開発者に代わりに何をすべきかを提案することも良いアイデアです。</p>
+<p>例えば、「この変更には良い仕事がされているようですね、ありがとうございます！ただし、私たちは実際にはここで修正しているFooWidgetシステムを削除する方向に進んでいるため、現在それに新たな修正を加えたくありません。代わりに、新しいBarWidgetクラスをリファクタリングすることはいかがでしょうか？」</p>
+<p>レビュアーは現在のCLを拒否し、代わりの提案を行っただけでなく、それを<em>礼儀正しく</em>行いました。このような礼儀正しさは重要です。なぜなら、私たちは意見が異なる場合でも、開発者として互いを尊重することを示したいからです。</p>
+<p>もし、望ましくない変更を表すCLが数多くある場合は、チームの開発プロセスや外部貢献者向けの投稿プロセスを見直し、CLが書かれる前により多くのコミュニケーションが行われるようにすることを検討してください。人々に「いいえ」と伝えることは、彼らが大量の作業を行い、それを捨てるか大幅に書き直さなければならなくなる前に伝える方が良いです。</p>
+<h2 id="step_two"><a class="header" href="#step_two">ステップ2: CLの主要な部分を調べる</a></h2>
+<p>このCLの「主要な」部分となるファイルまたはファイルを見つけてください。通常、論理的な変更が最も多いファイルがあり、それがCLの主要な部分です。まずはこれらの主要な部分を見てください。これにより、CLのすべての小さな部分の文脈がわかり、コードレビューのスピードが向上します。CLが大きすぎて、どの部分が主要な部分かわからない場合は、開発者に最初に何を見るべきか尋ねるか、CLを複数のCLに分割するように依頼してください。</p>
+<p>この部分のCLに重大な設計上の問題が見つかった場合は、すぐにそれらのコメントを送信してください。今すぐCLの残りをレビューする時間がなくても、重要な設計上の問題がある場合は、CLの残りのコードをレビューすることは時間の無駄かもしれません。実際、重大な設計上の問題がある場合、レビュー対象の他のコードの多くは消えて問題にならない可能性があります。</p>
+<p>これらの重大な設計上のコメントをすぐに送信することが非常に重要な理由は2つあります：</p>
+<ul>
+<li>開発者は通常、CLをメールで送信した後、レビューを待ちながら新しい作業をすぐに開始します。レビュー中のCLに重大な設計上の問題がある場合、後のCLの再作業も行わなければなりません。問題のある設計の上に余分な作業を行う前に、それらを見つける必要があります。</li>
+<li>大規模な設計変更は、小規模な変更よりも時間がかかります。開発者はほぼすべての締め切りを持っています。それらの締め切りを守りながら、コードベースに品質の高いコードを残すためには、開発者はCLの重大な再作業をできるだけ早く開始する必要があります。</li>
+</ul>
+<h2 id="step_three"><a class="header" href="#step_three">ステップ3: 適切な順序でCLの残りを確認する</a></h2>
+<p>CL全体に大きな設計上の問題がないことを確認したら、各ファイルを見逃さずにレビューするための論理的な順序を考えてみてください。通常、主要なファイルを見た後は、コードレビューツールが提示する順序で各ファイルを見るのが最も簡単です。時には、メインのコードを読む前にテストを先に読むと、変更が何をするものかのアイデアが得られることもあります。</p>
+<p>次: <a href="ja/review/reviewer/speed.html">コードレビューの速度</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コードレビューの速度について"><a class="header" href="#コードレビューの速度について">コードレビューの速度について</a></h1>
+<h2 id="why"><a class="header" href="#why">なぜコードレビューを迅速に行うべきか</a></h2>
+<p><strong>Googleでは、開発者チームが一緒に製品を生産する速度を最適化します</strong>。これは、個々の開発者がコードを書く速度を最適化することとは対照的です。個々の開発速度も重要ですが、チーム全体の速度ほどではありません。</p>
+<p>コードレビューが遅いと、いくつかの問題が生じます：</p>
+<ul>
+<li><strong>チーム全体の速度が低下します。</strong> レビューにすぐに対応しない個人は他の仕事を進めるかもしれません。しかし、チームの残りの部分にとっての新機能やバグ修正は、各CLがレビューと再レビューを待つ間、日、週、または月単位で遅れます。</li>
+<li><strong>開発者がコードレビュープロセスに抗議し始めます。</strong> レビュアーが数日おきにしか反応せず、その都度CLに大きな変更を要求する場合、それは開発者にとってイライラすることであり、困難です。しばしば、これは「レビュアーが厳しすぎる」という不満として表現されます。レビュアーが開発者が更新を行うたびに<em>迅速に</em>同じ重要な変更（実際にコードの健全性を向上させる変更）を要求する場合、不満は消える傾向があります。<strong>コードレビュープロセスに関するほとんどの不満は、プロセスを迅速にすることで実際に解決されます。</strong></li>
+<li><strong>コードの健全性に影響を与える可能性があります。</strong> レビューが遅いと、開発者がそれほど良くないCLを提出する圧力が増します。遅いレビューは、コードのクリーンアップ、リファクタリング、および既存のCLへのさらなる改善を抑制する傾向があります。</li>
+</ul>
+<h2 id="fast"><a class="header" href="#fast">コードレビューはどれくらいの速さであるべきか</a></h2>
+<p>集中しているタスクの最中でない限り、<strong>コードレビューは受け取った直後に行うべきです。</strong></p>
+<p>コードレビュー要求に対して反応する最大時間は<strong>1営業日です</strong>（つまり、翌朝の最初の時間）。</p>
+<p>これらのガイドラインに従うと、典型的なCLは必要に応じて1日以内に複数ラウンドのレビューを受けることになります。</p>
+<h2 id="interruption"><a class="header" href="#interruption">Speed vs. Interruption</a></h2>
+<p>個人の作業速度がチームの速度を上回るべき唯一の時があります。<strong>コードを書くなど、集中している作業の最中に、自分を中断してコードレビューを行うべきではありません。</strong>
+研究によると、中断された後に開発のスムーズな流れに戻るまでには、開発者に長い時間がかかることが示されています。従って、コーディング中に自分自身を中断することは、他の開発者がコードレビューを少し待たされることよりも、実際にはチームにとって<em>より</em>コストがかかることになります。</p>
+<p>代わりに、作業の中断点でレビューの依頼に応答することを待ちます。これは、現在のコーディングタスクが完了した時、ランチ後、会議から戻った時、休憩室から戻ってきた時などが該当します。</p>
+<h2 id="responses"><a class="header" href="#responses">迅速な対応</a></h2>
+<p>コードレビューの速度について話す際、私たちが関心を持っているのは、CLがレビューを通過して提出されるまでにかかる時間ではなく、<em>対応</em>の時間です。全プロセスも理想的には速いべきですが、<strong>個々の対応が迅速に行われることの方が、全プロセスが迅速に行われることよりもさらに重要です。</strong></p>
+<p>たとえ全体のレビュー<em>プロセス</em>を通過するのに時々長い時間がかかる場合でも、プロセス全体を通じてレビュアーからの迅速な対応があることで、「遅い」と感じる開発者のフラストレーションが大幅に軽減されます。</p>
+<p>CLが到着した時に完全なレビューを行うのにあまりにも忙しい場合でも、いつ対応できるか開発者に知らせる迅速な返答を送ったり、より迅速に対応できる可能性のある他のレビュアーを提案したり、<a href="ja/review/reviewer/navigate.html">いくつかの初期の広範なコメントを提供する</a>ことができます。（注意：これは、このような返答を送るためにさえコーディングを中断すべきだという意味ではありません。作業の合理的な中断点で返答を送ってください。）</p>
+<p><strong>レビュアーがレビューに十分な時間を費やし、「LGTM」が「このコードは<a href="ja/review/reviewer/standard.html">私たちの基準</a>を満たしている」ということを確信していることが重要です。</strong> しかし、個々の対応は理想的には<a href="ja/review/reviewer/speed.html#fast">迅速</a>であるべきです。</p>
+<h2 id="tz"><a class="header" href="#tz">時差を考慮したレビュー</a></h2>
+<p>時差の差を扱う際は、彼らがその日の業務時間内に返答できるように、著者に返答しようと努めてください。彼らがすでにその日の業務を終えていた場合は、彼らが翌日の業務を開始する前にレビューを完了させるようにしてください。</p>
+<h2 id="lgtm-with-comments"><a class="header" href="#lgtm-with-comments">コメント付きLGTM</a></h2>
+<p>コードレビューを迅速に進めるため、レビュアーが未解決のコメントを残しつつもLGTM/承認を出すべき特定の状況があります。これは以下のいずれかの場合に行われます：</p>
+<ul>
+<li>レビュアーが開発者が全ての残りのコメントを適切に対処すると確信している場合。</li>
+<li>残りの変更が些細で、開発者が必ずしも行う必要はない場合。</li>
+</ul>
+<p>レビュアーは、どちらのオプションを意図しているかを明確に指定すべきです（それが明確でない場合）。</p>
+<p>開発者とレビュアーが異なるタイムゾーンにいて、開発者が「LGTM、承認」を得るために1日待たなければならない場合には、特にコメント付きLGTMを検討する価値があります。</p>
+<h2 id="large"><a class="header" href="#large">大きなCL</a></h2>
+<p>あなたにとても大きなコードレビューが送られてきて、いつレビューできるか分からない場合、通常の対応は開発者に<a href="ja/review/reviewer/../developer/small-cls.html">CLをいくつかの小さなCLに分割する</a>よう依頼することです。これは、開発者に追加の作業が必要であっても、通常は可能であり、レビュアーにとって非常に役立ちます。</p>
+<p>CLを小さなCLに分割<em>できない</em>場合、そしてあなたがすぐに全体をレビューする時間がない場合は、少なくともCLの全体的な設計についていくつかのコメントを書き、改善のために開発者に返送してください。レビュアーとしてのあなたの目標の1つは、コードの健全性を犠牲にすることなく、常に開発者のブロックを解除するか、迅速に何らかの行動を取ることができるようにすることです。</p>
+<h2 id="time"><a class="header" href="#time">時間と共に改善されるコードレビュー</a></h2>
+<p>これらのガイドラインに従い、コードレビューに厳格であれば、コードレビュープロセス全体が時間とともにますます速くなることがわかるでしょう。開発者は健全なコードに必要なことを学び、最初から素晴らしいCLを送ってくるようになり、レビュー時間がますます少なくなります。レビュアーは迅速に対応し、レビュープロセスに不必要な遅延を加えないように学びます。
+しかし、<strong>速度の想像される改善のために<a href="ja/review/reviewer/standard.html">コードレビュー基準</a>や品質を妥協しないでください</strong>—それは実際には何も早く進めることはありません、長い目で見れば。</p>
+<h2 id="緊急事態"><a class="header" href="#緊急事態">緊急事態</a></h2>
+<p>CLが非常に迅速に<em>全</em>レビュープロセスを通過しなければならない<a href="ja/review/reviewer/../emergencies.html">緊急事態</a>もあり、その場合は品質ガイドラインが緩和されるかもしれません。しかし、どの状況が実際に緊急事態として資格があるか、そしてどれがそうでないかについての説明は、<a href="ja/review/reviewer/../emergencies.html#what">何が緊急事態か？</a>をご覧ください。</p>
+<p>次: <a href="ja/review/reviewer/comments.html">コードレビューコメントの書き方</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コードレビューコメントの書き方"><a class="header" href="#コードレビューコメントの書き方">コードレビューコメントの書き方</a></h1>
+<h2 id="概要-2"><a class="header" href="#概要-2">概要</a></h2>
+<ul>
+<li>優しくあれ。</li>
+<li>理由を説明しろ。</li>
+<li>問題を指摘するだけでなく、明確な指示と開発者が自分で決めることのバランスを取ろう。</li>
+<li>複雑さを説明するだけでなく、開発者にコードを簡素化したり、コメントを追加するように促そう。</li>
+</ul>
+<h2 id="礼儀"><a class="header" href="#礼儀">礼儀</a></h2>
+<p>一般的に、<a href="https://chromium.googlesource.com/chromium/src/+/master/docs/cr_respect.md">礼儀正しく尊重する</a>ことは重要です。同時に、コードをレビューしている開発者に対して明確かつ助けになるコメントをすることも重要です。これを実践する方法の一つは、常にコードについてコメントをすることであり、開発者についてのコメントは避けることです。常にこの慣行に従う必要はありませんが、不快感や論争を引き起こす可能性のあることを言う場合には、特にこの慣行を使用するべきです。例えば：</p>
+<p>悪い例: &quot;なぜ<strong>あなた</strong>はここでスレッドを使用したのですか？明らかに並行性から得られる利益はありません。&quot;</p>
+<p>良い例: &quot;ここでの並行性モデルは、実際のパフォーマンスの利益が見当たらないまま、システムに複雑さを追加しています。パフォーマンスの利益がないため、このコードは複数のスレッドを使用するのではなく、シングルスレッドであることが最善です。&quot;</p>
+<h2 id="why"><a class="header" href="#why">なぜ説明するのか</a></h2>
+<p>上記の「良い」例について気づくことがあるでしょう。それは、コメントをする理由を開発者に理解させるのに役立つということです。レビューコメントにこの情報を常に含める必要はありませんが、時には意図やベストプラクティス、提案がコードの品質向上にどのように寄与するかについて少し説明することが適切な場合もあります。</p>
+<h2 id="guidance"><a class="header" href="#guidance">ガイダンスの提供</a></h2>
+<p><strong>一般的に、CLの修正は開発者の責任であり、レビュアーの責任ではありません。</strong> 解決策の詳細な設計や開発者のためのコードの記述は必要ありません。</p>
+<p>ただし、レビュアーは無力ではあってはなりません。一般的には、問題を指摘し、直接的なガイダンスを提供する適切なバランスを取るべきです。問題を指摘し、開発者に決定を任せることは、開発者が学ぶのに役立ち、コードレビューを行いやすくすることができます。また、開発者はレビュアーよりもコードに近いため、より良い解決策につながることもあります。</p>
+<p>ただし、時には直接的な指示、提案、またはコードの提供の方が役立つこともあります。コードレビューの主な目標は、最も優れたCLを得ることです。第二の目標は、開発者のスキルを向上させ、時間の経過とともにますます少ないレビューが必要となるようにすることです。</p>
+<p>人々は、自分がうまくやっていることを強化されることから学びます。ただし、改善できる点だけでなく、CLで好きな点もコメントしてください！例えば、開発者が乱雑なアルゴリズムを整理した、模範的なテストカバレッジを追加した、またはレビュアー自身がCLから何かを学んだなどです。すべてのコメントと同様に、なぜそのような点が好きなのかを含めて、開発者に良い慣行を続けるようにさらに促すことが重要です。</p>
+<h2 id="label-comment-severity"><a class="header" href="#label-comment-severity">ラベルコメントの重要度</a></h2>
+<p>コメントの重要度をラベル付けして、必要な変更とガイドラインや提案を区別することを検討してください。</p>
+<p>以下にいくつかの例を示します：</p>
+<blockquote>
+<p>Nit: これは小さなことです。技術的にはやるべきですが、大きな影響はありません。</p>
+<p>Optional (または Consider): これは良いアイデアかもしれませんが、厳密には必要ではありません。</p>
+<p>FYI: このCLではこれをやることは期待していませんが、将来的に考えるのに興味深いかもしれません。</p>
+</blockquote>
+<p>これにより、レビューの意図が明確になり、著者がさまざまなコメントの重要性を優先順位付けするのに役立ちます。また、誤解を避けるのにも役立ちます。たとえば、コメントにラベルがない場合、著者はすべてのコメントを必須と解釈するかもしれませんが、実際には情報提供やオプションのコメントである場合もあります。</p>
+<h2 id="explanations"><a class="header" href="#explanations">説明の受け入れ</a></h2>
+<p>もし開発者に理解できないコードの説明を求めると、通常は彼らが<strong>コードをより明確に書き直す</strong>ことになるはずです。
+時には、コードにコメントを追加することも適切な対応ですが、それが単に過度に複雑なコードを説明するだけでない限りです。</p>
+<p><strong>コードレビューツールだけで書かれた説明は、将来のコード読者にとって役に立ちません。</strong> それらは、通常のコードの読者が既に知っていることを開発者が説明する場合など、一部の状況でのみ受け入れられます。</p>
+<p>次: <a href="ja/review/reviewer/pushback.html">コードレビューでの反対意見の扱い方</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コードレビューでの反発の扱い"><a class="header" href="#コードレビューでの反発の扱い">コードレビューでの反発の扱い</a></h1>
+<p>時には、開発者がコードレビューに反発することがあります。彼らはあなたの提案に同意しないか、一般的にあなたが厳しすぎると不満を述べるかもしれません。</p>
+<h2 id="who_is_right"><a class="header" href="#who_is_right">誰が正しいのか？</a></h2>
+<p>開発者があなたの提案に反対する場合、まず彼らが正しいかどうかを考えてみてください。彼らはあなたよりもコードに近いことが多いため、特定の側面についてより良い洞察を持っているかもしれません。彼らの主張は理にかなっていますか？コードの健全性の観点からも理にかなっていますか？もしそうなら、彼らに正しいと伝え、問題を解決させましょう。</p>
+<p>しかし、開発者が常に正しいわけではありません。この場合、レビュアーはなぜ自分の提案が正しいと考えているのか、さらに説明する必要があります。良い説明は、開発者の返信を理解していることと、変更がなぜ要求されているのかについての追加情報を示します。</p>
+<p>特に、レビュアーが自分の提案がコードの健全性を向上させると信じている場合、結果としてのコード品質の向上が追加の作業を正当化すると考えるなら、変更を推進し続けるべきです。<strong>コードの健全性の向上は、小さなステップで行われる傾向があります。</strong></p>
+<p>時には、提案を説明するのに数回のやり取りが必要なこともあります。ただし、常に<a href="ja/review/reviewer/comments.html#courtesy">礼儀正しく</a>、開発者に彼らの言っていることを<em>聞いている</em>ことを伝え、ただ<em>同意しない</em>ことを伝えましょう。</p>
+<h2 id="開発者を不快にさせること"><a class="header" href="#開発者を不快にさせること">開発者を不快にさせること</a></h2>
+<p>レビュアーは、開発者が改善を求められると不快になると考えることがあります。開発者は時には不快になることもありますが、それは一時的なものであり、後であなたが彼らのコードの品質向上に役立ったことに非常に感謝します。通常、コメントが<a href="ja/review/reviewer/comments.html#courtesy">礼儀正しい</a>場合、開発者は実際には全く不快にならず、心配はレビュアーの心の中にあるだけです。不快感は通常、コメントの書き方よりもコードの品質に対するレビュアーの主張に関連しています。</p>
+<h2 id="later"><a class="header" href="#later">後で片付ける</a></h2>
+<p>開発者たちは（当然のことながら）仕事を進めたいと思っているため、抵抗が生じることがよくあります。彼らはこのCLを提出するためにもう一度レビューを受けたくないのです。そのため、後で何かをきれいにすると言って、今すぐこのCLを承認してほしいと言います。一部の開発者はこれに非常にうまく対応し、すぐに問題を修正するための追加のCLを書きます。しかし、経験からわかるように、開発者が元のCLを書いた後に時間が経つほど、このクリーンアップが行われる可能性は低くなります。実際、開発者が現在のCLの直後にクリーンアップを行わない限り、ほとんど行われません。これは開発者が無責任なわけではなく、他の仕事の中でクリーンアップが見失われたり忘れられたりするためです。したがって、コードがコードベースに組み込まれて「完了」する前に、開発者にCLのクリーンアップを行うように強く求めるのが通常最善です。後で「片付ける」ということを許すことは、コードベースが劣化する一般的な方法です。</p>
+<p>もしCLが新たな複雑さを導入する場合、<a href="ja/review/reviewer/../emergencies.html">緊急事態</a>でない限り、提出前にクリーンアップする必要があります。もしCLが周囲の問題を露呈し、現時点では対処できない場合、開発者はクリーンアップのためのバグを報告し、自分自身に割り当てるべきです。また、コードにTODOコメントを書いて、報告されたバグを参照することもできます。</p>
+<h2 id="strictness"><a class="header" href="#strictness">厳格さに関する一般的な苦情</a></h2>
+<p>以前は比較的緩いコードレビューを行っていた場合、厳格なレビューに切り替えると、一部の開発者は非常に大きな苦情を言うことがあります。コードレビューの速度を改善することで、これらの苦情はしだいに薄れていくことがあります。</p>
+<p>これらの苦情が薄れるまでには、数ヶ月かかることもありますが、開発者たちは徐々に厳格なコードレビューの価値を認識し、優れたコードを生成するのにどれほど役立つかを見るようになります。時には、一番声の大きい抗議者が、厳格さによって提供される価値を本当に理解するきっかけが起きたときに、最も強力な支持者になることさえあります。</p>
+<h2 id="conflicts"><a class="header" href="#conflicts">紛争の解決</a></h2>
+<p>もし上記のすべてを守っているにもかかわらず、解決できない開発者との紛争に直面した場合は、
+紛争を解決するのに役立つガイドラインと原則については、<a href="ja/review/reviewer/standard.html">コードレビューの基準</a>を参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="緊急事態-1"><a class="header" href="#緊急事態-1">緊急事態</a></h1>
+<p>時には、できるだけ早く全体のコードレビュープロセスを通過する必要がある緊急CLがあります。</p>
+<h2 id="what"><a class="header" href="#what">緊急事態とは何ですか？</a></h2>
+<p>緊急事態のCLは、以下のような<strong>小さな</strong>変更です：メジャーローンチをロールバックせずに続行できるようにする、本番環境のユーザーに重大な影響を与えるバグを修正する、緊急の法的問題を処理する、重大なセキュリティホールを閉じるなどです。</p>
+<p>緊急事態では、コードレビュー全体のスピードに本当に気を使います。ただし、<a href="ja/review/reviewer/speed.html">レビュアーのスピード</a>だけでなく、コードの正確性（緊急事態を解決するかどうか）についても、他の何よりも重視すべきです。また、（おそらく明らかですが）このようなレビューは、発生した場合には他のすべてのコードレビューよりも優先されるべきです。</p>
+<p>ただし、緊急事態が解決された後は、緊急事態のCLを再度見直し、<a href="ja/review/reviewer/looking-for.html">より詳細なレビュー</a>を行う必要があります。</p>
+<h2 id="not"><a class="header" href="#not">緊急ではないものは何ですか？</a></h2>
+<p>明確に述べると、以下の場合は<em>緊急ではありません</em>：</p>
+<ul>
+<li>来週ではなく今週にローンチしたいということ（ただし、パートナーとの合意など、実際の<a href="ja/review/emergencies.html#deadlines">厳しい締切</a>がある場合を除く）。</li>
+<li>開発者が長い時間をかけて機能を開発し、CLを取得したいと思っている場合。</li>
+<li>レビューアーが現在夜間である別のタイムゾーンにいるか、オフサイトで不在である場合。</li>
+<li>金曜日の終わりであり、開発者が週末に出発する前にこのCLを取得するのが良いと思われる場合。</li>
+<li>マネージャーが、<a href="ja/review/emergencies.html#deadlines">ソフト（厳しいではない）締切</a>のため、このレビューを完了し、CLを今日中にチェックインする必要があると言っている場合。</li>
+<li>テストの失敗やビルドの破損を引き起こしているCLをロールバックする場合。</li>
+</ul>
+<p>などなど。</p>
+<h2 id="deadlines"><a class="header" href="#deadlines">ハードデッドラインとは何ですか？</a></h2>
+<p>ハードデッドラインとは、もしもそれを逃すと<strong>何か災害的なことが起こる</strong>というものです。例えば：</p>
+<ul>
+<li>特定の日までにCLを提出することは契約上の義務です。</li>
+<li>特定の日までに製品をリリースしなければ、市場で完全に失敗します。</li>
+<li>一部のハードウェアメーカーは年に一度しか新しいハードウェアを出荷しません。彼らにコードを提出する期限を逃すと、提出しようとしているコードの種類によっては、それが災害的な結果をもたらす可能性があります。</li>
+</ul>
+<p>リリースを1週間遅らせることは災害的ではありません。重要な会議を逃すことは災害的かもしれませんが、しばしばそうではありません。</p>
+<p>ほとんどの締め切りは、ハードデッドラインではなく、ソフトデッドラインです。それらは特定の時間までに機能が完了することを望んでいます。重要ですが、それを達成するためにコードの品質を犠牲にするべきではありません。</p>
+<p>リリースサイクルが長い（数週間）場合、次のサイクルの前に機能を追加するためにコードレビューの品質を犠牲にすることは誘惑されるかもしれません。しかし、このパターンは、プロジェクトが圧倒的な技術的負債を蓄積する一般的な方法です。開発者がサイクルの終わり近くに「絶対に入れなければならない」という理由だけで表面的なレビューだけでCLを提出し続ける場合、チームはプロセスを変更して、大規模な機能変更がサイクルの初めに行われ、十分な時間があるようにすべきです。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="google-engineering-practices-documentation"><a class="header" href="#google-engineering-practices-documentation">Google Engineering Practices Documentation</a></h1>
+<p>Google has many generalized engineering practices that cover all languages and
+all projects. These documents represent our collective experience of various
+best practices that we have developed over time. It is possible that open source
+projects or other organizations would benefit from this knowledge, so we work to
+make it available publicly when possible.</p>
+<p>Currently this contains the following documents:</p>
+<ul>
+<li><a href="en/review/index.html">Google's Code Review Guidelines</a>, which are actually two
+separate sets of documents:
+<ul>
+<li><a href="en/review/reviewer/index.html">The Code Reviewer's Guide</a></li>
+<li><a href="en/review/developer/index.html">The Change Author's Guide</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="terminology"><a class="header" href="#terminology">Terminology</a></h2>
+<p>There is some Google-internal terminology used in some of these documents, which
+we clarify here for external readers:</p>
+<ul>
+<li><strong>CL</strong>: Stands for &quot;changelist&quot;, which means one self-contained change that
+has been submitted to version control or which is undergoing code review.
+Other organizations often call this a &quot;change&quot;, &quot;patch&quot;, or &quot;pull-request&quot;.</li>
+<li><strong>LGTM</strong>: Means &quot;Looks Good to Me&quot;. It is what a code reviewer says when
+approving a CL.</li>
+</ul>
+<h2 id="license"><a class="header" href="#license">License</a></h2>
+<p>The documents in this project are licensed under the
+<a href="en/LICENSE">CC-By 3.0 License</a>, which encourages you to share these documents. See
+<a href="https://creativecommons.org/licenses/by/3.0/">https://creativecommons.org/licenses/by/3.0/</a> for more details.</p>
+<p><a rel="license" href="https://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a></p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="intro"><a class="header" href="#intro">Introduction</a></h2>
+<p>A code review is a process where someone other than the author(s) of a piece of
+code examines that code.</p>
+<p>At Google, we use code review to maintain the quality of our code and products.</p>
+<p>This documentation is the canonical description of Google's code review
+processes and policies.</p>
+<p>This page is an overview of our code review process. There are two other large
+documents that are a part of this guide:</p>
+<ul>
+<li><strong><a href="en/review/reviewer/index.html">How To Do A Code Review</a></strong>: A detailed guide for code
+reviewers.</li>
+<li><strong><a href="en/review/developer/index.html">The CL Author's Guide</a></strong>: A detailed guide for
+developers whose CLs are going through review.</li>
+</ul>
+<h2 id="look_for"><a class="header" href="#look_for">What Do Code Reviewers Look For?</a></h2>
+<p>Code reviews should look at:</p>
+<ul>
+<li><strong>Design</strong>: Is the code well-designed and appropriate for your system?</li>
+<li><strong>Functionality</strong>: Does the code behave as the author likely intended? Is
+the way the code behaves good for its users?</li>
+<li><strong>Complexity</strong>: Could the code be made simpler? Would another developer be
+able to easily understand and use this code when they come across it in the
+future?</li>
+<li><strong>Tests</strong>: Does the code have correct and well-designed automated tests?</li>
+<li><strong>Naming</strong>: Did the developer choose clear names for variables, classes,
+methods, etc.?</li>
+<li><strong>Comments</strong>: Are the comments clear and useful?</li>
+<li><strong>Style</strong>: Does the code follow our
+<a href="http://google.github.io/styleguide/">style guides</a>?</li>
+<li><strong>Documentation</strong>: Did the developer also update relevant documentation?</li>
+</ul>
+<p>See <strong><a href="en/review/reviewer/index.html">How To Do A Code Review</a></strong> for more information.</p>
+<h3 id="best_reviewers"><a class="header" href="#best_reviewers">Picking the Best Reviewers</a></h3>
+<p>In general, you want to find the <em>best</em> reviewers you can who are capable of
+responding to your review within a reasonable period of time.</p>
+<p>The best reviewer is the person who will be able to give you the most thorough
+and correct review for the piece of code you are writing. This usually means the
+owner(s) of the code, who may or may not be the people in the OWNERS file.
+Sometimes this means asking different people to review different parts of the
+CL.</p>
+<p>If you find an ideal reviewer but they are not available, you should at least CC
+them on your change.</p>
+<h3 id="in_person"><a class="header" href="#in_person">In-Person Reviews (and Pair Programming)</a></h3>
+<p>If you pair-programmed a piece of code with somebody who was qualified to do a
+good code review on it, then that code is considered reviewed.</p>
+<p>You can also do in-person code reviews where the reviewer asks questions and the
+developer of the change speaks only when spoken to.</p>
+<h2 id="seealso"><a class="header" href="#seealso">See Also</a></h2>
+<ul>
+<li><a href="en/review/reviewer/index.html">How To Do A Code Review</a>: A detailed guide for code
+reviewers.</li>
+<li><a href="en/review/developer/index.html">The CL Author's Guide</a>: A detailed guide for developers
+whose CLs are going through review.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-cl-authors-guide-to-getting-through-code-review"><a class="header" href="#the-cl-authors-guide-to-getting-through-code-review">The CL author's guide to getting through code review</a></h1>
+<p>The pages in this section contain best practices for developers going through
+code review. These guidelines should help you get through reviews faster and
+with higher-quality results. You don't have to read them all, but they are
+intended to apply to every Google developer, and many people have found it
+helpful to read the whole set.</p>
+<ul>
+<li><a href="en/review/developer/cl-descriptions.html">Writing Good CL Descriptions</a></li>
+<li><a href="en/review/developer/small-cls.html">Small CLs</a></li>
+<li><a href="en/review/developer/handling-comments.html">How to Handle Reviewer Comments</a></li>
+</ul>
+<p>See also <a href="en/review/developer/../reviewer/index.html">How to Do a Code Review</a>, which gives detailed
+guidance for code reviewers.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="writing-good-cl-descriptions"><a class="header" href="#writing-good-cl-descriptions">Writing good CL descriptions</a></h1>
+<p>A CL description is a public record of <strong>what</strong> change is being made and <strong>why</strong>
+it was made. It will become a permanent part of our version control history, and
+will possibly be read by hundreds of people other than your reviewers over the
+years.</p>
+<p>Future developers will search for your CL based on its description. Someone in
+the future might be looking for your change because of a faint memory of its
+relevance but without the specifics handy. If all the important information is
+in the code and not the description, it's going to be a lot harder for them to
+locate your CL.</p>
+<h2 id="firstline"><a class="header" href="#firstline">First Line</a></h2>
+<ul>
+<li>Short summary of what is being done.</li>
+<li>Complete sentence, written as though it was an order.</li>
+<li>Follow by empty line.</li>
+</ul>
+<p>The <strong>first line</strong> of a CL description should be a short summary of
+<em>specifically</em> <strong>what</strong> <em>is being done by the CL</em>, followed by a blank line.
+This is what appears in version control history summaries, so it should be
+informative enough that future code searchers don't have to read your CL or its
+whole description to understand what your CL actually <em>did</em> or how it differs
+from other CLs. That is, the first line should stand alone, allowing readers to
+skim through code history much faster.</p>
+<p>Try to keep your first line short, focused, and to the point. The clarity and
+utility to the reader should be the top concern.</p>
+<p>By tradition, the first line of a CL description is a complete sentence, written
+as though it were an order (an imperative sentence). For example, say
+&quot;<strong>Delete</strong> the FizzBuzz RPC and <strong>replace</strong> it with the new system.&quot; instead
+of &quot;<strong>Deleting</strong> the FizzBuzz RPC and <strong>replacing</strong> it with the new system.&quot;
+You don't have to write the rest of the description as an imperative sentence,
+though.</p>
+<h2 id="informative"><a class="header" href="#informative">Body is Informative</a></h2>
+<p>The <a href="en/review/developer/cl-descriptions.html#firstline">first line</a> should be a short, focused summary, while the rest
+of the description should fill in the details and include any supplemental
+information a reader needs to understand the changelist holistically. It might
+include a brief description of the problem that's being solved, and why this is
+the best approach. If there are any shortcomings to the approach, they should be
+mentioned. If relevant, include background information such as bug numbers,
+benchmark results, and links to design documents.</p>
+<p>If you include links to external resources consider that they may not be visible
+to future readers due to access restrictions or retention policies. Where
+possible include enough context for reviewers and future readers to understand
+the CL.</p>
+<p>Even small CLs deserve a little attention to detail. Put the CL in context.</p>
+<h2 id="bad"><a class="header" href="#bad">Bad CL Descriptions</a></h2>
+<p>&quot;Fix bug&quot; is an inadequate CL description. What bug? What did you do to fix it?
+Other similarly bad descriptions include:</p>
+<ul>
+<li>&quot;Fix build.&quot;</li>
+<li>&quot;Add patch.&quot;</li>
+<li>&quot;Moving code from A to B.&quot;</li>
+<li>&quot;Phase 1.&quot;</li>
+<li>&quot;Add convenience functions.&quot;</li>
+<li>&quot;kill weird URLs.&quot;</li>
+</ul>
+<p>Some of those are real CL descriptions. Although short, they do not provide
+enough useful information.</p>
+<h2 id="good"><a class="header" href="#good">Good CL Descriptions</a></h2>
+<p>Here are some examples of good descriptions.</p>
+<h3 id="functionality-change"><a class="header" href="#functionality-change">Functionality change</a></h3>
+<p>Example:</p>
+<blockquote>
+<p>RPC: Remove size limit on RPC server message freelist.</p>
+<p>Servers like FizzBuzz have very large messages and would benefit from reuse.
+Make the freelist larger, and add a goroutine that frees the freelist entries
+slowly over time, so that idle servers eventually release all freelist
+entries.</p>
+</blockquote>
+<p>The first few words describe what the CL actually does. The rest of the
+description talks about the problem being solved, why this is a good solution,
+and a bit more information about the specific implementation.</p>
+<h3 id="refactoring"><a class="header" href="#refactoring">Refactoring</a></h3>
+<p>Example:</p>
+<blockquote>
+<p>Construct a Task with a TimeKeeper to use its TimeStr and Now methods.</p>
+<p>Add a Now method to Task, so the borglet() getter method can be removed (which
+was only used by OOMCandidate to call borglet's Now method). This replaces the
+methods on Borglet that delegate to a TimeKeeper.</p>
+<p>Allowing Tasks to supply Now is a step toward eliminating the dependency on
+Borglet. Eventually, collaborators that depend on getting Now from the Task
+should be changed to use a TimeKeeper directly, but this has been an
+accommodation to refactoring in small steps.</p>
+<p>Continuing the long-range goal of refactoring the Borglet Hierarchy.</p>
+</blockquote>
+<p>The first line describes what the CL does and how this is a change from the
+past. The rest of the description talks about the specific implementation, the
+context of the CL, that the solution isn't ideal, and possible future direction.
+It also explains <em>why</em> this change is being made.</p>
+<h3 id="small-cl-that-needs-some-context"><a class="header" href="#small-cl-that-needs-some-context">Small CL that needs some context</a></h3>
+<p>Example:</p>
+<blockquote>
+<p>Create a Python3 build rule for status.py.</p>
+<p>This allows consumers who are already using this as in Python3 to depend on a
+rule that is next to the original status build rule instead of somewhere in
+their own tree. It encourages new consumers to use Python3 if they can,
+instead of Python2, and significantly simplifies some automated build file
+refactoring tools being worked on currently.</p>
+</blockquote>
+<p>The first sentence describes what's actually being done. The rest of the
+description explains <em>why</em> the change is being made and gives the reviewer a lot
+of context.</p>
+<h2 id="tags"><a class="header" href="#tags">Using tags</a></h2>
+<p>Tags are manually entered labels that can be used to categorize CLs. These may
+be supported by tools or just used by team convention.</p>
+<p>For example:</p>
+<ul>
+<li>&quot;[tag]&quot;</li>
+<li>&quot;[a longer tag]&quot;</li>
+<li>&quot;#tag&quot;</li>
+<li>&quot;tag:&quot;</li>
+</ul>
+<p>Using tags is optional.</p>
+<p>When adding tags, consider whether they should be in the <a href="en/review/developer/cl-descriptions.html#informative">body</a> of
+the CL description or the <a href="en/review/developer/cl-descriptions.html#firstline">first line</a>. Limit the usage of tags in
+the first line, as this can obscure the content.</p>
+<p>Examples with and without tags:</p>
+<pre><code class="language-{.good}">// Tags are okay in the first line if kept short.
+[banana] Peel the banana before eating.
+
+// Tags can be inlined in content.
+Peel the #banana before eating.
+
+// Tags are optional.
+Peel the banana before eating.
+
+// Multiple tags are acceptable if kept short.
+#banana #apple: Assemble a fruit basket.
+
+// Tags can go anywhere in the CL description.
+&gt; Assemble a fruit basket.
+&gt;
+&gt; #banana #apple
+</code></pre>
+<pre><code class="language-{.bad}">// Too many tags (or tags that are too long) overwhelm the first line.
+//
+// Instead, consider whether the tags can be moved into the description body
+// and/or shortened.
+[banana peeler factory factory][apple picking service] Assemble a fruit basket.
+</code></pre>
+<h2 id="generated-cl-descriptions"><a class="header" href="#generated-cl-descriptions">Generated CL descriptions</a></h2>
+<p>Some CLs are generated by tools. Whenever possible, their descriptions should
+also follow the advice here. That is, their first line should be short, focused,
+and stand alone, and the CL description body should include informative details
+that help reviewers and future code searchers understand each CL's effect.</p>
+<h2 id="review-the-description-before-submitting-the-cl"><a class="header" href="#review-the-description-before-submitting-the-cl">Review the description before submitting the CL</a></h2>
+<p>CLs can undergo significant change during review. It can be worthwhile to review
+a CL description before submitting the CL, to ensure that the description still
+reflects what the CL does.</p>
+<p>Next: <a href="en/review/developer/small-cls.html">Small CLs</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="small-cls"><a class="header" href="#small-cls">Small CLs</a></h1>
+<h2 id="why"><a class="header" href="#why">Why Write Small CLs?</a></h2>
+<p>Small, simple CLs are:</p>
+<ul>
+<li><strong>Reviewed more quickly.</strong> It's easier for a reviewer to find five minutes
+several times to review small CLs than to set aside a 30 minute block to
+review one large CL.</li>
+<li><strong>Reviewed more thoroughly.</strong> With large changes, reviewers and authors tend
+to get frustrated by large volumes of detailed commentary shifting back and
+forth—sometimes to the point where important points get missed or dropped.</li>
+<li><strong>Less likely to introduce bugs.</strong> Since you're making fewer changes, it's
+easier for you and your reviewer to reason effectively about the impact of
+the CL and see if a bug has been introduced.</li>
+<li><strong>Less wasted work if they are rejected.</strong> If you write a huge CL and then
+your reviewer says that the overall direction is wrong, you've wasted a lot
+of work.</li>
+<li><strong>Easier to merge.</strong> Working on a large CL takes a long time, so you will
+have lots of conflicts when you merge, and you will have to merge
+frequently.</li>
+<li><strong>Easier to design well.</strong> It's a lot easier to polish the design and code
+health of a small change than it is to refine all the details of a large
+change.</li>
+<li><strong>Less blocking on reviews.</strong> Sending self-contained portions of your
+overall change allows you to continue coding while you wait for your current
+CL in review.</li>
+<li><strong>Simpler to roll back.</strong> A large CL will more likely touch files that get
+updated between the initial CL submission and a rollback CL, complicating
+the rollback (the intermediate CLs will probably need to be rolled back
+too).</li>
+</ul>
+<p>Note that <strong>reviewers have discretion to reject your change outright for the
+sole reason of it being too large.</strong> Usually they will thank you for your
+contribution but request that you somehow make it into a series of smaller
+changes. It can be a lot of work to split up a change after you've already
+written it, or require lots of time arguing about why the reviewer should accept
+your large change. It's easier to just write small CLs in the first place.</p>
+<h2 id="what_is_small"><a class="header" href="#what_is_small">What is Small?</a></h2>
+<p>In general, the right size for a CL is <strong>one self-contained change</strong>. This means
+that:</p>
+<ul>
+<li>The CL makes a minimal change that addresses <strong>just one thing</strong>. This is
+usually just one part of a feature, rather than a whole feature at once. In
+general it's better to err on the side of writing CLs that are too small vs.
+CLs that are too large. Work with your reviewer to find out what an
+acceptable size is.</li>
+<li>The CL should <a href="en/review/developer/small-cls.html#test_code">include related test code</a>.</li>
+<li>Everything the reviewer needs to understand about the CL (except future
+development) is in the CL, the CL's description, the existing codebase, or a
+CL they've already reviewed.</li>
+<li>The system will continue to work well for its users and for the developers
+after the CL is checked in.</li>
+<li>The CL is not so small that its implications are difficult to understand. If
+you add a new API, you should include a usage of the API in the same CL so
+that reviewers can better understand how the API will be used. This also
+prevents checking in unused APIs.</li>
+</ul>
+<p>There are no hard and fast rules about how large is &quot;too large.&quot; 100 lines is
+usually a reasonable size for a CL, and 1000 lines is usually too large, but
+it's up to the judgment of your reviewer. The number of files that a change is
+spread across also affects its &quot;size.&quot; A 200-line change in one file might be
+okay, but spread across 50 files it would usually be too large.</p>
+<p>Keep in mind that although you have been intimately involved with your code from
+the moment you started to write it, the reviewer often has no context. What
+seems like an acceptably-sized CL to you might be overwhelming to your reviewer.
+When in doubt, write CLs that are smaller than you think you need to write.
+Reviewers rarely complain about getting CLs that are too small.</p>
+<h2 id="large_okay"><a class="header" href="#large_okay">When are Large CLs Okay?</a></h2>
+<p>There are a few situations in which large changes aren't as bad:</p>
+<ul>
+<li>You can usually count deletion of an entire file as being just one line of
+change, because it doesn't take the reviewer very long to review.</li>
+<li>Sometimes a large CL has been generated by an automatic refactoring tool
+that you trust completely, and the reviewer's job is just to verify and say
+that they really do want the change. These CLs can be larger, although some
+of the caveats from above (such as merging and testing) still apply.</li>
+</ul>
+<h2 id="efficiently"><a class="header" href="#efficiently">Writing Small CLs Efficiently</a></h2>
+<p>If you write a small CL and then you wait for your reviewer to approve it before
+you write your next CL, then you're going to waste a lot of time. So you want to
+find some way to work that won't block you while you're waiting for review. This
+could involve having multiple projects to work on simultaneously, finding
+reviewers who agree to be immediately available, doing in-person reviews, pair
+programming, or splitting your CLs in a way that allows you to continue working
+immediately.</p>
+<h2 id="splitting"><a class="header" href="#splitting">Splitting CLs</a></h2>
+<p>When starting work that will have multiple CLs with potential dependencies among
+each other, it's often useful to think about how to split and organize those CLs
+at a high level before diving into coding.</p>
+<p>Besides making things easier for you as an author to manage and organize your
+CLs, it also makes things easier for your code reviewers, which in turn makes
+your code reviews more efficient.</p>
+<p>Here are some strategies for splitting work into different CLs.</p>
+<h3 id="stacking"><a class="header" href="#stacking">Stacking Multiple Changes on Top of Each Other</a></h3>
+<p>One way to split up a CL without blocking yourself is to write one small CL,
+send it off for review, and then immediately start writing another CL <em>based</em> on
+the first CL. Most version control systems allow you to do this somehow.</p>
+<h3 id="splitting-files"><a class="header" href="#splitting-files">Splitting by Files</a></h3>
+<p>Another way to split up a CL is by groupings of files that will require
+different reviewers but are otherwise self-contained changes.</p>
+<p>For example: you send off one CL for modifications to a protocol buffer and
+another CL for changes to the code that uses that proto. You have to submit the
+proto CL before the code CL, but they can both be reviewed simultaneously. If
+you do this, you might want to inform both sets of reviewers about the other CL
+that you wrote, so that they have context for your changes.</p>
+<p>Another example: you send one CL for a code change and another for the
+configuration or experiment that uses that code; this is easier to roll back
+too, if necessary, as configuration/experiment files are sometimes pushed to
+production faster than code changes.</p>
+<h3 id="splitting-horizontally"><a class="header" href="#splitting-horizontally">Splitting Horizontally</a></h3>
+<p>Consider creating shared code or stubs that help isolate changes between layers
+of the tech stack. This not only helps expedite development but also encourages
+abstraction between layers.</p>
+<p>For example: You created a calculator app with client, API, service, and data
+model layers. A shared proto signature can abstract the service and data model
+layers from each other. Similarly, an API stub can split the implementation of
+client code from service code and enable them to move forward independently.
+Similar ideas can also be applied to more granular function or class level
+abstractions.</p>
+<h3 id="splitting-vertically"><a class="header" href="#splitting-vertically">Splitting Vertically</a></h3>
+<p>Orthogonal to the layered, horizontal approach, you can instead break down your
+code into smaller, full-stack, vertical features. Each of these features can be
+independent parallel implementation tracks. This enables some tracks to move
+forward while other tracks are awaiting review or feedback.</p>
+<p>Back to our calculator example from
+<a href="en/review/developer/small-cls.html#splitting-horizontally">Splitting Horizontally</a>. You now want to support new
+operators, like multiplication and division. You could split this up by
+implementing multiplication and division as separate verticals or sub-features,
+even though they may have some overlap such as shared button styling or shared
+validation logic.</p>
+<h3 id="splitting-grid"><a class="header" href="#splitting-grid">Splitting Horizontally &amp; Vertically</a></h3>
+<p>To take this a step further, you could combine these approaches and chart out an
+implementation plan like this, where each cell is its own standalone CL.
+Starting from the model (at the bottom) and working up to the client:</p>
+<div class="table-wrapper"><table><thead><tr><th>Layer</th><th>Feature: Multiplication</th><th>Feature: Division</th></tr></thead><tbody>
+<tr><td>Client</td><td>Add button</td><td>Add button</td></tr>
+<tr><td>API</td><td>Add endpoint</td><td>Add endpoint</td></tr>
+<tr><td>Service</td><td>Implement transformations</td><td>Share transformation logic with</td></tr>
+<tr><td>:         :                           : multiplication                  :</td><td></td><td></td></tr>
+<tr><td>Model</td><td>Add proto definition</td><td>Add proto definition</td></tr>
+</tbody></table>
+</div>
+<h2 id="refactoring"><a class="header" href="#refactoring">Separate Out Refactorings</a></h2>
+<p>It's usually best to do refactorings in a separate CL from feature changes or
+bug fixes. For example, moving and renaming a class should be in a different CL
+from fixing a bug in that class. It is much easier for reviewers to understand
+the changes introduced by each CL when they are separate.</p>
+<p>Small cleanups such as fixing a local variable name can be included inside of a
+feature change or bug fix CL, though. It's up to the judgment of developers and
+reviewers to decide when a refactoring is so large that it will make the review
+more difficult if included in your current CL.</p>
+<h2 id="test_code"><a class="header" href="#test_code">Keep related test code in the same CL</a></h2>
+<p>CLs should include related test code. Remember that <a href="en/review/developer/small-cls.html#what_is_small">smallness</a>
+here refers the conceptual idea that the CL should be focused and is not a
+simplistic function on line count.</p>
+<p>Tests are expected for all Google changes.</p>
+<p>A CL that adds or changes logic should be accompanied by new or updated tests
+for the new behavior. Pure refactoring CLs (that aren't intended to change
+behavior) should also be covered by tests; ideally, these tests already exist,
+but if they don't, you should add them.</p>
+<p><em>Independent</em> test modifications can go into separate CLs first, similar to the
+<a href="en/review/developer/small-cls.html#refactoring">refactorings guidelines</a>. That includes:</p>
+<ul>
+<li>Validating pre-existing, submitted code with new tests.
+<ul>
+<li>Ensures that important logic is covered by tests.</li>
+<li>Increases confidence in subsequent refactorings on affected code. For
+example, if you want to refactor code that isn't already covered by
+tests, submitting test CLs <em>before</em> submitting refactoring CLs can
+validate that the tested behavior is unchanged before and after the
+refactoring.</li>
+</ul>
+</li>
+<li>Refactoring the test code (e.g. introduce helper functions).</li>
+<li>Introducing larger test framework code (e.g. an integration test).</li>
+</ul>
+<h2 id="break"><a class="header" href="#break">Don't Break the Build</a></h2>
+<p>If you have several CLs that depend on each other, you need to find a way to
+make sure the whole system keeps working after each CL is submitted. Otherwise
+you might break the build for all your fellow developers for a few minutes
+between your CL submissions (or even longer if something goes wrong unexpectedly
+with your later CL submissions).</p>
+<h2 id="cant"><a class="header" href="#cant">Can't Make it Small Enough</a></h2>
+<p>Sometimes you will encounter situations where it seems like your CL <em>has</em> to be
+large. This is very rarely true. Authors who practice writing small CLs can
+almost always find a way to decompose functionality into a series of small
+changes.</p>
+<p>Before writing a large CL, consider whether preceding it with a refactoring-only
+CL could pave the way for a cleaner implementation. Talk to your teammates and
+see if anybody has thoughts on how to implement the functionality in small CLs
+instead.</p>
+<p>If all of these options fail (which should be extremely rare) then get consent
+from your reviewers in advance to review a large CL, so they are warned about
+what is coming. In this situation, expect to be going through the review process
+for a long time, be vigilant about not introducing bugs, and be extra diligent
+about writing tests.</p>
+<p>Next: <a href="en/review/developer/handling-comments.html">How to Handle Reviewer Comments</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-handle-reviewer-comments"><a class="header" href="#how-to-handle-reviewer-comments">How to handle reviewer comments</a></h1>
+<p>When you've sent a CL out for review, it's likely that your reviewer will
+respond with several comments on your CL. Here are some useful things to know
+about handling reviewer comments.</p>
+<h2 id="personal"><a class="header" href="#personal">Don't Take it Personally</a></h2>
+<p>The goal of review is to maintain the quality of our codebase and our products.
+When a reviewer provides a critique of your code, think of it as their attempt
+to help you, the codebase, and Google, rather than as a personal attack on you
+or your abilities.</p>
+<p>Sometimes reviewers feel frustrated and they express that frustration in their
+comments. This isn't a good practice for reviewers, but as a developer you
+should be prepared for this. Ask yourself, &quot;What is the constructive thing that
+the reviewer is trying to communicate to me?&quot; and then operate as though that's
+what they actually said.</p>
+<p><strong>Never respond in anger to code review comments.</strong> That is a serious breach of
+professional etiquette that will live forever in the code review tool. If you
+are too angry or annoyed to respond kindly, then walk away from your computer
+for a while, or work on something else until you feel calm enough to reply
+politely.</p>
+<p>In general, if a reviewer isn't providing feedback in a way that's constructive
+and polite, explain this to them in person. If you can't talk to them in person
+or on a video call, then send them a private email. Explain to them in a kind
+way what you don't like and what you'd like them to do differently. If they also
+respond in a non-constructive way to this private discussion, or it doesn't have
+the intended effect, then
+escalate to your manager as
+appropriate.</p>
+<h2 id="code"><a class="header" href="#code">Fix the Code</a></h2>
+<p>If a reviewer says that they don't understand something in your code, your first
+response should be to clarify the code itself. If the code can't be clarified,
+add a code comment that explains why the code is there. If a comment seems
+pointless, only then should your response be an explanation in the code review
+tool.</p>
+<p>If a reviewer didn't understand some piece of your code, it's likely other
+future readers of the code won't understand either. Writing a response in the
+code review tool doesn't help future code readers, but clarifying your code or
+adding code comments does help them.</p>
+<h2 id="think"><a class="header" href="#think">Think Collaboratively</a></h2>
+<p>Writing a CL can take a lot of work. It's often really satisfying to finally
+send one out for review, feel like it's done, and be pretty sure that no further
+work is needed. It can be frustrating to receive comments asking for changes,
+especially if you don't agree with them.</p>
+<p>At times like this, take a moment to step back and consider if the reviewer is
+providing valuable feedback that will help the codebase and Google. Your first
+question to yourself should always be, &quot;Do I understand what the reviewer is
+asking for?&quot;</p>
+<p>If you can't answer that question, ask the reviewer for clarification.</p>
+<p>And then, if you understand the comments but disagree with them, it's important
+to think collaboratively, not combatively or defensively:</p>
+<p>Bad: &quot;No, I'm not going to do that.&quot;</p>
+<p>Good: &quot;I went with X because of [these pros/cons] with [these
+tradeoffs].
+My understanding is that using Y would be worse because of [these reasons]. Are
+you suggesting that Y better serves the original tradeoffs, that we should weigh
+the tradeoffs differently, or something else?&quot;</p>
+<p>Remember,
+<strong><a href="https://chromium.googlesource.com/chromium/src/+/master/docs/cr_respect.md">courtesy and respect</a>
+should always be a first priority</strong>. If you disagree with the reviewer, find
+ways to collaborate: ask for clarifications, discuss pros/cons, and provide
+explanations of why your method of doing things is better for the codebase,
+users, and/or Google.</p>
+<p>Sometimes, you might know something about the users, codebase, or CL that the
+reviewer doesn't know. <a href="en/review/developer/handling-comments.html#code">Fix the code</a> where appropriate, and engage your
+reviewer in discussion, including giving them more context. Usually you can come
+to some consensus between yourself and the reviewer based on technical facts.</p>
+<h2 id="conflicts"><a class="header" href="#conflicts">Resolving Conflicts</a></h2>
+<p>Your first step in resolving conflicts should always be to try to come to
+consensus with your reviewer. If you can't achieve consensus, see
+<a href="en/review/developer/../reviewer/standard.html">The Standard of Code Review</a>, which gives principles
+to follow in such a situation.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-do-a-code-review"><a class="header" href="#how-to-do-a-code-review">How to do a code review</a></h1>
+<p>The pages in this section contain recommendations on the best way to do code
+reviews, based on long experience. All together they represent one complete
+document, broken up into many separate sections. You don't have to read them
+all, but many people have found it very helpful to themselves and their team to
+read the entire set.</p>
+<ul>
+<li><a href="en/review/reviewer/standard.html">The Standard of Code Review</a></li>
+<li><a href="en/review/reviewer/looking-for.html">What to Look For In a Code Review</a></li>
+<li><a href="en/review/reviewer/navigate.html">Navigating a CL in Review</a></li>
+<li><a href="en/review/reviewer/speed.html">Speed of Code Reviews</a></li>
+<li><a href="en/review/reviewer/comments.html">How to Write Code Review Comments</a></li>
+<li><a href="en/review/reviewer/pushback.html">Handling Pushback in Code Reviews</a></li>
+</ul>
+<p>See also the <a href="en/review/reviewer/../developer/index.html">CL Author's Guide</a>, which gives detailed
+guidance to developers whose CLs are undergoing review.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-standard-of-code-review"><a class="header" href="#the-standard-of-code-review">The Standard of Code Review</a></h1>
+<p>The primary purpose of code review is to make sure that the overall
+code health of Google's code
+base is improving over time. All of the tools and processes of code review are
+designed to this end.</p>
+<p>In order to accomplish this, a series of trade-offs have to be balanced.</p>
+<p>First, developers must be able to <em>make progress</em> on their tasks. If you never
+submit an improvement to the codebase, then the codebase never improves. Also,
+if a reviewer makes it very difficult for <em>any</em> change to go in, then developers
+are disincentivized to make improvements in the future.</p>
+<p>On the other hand, it is the duty of the reviewer to make sure that each CL is
+of such a quality that the overall code health of their codebase is not
+decreasing as time goes on. This can be tricky, because often, codebases degrade
+through small decreases in code health over time, especially when a team is
+under significant time constraints and they feel that they have to take
+shortcuts in order to accomplish their goals.</p>
+<p>Also, a reviewer has ownership and responsibility over the code they are
+reviewing. They want to ensure that the codebase stays consistent, maintainable,
+and all of the other things mentioned in
+<a href="en/review/reviewer/looking-for.html">&quot;What to look for in a code review.&quot;</a></p>
+<p>Thus, we get the following rule as the standard we expect in code reviews:</p>
+<p><strong>In general, reviewers should favor approving a CL once it is in a state where
+it definitely improves the overall
+code health of the system
+being worked on, even if the CL isn't perfect.</strong></p>
+<p>That is <em>the</em> senior principle among all of the code review guidelines.</p>
+<p>There are limitations to this, of course. For example, if a CL adds a feature
+that the reviewer doesn't want in their system, then the reviewer can certainly
+deny approval even if the code is well-designed.</p>
+<p>A key point here is that there is no such thing as &quot;perfect&quot; code—there is
+only <em>better</em> code. Reviewers should not require the author to polish every tiny
+piece of a CL before granting approval. Rather, the reviewer should balance out
+the need to make forward progress compared to the importance of the changes they
+are suggesting. Instead of seeking perfection, what a reviewer should seek is
+<em>continuous improvement</em>. A CL that, as a whole, improves the maintainability,
+readability, and understandability of the system shouldn't be delayed for days
+or weeks because it isn't &quot;perfect.&quot;</p>
+<p>Reviewers should <em>always</em> feel free to leave comments expressing that something
+could be better, but if it's not very important, prefix it with something like
+&quot;Nit: &quot; to let the author know that it's just a point of polish that they could
+choose to ignore.</p>
+<p>Note: Nothing in this document justifies checking in CLs that definitely
+<em>worsen</em> the overall code health of the system. The only time you would do that
+would be in an <a href="en/review/reviewer/../emergencies.html">emergency</a>.</p>
+<h2 id="mentoring"><a class="header" href="#mentoring">Mentoring</a></h2>
+<p>Code review can have an important function of teaching developers something new
+about a language, a framework, or general software design principles. It's
+always fine to leave comments that help a developer learn something new. Sharing
+knowledge is part of improving the code health of a system over time. Just keep
+in mind that if your comment is purely educational, but not critical to meeting
+the standards described in this document, prefix it with &quot;Nit: &quot; or otherwise
+indicate that it's not mandatory for the author to resolve it in this CL.</p>
+<h2 id="principles"><a class="header" href="#principles">Principles</a></h2>
+<ul>
+<li>
+<p>Technical facts and data overrule opinions and personal preferences.</p>
+</li>
+<li>
+<p>On matters of style, the <a href="http://google.github.io/styleguide/">style guide</a>
+is the absolute authority. Any purely style point (whitespace, etc.) that is
+not in the style guide is a matter of personal preference. The style should
+be consistent with what is there. If there is no previous style, accept the
+author's.</p>
+</li>
+<li>
+<p><strong>Aspects of software design are almost never a pure style issue or just a
+personal preference.</strong> They are based on underlying principles and should be
+weighed on those principles, not simply by personal opinion. Sometimes there
+are a few valid options. If the author can demonstrate (either through data
+or based on solid engineering principles) that several approaches are
+equally valid, then the reviewer should accept the preference of the author.
+Otherwise the choice is dictated by standard principles of software design.</p>
+</li>
+<li>
+<p>If no other rule applies, then the reviewer may ask the author to be
+consistent with what is in the current codebase, as long as that doesn't
+worsen the overall code health of the system.</p>
+</li>
+</ul>
+<h2 id="conflicts"><a class="header" href="#conflicts">Resolving Conflicts</a></h2>
+<p>In any conflict on a code review, the first step should always be for the
+developer and reviewer to try to come to consensus, based on the contents of
+this document and the other documents in
+<a href="en/review/reviewer/../developer/index.html">The CL Author's Guide</a> and this
+<a href="en/review/reviewer/index.html">Reviewer Guide</a>.</p>
+<p>When coming to consensus becomes especially difficult, it can help to have a
+face-to-face meeting or a video conference between the reviewer and the author, instead of
+just trying to resolve the conflict through code review comments. (If you do
+this, though, make sure to record the results of the discussion as a comment on
+the CL, for future readers.)</p>
+<p>If that doesn't resolve the situation, the most common way to resolve it would
+be to escalate. Often the
+escalation path is to a broader team discussion, having a Technical Lead weigh in, asking
+for a decision from a maintainer of the code, or asking an Eng Manager to help
+out. <strong>Don't let a CL sit around because the author and the reviewer can't come
+to an agreement.</strong></p>
+<p>Next: <a href="en/review/reviewer/looking-for.html">What to look for in a code review</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="what-to-look-for-in-a-code-review"><a class="header" href="#what-to-look-for-in-a-code-review">What to look for in a code review</a></h1>
+<p>Note: Always make sure to take into account
+<a href="en/review/reviewer/standard.html">The Standard of Code Review</a> when considering each of these
+points.</p>
+<h2 id="design"><a class="header" href="#design">Design</a></h2>
+<p>The most important thing to cover in a review is the overall design of the CL.
+Do the interactions of various pieces of code in the CL make sense? Does this
+change belong in your codebase, or in a library? Does it integrate well with the
+rest of your system? Is now a good time to add this functionality?</p>
+<h2 id="functionality"><a class="header" href="#functionality">Functionality</a></h2>
+<p>Does this CL do what the developer intended? Is what the developer intended good
+for the users of this code? The &quot;users&quot; are usually both end-users (when they
+are affected by the change) and developers (who will have to &quot;use&quot; this code in
+the future).</p>
+<p>Mostly, we expect developers to test CLs well-enough that they work correctly by
+the time they get to code review. However, as the reviewer you should still be
+thinking about edge cases, looking for concurrency problems, trying to think
+like a user, and making sure that there are no bugs that you see just by reading
+the code.</p>
+<p>You <em>can</em> validate the CL if you want—the time when it's most important for a
+reviewer to check a CL's behavior is when it has a user-facing impact, such as a
+<strong>UI change</strong>. It's hard to understand how some changes will impact a user when
+you're just reading the code. For changes like that, you can have the developer
+give you a demo of the functionality if it's too inconvenient to patch in the CL
+and try it yourself.</p>
+<p>Another time when it's particularly important to think about functionality
+during a code review is if there is some sort of <strong>parallel programming</strong> going
+on in the CL that could theoretically cause deadlocks or race conditions. These
+sorts of issues are very hard to detect by just running the code and usually
+need somebody (both the developer and the reviewer) to think through them
+carefully to be sure that problems aren't being introduced. (Note that this is
+also a good reason not to use concurrency models where race conditions or
+deadlocks are possible—it can make it very complex to do code reviews or
+understand the code.)</p>
+<h2 id="complexity"><a class="header" href="#complexity">Complexity</a></h2>
+<p>Is the CL more complex than it should be? Check this at every level of the
+CL—are individual lines too complex? Are functions too complex? Are classes too
+complex? &quot;Too complex&quot; usually means <strong>&quot;can't be understood quickly by code
+readers.&quot;</strong> It can also mean <strong>&quot;developers are likely to introduce bugs when
+they try to call or modify this code.&quot;</strong></p>
+<p>A particular type of complexity is <strong>over-engineering</strong>, where developers have
+made the code more generic than it needs to be, or added functionality that
+isn't presently needed by the system. Reviewers should be especially vigilant
+about over-engineering. Encourage developers to solve the problem they know
+needs to be solved <em>now</em>, not the problem that the developer speculates <em>might</em>
+need to be solved in the future. The future problem should be solved once it
+arrives and you can see its actual shape and requirements in the physical
+universe.</p>
+<h2 id="tests"><a class="header" href="#tests">Tests</a></h2>
+<p>Ask for unit, integration, or end-to-end
+tests as appropriate for the change. In general, tests should be added in the
+same CL as the production code unless the CL is handling an
+<a href="en/review/reviewer/../emergencies.html">emergency</a>.</p>
+<p>Make sure that the tests in the CL are correct, sensible, and useful. Tests do
+not test themselves, and we rarely write tests for our tests—a human must ensure
+that tests are valid.</p>
+<p>Will the tests actually fail when the code is broken? If the code changes
+beneath them, will they start producing false positives? Does each test make
+simple and useful assertions? Are the tests separated appropriately between
+different test methods?</p>
+<p>Remember that tests are also code that has to be maintained. Don't accept
+complexity in tests just because they aren't part of the main binary.</p>
+<h2 id="naming"><a class="header" href="#naming">Naming</a></h2>
+<p>Did the developer pick good names for everything? A good name is long enough to
+fully communicate what the item is or does, without being so long that it
+becomes hard to read.</p>
+<h2 id="comments"><a class="header" href="#comments">Comments</a></h2>
+<p>Did the developer write clear comments in understandable English? Are all of the
+comments actually necessary? Usually comments are useful when they <strong>explain
+why</strong> some code exists, and should not be explaining <em>what</em> some code is doing.
+If the code isn't clear enough to explain itself, then the code should be made
+simpler. There are some exceptions (regular expressions and complex algorithms
+often benefit greatly from comments that explain what they're doing, for
+example) but mostly comments are for information that the code itself can't
+possibly contain, like the reasoning behind a decision.</p>
+<p>It can also be helpful to look at comments that were there before this CL. Maybe
+there is a TODO that can be removed now, a comment advising against this change
+being made, etc.</p>
+<p>Note that comments are different from <em>documentation</em> of classes, modules, or
+functions, which should instead express the purpose of a piece of code, how it
+should be used, and how it behaves when used.</p>
+<h2 id="style"><a class="header" href="#style">Style</a></h2>
+<p>We have <a href="http://google.github.io/styleguide/">style guides</a> at Google for all
+of our major languages, and even for most of the minor languages. Make sure the
+CL follows the appropriate style guides.</p>
+<p>If you want to improve some style point that isn't in the style guide, prefix
+your comment with &quot;Nit:&quot; to let the developer know that it's a nitpick that you
+think would improve the code but isn't mandatory. Don't block CLs from being
+submitted based only on personal style preferences.</p>
+<p>The author of the CL should not include major style changes combined with other
+changes. It makes it hard to see what is being changed in the CL, makes merges
+and rollbacks more complex, and causes other problems. For example, if the
+author wants to reformat the whole file, have them send you just the
+reformatting as one CL, and then send another CL with their functional changes
+after that.</p>
+<h2 id="consistency"><a class="header" href="#consistency">Consistency</a></h2>
+<p>What if the existing code is inconsistent with the style guide? Per our
+<a href="en/review/reviewer/standard.html#principles">code review principles</a>, the style guide is the
+absolute authority: if something is required by the style guide, the CL should
+follow the guidelines.</p>
+<p>In some cases, the style guide makes recommendations rather than declaring
+requirements. In these cases, it's a judgment call whether the new code should
+be consistent with the recommendations or the surrounding code. Bias towards
+following the style guide unless the local inconsistency would be too confusing.</p>
+<p>If no other rule applies, the author should maintain consistency with the
+existing code.</p>
+<p>Either way, encourage the author to file a bug and add a TODO for cleaning up
+existing code.</p>
+<h2 id="documentation"><a class="header" href="#documentation">Documentation</a></h2>
+<p>If a CL changes how users build, test, interact with, or release code, check to
+see that it also updates associated documentation, including
+READMEs, g3doc pages, and any generated
+reference docs. If the CL deletes or deprecates code, consider whether the
+documentation should also be deleted.
+If documentation is
+missing, ask for it.</p>
+<h2 id="every-line"><a class="header" href="#every-line">Every Line</a></h2>
+<p>In the general case, look at <em>every</em> line of code that you have been assigned to
+review. Some things like data files, generated code, or large data structures
+you can scan over sometimes, but don't scan over a human-written class,
+function, or block of code and assume that what's inside of it is okay.
+Obviously some code deserves more careful scrutiny than other code—that's
+a judgment call that you have to make—but you should at least be sure that
+you <em>understand</em> what all the code is doing.</p>
+<p>If it's too hard for you to read the code and this is slowing down the review,
+then you should let the developer know that
+and wait for them to clarify it before you try to review it. At Google, we hire
+great software engineers, and you are one of them. If you can't understand the
+code, it's very likely that other developers won't either. So you're also
+helping future developers understand this code, when you ask the developer to
+clarify it.</p>
+<p>If you understand the code but you don't feel qualified to do some part of the
+review, <a href="en/review/reviewer/looking-for.html#every-line-exceptions">make sure there is a reviewer</a> on the CL who is
+qualified, particularly for complex issues such as privacy, security,
+concurrency, accessibility, internationalization, etc.</p>
+<h3 id="every-line-exceptions"><a class="header" href="#every-line-exceptions">Exceptions</a></h3>
+<p>What if it doesn't make sense for you to review every line? For example, you are
+one of multiple reviewers on a CL and may be asked:</p>
+<ul>
+<li>To review only certain files that are part of a larger change.</li>
+<li>To review only certain aspects of the CL, such as the high-level design,
+privacy or security implications, etc.</li>
+</ul>
+<p>In these cases, note in a comment which parts you reviewed. Prefer giving
+<a href="en/review/reviewer/speed.html#lgtm-with-comments">LGTM with comments</a>
+.</p>
+<p>If you instead wish to grant LGTM after confirming that other reviewers have
+reviewed other parts of the CL, note this explicitly in a comment to set
+expectations. Aim to <a href="en/review/reviewer/speed.html#responses">respond quickly</a> once the CL has
+reached the desired state.</p>
+<h2 id="context"><a class="header" href="#context">Context</a></h2>
+<p>It is often helpful to look at the CL in a broad context. Usually the code
+review tool will only show you a few lines of code around the parts that are
+being changed. Sometimes you have to look at the whole file to be sure that the
+change actually makes sense. For example, you might see only four new lines
+being added, but when you look at the whole file, you see those four lines are
+in a 50-line method that now really needs to be broken up into smaller methods.</p>
+<p>It's also useful to think about the CL in the context of the system as a whole.
+Is this CL improving the code health of the system or is it making the whole
+system more complex, less tested, etc.? <strong>Don't accept CLs that degrade the code
+health of the system.</strong> Most systems become complex through many small changes
+that add up, so it's important to prevent even small complexities in new
+changes.</p>
+<h2 id="good-things"><a class="header" href="#good-things">Good Things</a></h2>
+<p>If you see something nice in the CL, tell the developer, especially when they
+addressed one of your comments in a great way. Code reviews often just focus on
+mistakes, but they should offer encouragement and appreciation for good
+practices, as well. It’s sometimes even more valuable, in terms of mentoring, to
+tell a developer what they did right than to tell them what they did wrong.</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>In doing a code review, you should make sure that:</p>
+<ul>
+<li>The code is well-designed.</li>
+<li>The functionality is good for the users of the code.</li>
+<li>Any UI changes are sensible and look good.</li>
+<li>Any parallel programming is done safely.</li>
+<li>The code isn't more complex than it needs to be.</li>
+<li>The developer isn't implementing things they <em>might</em> need in the future but
+don't know they need now.</li>
+<li>Code has appropriate unit tests.</li>
+<li>Tests are well-designed.</li>
+<li>The developer used clear names for everything.</li>
+<li>Comments are clear and useful, and mostly explain <em>why</em> instead of <em>what</em>.</li>
+<li>Code is appropriately documented (generally in g3doc).</li>
+<li>The code conforms to our style guides.</li>
+</ul>
+<p>Make sure to review <strong>every line</strong> of code you've been asked to review, look at
+the <strong>context</strong>, make sure you're <strong>improving code health</strong>, and compliment
+developers on <strong>good things</strong> that they do.</p>
+<p>Next: <a href="en/review/reviewer/navigate.html">Navigating a CL in Review</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="navigating-a-cl-in-review"><a class="header" href="#navigating-a-cl-in-review">Navigating a CL in review</a></h1>
+<h2 id="summary-1"><a class="header" href="#summary-1">Summary</a></h2>
+<p>Now that you know <a href="en/review/reviewer/looking-for.html">what to look for</a>, what's the most efficient
+way to manage a review that's spread across multiple files?</p>
+<ol>
+<li>Does the change make sense? Does it have a good
+<a href="en/review/reviewer/../developer/cl-descriptions.html">description</a>?</li>
+<li>Look at the most important part of the change first. Is it well-designed
+overall?</li>
+<li>Look at the rest of the CL in an appropriate sequence.</li>
+</ol>
+<h2 id="step_one"><a class="header" href="#step_one">Step One: Take a broad view of the change</a></h2>
+<p>Look at the <a href="en/review/reviewer/../developer/cl-descriptions.html">CL description</a> and what the CL
+does in general. Does this change even make sense? If this change shouldn't have
+happened in the first place, please respond immediately with an explanation of
+why the change should not be happening. When you reject a change like this, it's
+also a good idea to suggest to the developer what they should have done instead.</p>
+<p>For example, you might say &quot;Looks like you put some good work into this, thanks!
+However, we're actually going in the direction of removing the FooWidget system
+that you're modifying here, and so we don't want to make any new modifications
+to it right now. How about instead you refactor our new BarWidget class?&quot;</p>
+<p>Note that not only did the reviewer reject the current CL and provide an
+alternative suggestion, but they did it <em>courteously</em>. This kind of courtesy is
+important because we want to show that we respect each other as developers even
+when we disagree.</p>
+<p>If you get more than a few CLs that represent changes you don't want to make,
+you should consider re-working your team's development process or the posted
+process for external contributors so that there is more communication before CLs
+are written. It's better to tell people &quot;no&quot; before they've done a ton of work
+that now has to be thrown away or drastically re-written.</p>
+<h2 id="step_two"><a class="header" href="#step_two">Step Two: Examine the main parts of the CL</a></h2>
+<p>Find the file or files that are the &quot;main&quot; part of this CL. Often, there is one
+file that has the largest number of logical changes, and it's the major piece of
+the CL. Look at these major parts first. This helps give context to all of the
+smaller parts of the CL, and generally accelerates doing the code review. If the
+CL is too large for you to figure out which parts are the major parts, ask the
+developer what you should look at first, or ask them to
+<a href="en/review/reviewer/../developer/small-cls.html">split up the CL into multiple CLs</a>.</p>
+<p>If you see some major design problems with this part of the CL, you should send
+those comments immediately, even if you don't have time to review the rest of
+the CL right now. In fact, reviewing the rest of the CL might be a waste of
+time, because if the design problems are significant enough, a lot of the other
+code under review is going to disappear and not matter anyway.</p>
+<p>There are two major reasons it's so important to send these major design
+comments out immediately:</p>
+<ul>
+<li>Developers often mail a CL and then immediately start new work based on that
+CL while they wait for review. If there are major design problems in the CL
+you're reviewing, they're also going to have to re-work their later CL. You
+want to catch them before they've done too much extra work on top of the
+problematic design.</li>
+<li>Major design changes take longer to do than small changes. Developers nearly
+all have deadlines; in order to make those deadlines and still have quality
+code in the codebase, the developer needs to start on any major re-work of
+the CL as soon as possible.</li>
+</ul>
+<h2 id="step_three"><a class="header" href="#step_three">Step Three: Look through the rest of the CL in an appropriate sequence</a></h2>
+<p>Once you've confirmed there are no major design problems with the CL as a whole,
+try to figure out a logical sequence to look through the files while also making
+sure you don't miss reviewing any file. Usually after you've looked through the
+major files, it's simplest to just go through each file in the order that
+the code review tool presents them to you. Sometimes it's also helpful to read the tests
+first before you read the main code, because then you have an idea of what the
+change is supposed to be doing.</p>
+<p>Next: <a href="en/review/reviewer/speed.html">Speed of Code Reviews</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="speed-of-code-reviews"><a class="header" href="#speed-of-code-reviews">Speed of Code Reviews</a></h1>
+<h2 id="why"><a class="header" href="#why">Why Should Code Reviews Be Fast?</a></h2>
+<p><strong>At Google, we optimize for the speed at which a team of developers can produce
+a product together</strong>, as opposed to optimizing for the speed at which an
+individual developer can write code. The speed of individual development is
+important, it's just not <em>as</em> important as the velocity of the entire team.</p>
+<p>When code reviews are slow, several things happen:</p>
+<ul>
+<li><strong>The velocity of the team as a whole is decreased.</strong> Yes, the individual
+who doesn't respond quickly to the review gets other work done. However, new
+features and bug fixes for the rest of the team are delayed by days, weeks,
+or months as each CL waits for review and re-review.</li>
+<li><strong>Developers start to protest the code review process.</strong> If a reviewer only
+responds every few days, but requests major changes to the CL each time,
+that can be frustrating and difficult for developers. Often, this is
+expressed as complaints about how &quot;strict&quot; the reviewer is being. If the
+reviewer requests the <em>same</em> substantial changes (changes which really do
+improve code health), but responds <em>quickly</em> every time the developer makes
+an update, the complaints tend to disappear. <strong>Most complaints about the
+code review process are actually resolved by making the process faster.</strong></li>
+<li><strong>Code health can be impacted.</strong> When reviews are slow, there is increased
+pressure to allow developers to submit CLs that are not as good as they
+could be. Slow reviews also discourage code cleanups, refactorings, and
+further improvements to existing CLs.</li>
+</ul>
+<h2 id="fast"><a class="header" href="#fast">How Fast Should Code Reviews Be?</a></h2>
+<p>If you are not in the middle of a focused task, <strong>you should do a code review
+shortly after it comes in.</strong></p>
+<p><strong>One business day is the maximum time it should take to respond</strong> to a code
+review request (i.e., first thing the next morning).</p>
+<p>Following these guidelines means that a typical CL should get multiple rounds of
+review (if needed) within a single day.</p>
+<h2 id="interruption"><a class="header" href="#interruption">Speed vs. Interruption</a></h2>
+<p>There is one time where the consideration of personal velocity trumps team
+velocity. <strong>If you are in the middle of a focused task, such as writing code,
+don't interrupt yourself to do a code review.</strong>
+Research has shown that it can
+take a long time for a developer to get back into a smooth flow of development
+after being interrupted. So interrupting yourself while coding is actually
+<em>more</em> expensive to the team than making another developer wait a bit for a code
+review.</p>
+<p>Instead, wait for a break point in your work before you respond to a request for
+review. This could be when your current coding task is completed, after lunch,
+returning from a meeting, coming back from the breakroom, etc.</p>
+<h2 id="responses"><a class="header" href="#responses">Fast Responses</a></h2>
+<p>When we talk about the speed of code reviews, it is the <em>response</em> time that we
+are concerned with, as opposed to how long it takes a CL to get through the
+whole review and be submitted. The whole process should also be fast, ideally,
+but <strong>it's even more important for the <em>individual responses</em> to come quickly
+than it is for the whole process to happen rapidly.</strong></p>
+<p>Even if it sometimes takes a long time to get through the entire review
+<em>process</em>, having quick responses from the reviewer throughout the process
+significantly eases the frustration developers can feel with &quot;slow&quot; code
+reviews.</p>
+<p>If you are too busy to do a full review on a CL when it comes in, you can still
+send a quick response that lets the developer know when you will get to it,
+suggest other reviewers who might be able to respond more quickly, or
+<a href="en/review/reviewer/navigate.html">provide some initial broad comments</a>. (Note: none of this means
+you should interrupt coding even to send a response like this—send the
+response at a reasonable break point in your work.)</p>
+<p><strong>It is important that reviewers spend enough time on review that they are
+certain their &quot;LGTM&quot; means &quot;this code meets <a href="en/review/reviewer/standard.html">our standards</a>.&quot;</strong>
+However, individual responses should still ideally be <a href="en/review/reviewer/speed.html#fast">fast</a>.</p>
+<h2 id="tz"><a class="header" href="#tz">Cross-Time-Zone Reviews</a></h2>
+<p>When dealing with time zone differences, try to get back to the author while
+they have time to respond before the end of their working hours. If they have
+already finished work for the day, then try to make sure your review is done
+before they start work the next day.</p>
+<h2 id="lgtm-with-comments"><a class="header" href="#lgtm-with-comments">LGTM With Comments</a></h2>
+<p>In order to speed up code reviews, there are certain situations in which a
+reviewer should give LGTM/Approval even though they are also leaving unresolved
+comments on the CL. This is done when either:</p>
+<ul>
+<li>The reviewer is confident that the developer will appropriately address all
+the reviewer's remaining comments.</li>
+<li>The remaining changes are minor and don't <em>have</em> to be done by the
+developer.</li>
+</ul>
+<p>The reviewer should specify which of these options they intend, if it is not
+otherwise clear.</p>
+<p>LGTM With Comments is especially worth considering when the developer and
+reviewer are in different time zones and otherwise the developer would be
+waiting for a whole day just to get &quot;LGTM, Approval.&quot;</p>
+<h2 id="large"><a class="header" href="#large">Large CLs</a></h2>
+<p>If somebody sends you a code review that is so large you're not sure when you
+will be able to have time to review it, your typical response should be to ask
+the developer to
+<a href="en/review/reviewer/../developer/small-cls.html">split the CL into several smaller CLs</a> that build on
+each other, instead of one huge CL that has to be reviewed all at once. This is
+usually possible and very helpful to reviewers, even if it takes additional work
+from the developer.</p>
+<p>If a CL <em>can't</em> be broken up into smaller CLs, and you don't have time to review
+the entire thing quickly, then at least write some comments on the overall
+design of the CL and send it back to the developer for improvement. One of your
+goals as a reviewer should be to always unblock the developer or enable them to
+take some sort of further action quickly, without sacrificing code health to do
+so.</p>
+<h2 id="time"><a class="header" href="#time">Code Review Improvements Over Time</a></h2>
+<p>If you follow these guidelines and you are strict with your code reviews, you
+should find that the entire code review process tends to go faster and faster
+over time. Developers learn what is required for healthy code, and send you CLs
+that are great from the start, requiring less and less review time. Reviewers
+learn to respond quickly and not add unnecessary latency into the review
+process.
+But <strong>don't compromise on
+the <a href="en/review/reviewer/standard.html">code review standards</a> or quality for an imagined improvement
+in velocity</strong>—it's not actually going to make anything happen more
+quickly, in the long run.</p>
+<h2 id="emergencies"><a class="header" href="#emergencies">Emergencies</a></h2>
+<p>There are also <a href="en/review/reviewer/../emergencies.html">emergencies</a> where CLs must pass through the
+<em>whole</em> review process very quickly, and where the quality guidelines would be
+relaxed. However, please see <a href="en/review/reviewer/../emergencies.html#what">What Is An Emergency?</a> for
+a description of which situations actually qualify as emergencies and which
+don't.</p>
+<p>Next: <a href="en/review/reviewer/comments.html">How to Write Code Review Comments</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="how-to-write-code-review-comments"><a class="header" href="#how-to-write-code-review-comments">How to write code review comments</a></h1>
+<h2 id="summary-2"><a class="header" href="#summary-2">Summary</a></h2>
+<ul>
+<li>Be kind.</li>
+<li>Explain your reasoning.</li>
+<li>Balance giving explicit directions with just pointing out problems and
+letting the developer decide.</li>
+<li>Encourage developers to simplify code or add code comments instead of just
+explaining the complexity to you.</li>
+</ul>
+<h2 id="courtesy"><a class="header" href="#courtesy">Courtesy</a></h2>
+<p>In general, it is important to be
+<a href="https://chromium.googlesource.com/chromium/src/+/master/docs/cr_respect.md">courteous and respectful</a>
+while also being very clear and helpful to the developer whose code you are
+reviewing. One way to do this is to be sure that you are always making comments
+about the <em>code</em> and never making comments about the <em>developer</em>. You don't
+always have to follow this practice, but you should definitely use it when
+saying something that might otherwise be upsetting or contentious. For example:</p>
+<p>Bad: &quot;Why did <strong>you</strong> use threads here when there's obviously no benefit to be
+gained from concurrency?&quot;</p>
+<p>Good: &quot;The concurrency model here is adding complexity to the system without any
+actual performance benefit that I can see. Because there's no performance
+benefit, it's best for this code to be single-threaded instead of using multiple
+threads.&quot;</p>
+<h2 id="why"><a class="header" href="#why">Explain Why</a></h2>
+<p>One thing you'll notice about the &quot;good&quot; example from above is that it helps the
+developer understand <em>why</em> you are making your comment. You don't always need to
+include this information in your review comments, but sometimes it's appropriate
+to give a bit more explanation around your intent, the best practice you're
+following, or how your suggestion improves code health.</p>
+<h2 id="guidance"><a class="header" href="#guidance">Giving Guidance</a></h2>
+<p><strong>In general it is the developer's responsibility to fix a CL, not the
+reviewer's.</strong> You are not required to do detailed design of a solution or write
+code for the developer.</p>
+<p>This doesn't mean the reviewer should be unhelpful, though. In general you
+should strike an appropriate balance between pointing out problems and providing
+direct guidance. Pointing out problems and letting the developer make a decision
+often helps the developer learn, and makes it easier to do code reviews. It also
+can result in a better solution, because the developer is closer to the code
+than the reviewer is.</p>
+<p>However, sometimes direct instructions, suggestions, or even code are more
+helpful. The primary goal of code review is to get the best CL possible. A
+secondary goal is improving the skills of developers so that they require less
+and less review over time.</p>
+<p>Remember that people learn from reinforcement of what they are doing well and
+not just what they could do better. If you see things you like in the CL,
+comment on those too! Examples: developer cleaned up a messy algorithm, added
+exemplary test coverage, or you as the reviewer learned something from the CL.
+Just as with all comments, include <a href="en/review/reviewer/comments.html#why">why</a> you liked something, further
+encouraging the developer to continue good practices.</p>
+<h2 id="label-comment-severity"><a class="header" href="#label-comment-severity">Label comment severity</a></h2>
+<p>Consider labeling the severity of your comments, differentiating required
+changes from guidelines or suggestions.</p>
+<p>Here are some examples:</p>
+<blockquote>
+<p>Nit: This is a minor thing. Technically you should do it, but it won’t hugely
+impact things.</p>
+<p>Optional (or Consider): I think this may be a good idea, but it’s not strictly
+required.</p>
+<p>FYI: I don’t expect you to do this in this CL, but you may find this
+interesting to think about for the future.</p>
+</blockquote>
+<p>This makes review intent explicit and helps authors prioritize the importance of
+various comments. It also helps avoid misunderstandings; for example, without
+comment labels, authors may interpret all comments as mandatory, even if some
+comments are merely intended to be informational or optional.</p>
+<h2 id="explanations"><a class="header" href="#explanations">Accepting Explanations</a></h2>
+<p>If you ask a developer to explain a piece of code that you don't understand,
+that should usually result in them <strong>rewriting the code more clearly</strong>.
+Occasionally, adding a comment in the code is also an appropriate response, as
+long as it's not just explaining overly complex code.</p>
+<p><strong>Explanations written only in the code review tool are not helpful to future
+code readers.</strong> They are acceptable only in a few circumstances, such as when
+you are reviewing an area you are not very familiar with and the developer
+explains something that normal readers of the code would have already known.</p>
+<p>Next: <a href="en/review/reviewer/pushback.html">Handling Pushback in Code Reviews</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="handling-pushback-in-code-reviews"><a class="header" href="#handling-pushback-in-code-reviews">Handling pushback in code reviews</a></h1>
+<p>Sometimes a developer will push back on a code review. Either they will disagree
+with your suggestion or they will complain that you are being too strict in
+general.</p>
+<h2 id="who_is_right"><a class="header" href="#who_is_right">Who is right?</a></h2>
+<p>When a developer disagrees with your suggestion, first take a moment to consider
+if they are correct. Often, they are closer to the code than you are, and so
+they might really have a better insight about certain aspects of it. Does their
+argument make sense? Does it make sense from a code health perspective? If so,
+let them know that they are right and let the issue drop.</p>
+<p>However, developers are not always right. In this case the reviewer should
+further explain why they believe that their suggestion is correct. A good
+explanation demonstrates both an understanding of the developer's reply, and
+additional information about why the change is being requested.</p>
+<p>In particular, when the reviewer believes their suggestion will improve code
+health, they should continue to advocate for the change, if they believe the
+resulting code quality improvement justifies the additional work requested.
+<strong>Improving code health tends to happen in small steps.</strong></p>
+<p>Sometimes it takes a few rounds of explaining a suggestion before it really
+sinks in. Just make sure to always stay <a href="en/review/reviewer/comments.html#courtesy">polite</a> and let
+the developer know that you <em>hear</em> what they're saying, you just don't <em>agree</em>.</p>
+<h2 id="upsetting_developers"><a class="header" href="#upsetting_developers">Upsetting Developers</a></h2>
+<p>Reviewers sometimes believe that the developer will be upset if the reviewer
+insists on an improvement. Sometimes developers do become upset, but it is
+usually brief and they become very thankful later that you helped them improve
+the quality of their code. Usually, if you are <a href="en/review/reviewer/comments.html#courtesy">polite</a> in
+your comments, developers actually don't become upset at all, and the worry is
+just in the reviewer's mind. Upsets are usually more about
+<a href="en/review/reviewer/comments.html#courtesy">the way comments are written</a> than about the reviewer's
+insistence on code quality.</p>
+<h2 id="later"><a class="header" href="#later">Cleaning It Up Later</a></h2>
+<p>A common source of push back is that developers (understandably) want to get
+things done. They don't want to go through another round of review just to get
+this CL in. So they say they will clean something up in a later CL, and thus you
+should LGTM <em>this</em> CL now. Some developers are very good about this, and will
+immediately write a follow-up CL that fixes the issue. However, experience shows
+that as more time passes after a developer writes the original CL, the less
+likely this clean up is to happen. In fact, usually unless the developer does
+the clean up <em>immediately</em> after the present CL, it never happens. This isn't
+because developers are irresponsible, but because they have a lot of work to do
+and the cleanup gets lost or forgotten in the press of other work. Thus, it is
+usually best to insist that the developer clean up their CL <em>now</em>, before the
+code is in the codebase and &quot;done.&quot; Letting people &quot;clean things up later&quot; is a
+common way for codebases to degenerate.</p>
+<p>If a CL introduces new complexity, it must be cleaned up before submission
+unless it is an <a href="en/review/reviewer/../emergencies.html">emergency</a>. If the CL exposes surrounding
+problems and they can't be addressed right now, the developer should file a bug
+for the cleanup and assign it to themselves so that it doesn't get lost. They
+can optionally also write a TODO comment in the code that references the filed
+bug.</p>
+<h2 id="strictness"><a class="header" href="#strictness">General Complaints About Strictness</a></h2>
+<p>If you previously had fairly lax code reviews and you switch to having strict
+reviews, some developers will complain very loudly. Improving the
+<a href="en/review/reviewer/speed.html">speed</a> of your code reviews usually causes these complaints to fade
+away.</p>
+<p>Sometimes it can take months for these complaints to fade away, but eventually
+developers tend to see the value of strict code reviews as they see what great
+code they help generate. Sometimes the loudest protesters even become your
+strongest supporters once something happens that causes them to really see the
+value you're adding by being strict.</p>
+<h2 id="conflicts"><a class="header" href="#conflicts">Resolving Conflicts</a></h2>
+<p>If you are following all of the above but you still encounter a conflict between
+yourself and a developer that can't be resolved, see
+<a href="en/review/reviewer/standard.html">The Standard of Code Review</a> for guidelines and principles that
+can help resolve the conflict.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="emergencies-1"><a class="header" href="#emergencies-1">Emergencies</a></h1>
+<p>Sometimes there are emergency CLs that must pass through the entire code review
+process as quickly as
+possible.</p>
+<h2 id="what"><a class="header" href="#what">What Is An Emergency?</a></h2>
+<p>An emergency CL would be a <strong>small</strong> change that: allows a major launch to
+continue instead of rolling back, fixes a bug significantly affecting users in
+production, handles a pressing legal issue, closes a major security hole, etc.</p>
+<p>In emergencies we really do care about the speed of the entire code review
+process, not just the <a href="en/review/reviewer/speed.html">speed of response</a>. In this case
+<em>only</em>, the reviewer should care more about the speed of the review and the
+correctness of the code (does it actually resolve the emergency?) than anything
+else. Also (perhaps obviously) such reviews should take priority over all other
+code reviews, when they come up.</p>
+<p>However, after the emergency is resolved you should look over the emergency CLs
+again and give them a <a href="en/review/reviewer/looking-for.html">more thorough review</a>.</p>
+<h2 id="not"><a class="header" href="#not">What Is NOT An Emergency?</a></h2>
+<p>To be clear, the following cases are <em>not</em> an emergency:</p>
+<ul>
+<li>Wanting to launch this week rather than next week (unless there is some
+actual <a href="en/review/emergencies.html#deadlines">hard deadline</a> for launch such as a partner agreement).</li>
+<li>The developer has worked on a feature for a very long time and they really
+want to get the CL in.</li>
+<li>The reviewers are all in another timezone where it is currently nighttime or
+they are away on an off-site.</li>
+<li>It is the end of the day on a Friday and it would just be great to get this
+CL in before the developer leaves for the weekend.</li>
+<li>A manager says that this review has to be complete and the CL checked in
+today because of a <a href="en/review/emergencies.html#deadlines">soft (not hard) deadline</a>.</li>
+<li>Rolling back a CL that is causing test failures or build breakages.</li>
+</ul>
+<p>And so on.</p>
+<h2 id="deadlines"><a class="header" href="#deadlines">What Is a Hard Deadline?</a></h2>
+<p>A hard deadline is one where <strong>something disastrous would happen</strong> if you miss
+it. For example:</p>
+<ul>
+<li>Submitting your CL by a certain date is necessary for a contractual
+obligation.</li>
+<li>Your product will completely fail in the marketplace if not released by a
+certain date.</li>
+<li>Some hardware manufacturers only ship new hardware once a year. If you miss
+the deadline to submit code to them, that could be disastrous, depending on
+what type of code you're trying to ship.</li>
+</ul>
+<p>Delaying a release for a week is not disastrous. Missing an important conference
+might be disastrous, but often is not.</p>
+<p>Most deadlines are soft deadlines, not hard deadlines. They represent a desire
+for a feature to be done by a certain time. They are important, but you
+shouldn't be sacrificing code health to make them.</p>
+<p>If you have a long release cycle (several weeks) it can be tempting to sacrifice
+code review quality to get a feature in before the next cycle. However, this
+pattern, if repeated, is a common way for projects to build up overwhelming
+technical debt. If developers are routinely submitting CLs near the end of the
+cycle that &quot;must get in&quot; with only superficial review, then the team should
+modify its process so that large feature changes happen early in the cycle and
+have enough time for good review.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
