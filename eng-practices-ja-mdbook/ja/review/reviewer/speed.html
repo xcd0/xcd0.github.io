@@ -1,268 +1,313 @@
 <!DOCTYPE HTML>
-<html lang="en" class="light" dir="ltr">
-    <head>
-        <!-- Book generated using mdBook -->
-        <meta charset="UTF-8">
-        <title>コードレビューの速度 - Google Engineering Practices Documentation</title>
+<html lang="ja" class="light" dir="ltr">
+	<head>
+		<!-- Book generated using mdBook -->
+		<meta charset="UTF-8">
+		<title>コードレビューの速度 - Google Engineering Practices Documentation</title>
 
 
-        <!-- Custom HTML head -->
-        
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff">
+		<!-- Custom HTML head -->
+		
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="../../../favicon.svg">
-        <link rel="shortcut icon" href="../../../favicon.png">
-        <link rel="stylesheet" href="../../../css/variables.css">
-        <link rel="stylesheet" href="../../../css/general.css">
-        <link rel="stylesheet" href="../../../css/chrome.css">
-        <link rel="stylesheet" href="../../../css/print.css" media="print">
+		<link rel="icon" href="../../favicon.svg">
+		<link rel="shortcut icon" href="../../favicon.png">
+		<link rel="stylesheet" href="../../css/variables.css">
+		<link rel="stylesheet" href="../../css/general.css">
+		<link rel="stylesheet" href="../../css/chrome.css">
+		<link rel="stylesheet" href="../../css/print.css" media="print">
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="../../../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../../../fonts/fonts.css">
+		<!-- Fonts -->
+		<link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+		<link rel="stylesheet" href="../../fonts/fonts.css">
 
-        <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../../../highlight.css">
-        <link rel="stylesheet" href="../../../tomorrow-night.css">
-        <link rel="stylesheet" href="../../../ayu-highlight.css">
+		<!-- Highlight.js Stylesheets -->
+		<link rel="stylesheet" href="../../highlight.css">
+		<link rel="stylesheet" href="../../tomorrow-night.css">
+		<link rel="stylesheet" href="../../ayu-highlight.css">
 
-        <!-- Custom theme stylesheets -->
+		<!-- Custom theme stylesheets -->
+		<link rel="stylesheet" href="../../theme/css/language-picker.css">
 
-    </head>
-    <body class="sidebar-visible no-js">
-    <div id="body-container">
-        <!-- Provide site root to javascript -->
-        <script>
-            var path_to_root = "../../../";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
-        </script>
+	</head>
+	<body class="sidebar-visible no-js">
+	<div id="body-container">
+		<!-- Provide site root to javascript -->
+		<script>
+			var path_to_root = "../../";
+			var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+		</script>
 
-        <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script>
-            try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+		<!-- Work around some values being stored in localStorage wrapped in quotes -->
+		<script>
+			try {
+				var theme = localStorage.getItem('mdbook-theme');
+				var sidebar = localStorage.getItem('mdbook-sidebar');
 
-                if (theme.startsWith('"') && theme.endsWith('"')) {
-                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
-                }
+				if (theme.startsWith('"') && theme.endsWith('"')) {
+					localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+				}
 
-                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
-                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
-                }
-            } catch (e) { }
-        </script>
+				if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+					localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+				}
+			} catch (e) { }
+		</script>
 
-        <!-- Set the theme before any content is loaded, prevents flash -->
-        <script>
-            var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
-            if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('light')
-            html.classList.add(theme);
-            var body = document.querySelector('body');
-            body.classList.remove('no-js')
-            body.classList.add('js');
-        </script>
+		<!-- Set the theme before any content is loaded, prevents flash -->
+		<script>
+			var theme;
+			try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+			if (theme === null || theme === undefined) { theme = default_theme; }
+			var html = document.querySelector('html');
+			html.classList.remove('light')
+			html.classList.add(theme);
+			var body = document.querySelector('body');
+			body.classList.remove('no-js')
+			body.classList.add('js');
+		</script>
 
-        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+		<input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
-        <!-- Hide / unhide sidebar before it is displayed -->
-        <script>
-            var body = document.querySelector('body');
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
-            if (document.body.clientWidth >= 1080) {
-                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
-                sidebar = sidebar || 'visible';
-            } else {
-                sidebar = 'hidden';
-            }
-            sidebar_toggle.checked = sidebar === 'visible';
-            body.classList.remove('sidebar-visible');
-            body.classList.add("sidebar-" + sidebar);
-        </script>
+		<!-- Hide / unhide sidebar before it is displayed -->
+		<script>
+			var body = document.querySelector('body');
+			var sidebar = null;
+			var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+			if (document.body.clientWidth >= 1080) {
+				try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+				sidebar = sidebar || 'visible';
+			} else {
+				sidebar = 'hidden';
+			}
+			sidebar_toggle.checked = sidebar === 'visible';
+			body.classList.remove('sidebar-visible');
+			body.classList.add("sidebar-" + sidebar);
+		</script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">和訳</li><li class="chapter-item expanded "><a href="../../../ja/index.html"><strong aria-hidden="true">1.</strong> Googleのエンジニアリングプラクティスドキュメント</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../ja/review/index.html"><strong aria-hidden="true">1.1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="../../../ja/review/developer/index.html"><strong aria-hidden="true">1.2.</strong> CL作成者のコードレビューを乗り越えるためのガイド</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../ja/review/developer/cl-descriptions.html"><strong aria-hidden="true">1.2.1.</strong> 良いCLの説明文を書く</a></li><li class="chapter-item expanded "><a href="../../../ja/review/developer/small-cls.html"><strong aria-hidden="true">1.2.2.</strong> 小さなCLs</a></li><li class="chapter-item expanded "><a href="../../../ja/review/developer/handling-comments.html"><strong aria-hidden="true">1.2.3.</strong> レビューコメントの扱い方</a></li></ol></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/index.html"><strong aria-hidden="true">1.3.</strong> どのようにコードリビューするか</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/standard.html"><strong aria-hidden="true">1.3.1.</strong> コードレビューの基準</a></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/looking-for.html"><strong aria-hidden="true">1.3.2.</strong> コードレビューで注目すべきポイント</a></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/navigate.html"><strong aria-hidden="true">1.3.3.</strong> レビュー中のCLのナビゲーション</a></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/speed.html" class="active"><strong aria-hidden="true">1.3.4.</strong> コードレビューの速度</a></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/comments.html"><strong aria-hidden="true">1.3.5.</strong> コードレビューコメントの書き方</a></li><li class="chapter-item expanded "><a href="../../../ja/review/reviewer/pushback.html"><strong aria-hidden="true">1.3.6.</strong> コードレビューでの反発の扱い</a></li></ol></li><li class="chapter-item expanded "><a href="../../../ja/review/emergencies.html"><strong aria-hidden="true">1.4.</strong> 緊急事態</a></li><li class="spacer"></li></ol></li><li class="chapter-item expanded "><li class="part-title">原文</li><li class="chapter-item expanded "><a href="../../../en/index.html"><strong aria-hidden="true">2.</strong> Google Engineering Practices Documentation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../en/review/index.html"><strong aria-hidden="true">2.1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../../en/review/developer/index.html"><strong aria-hidden="true">2.2.</strong> The CL author's guide to getting through code review</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../en/review/developer/cl-descriptions.html"><strong aria-hidden="true">2.2.1.</strong> Writing good CL descriptions</a></li><li class="chapter-item expanded "><a href="../../../en/review/developer/small-cls.html"><strong aria-hidden="true">2.2.2.</strong> Small CLs</a></li><li class="chapter-item expanded "><a href="../../../en/review/developer/handling-comments.html"><strong aria-hidden="true">2.2.3.</strong> How to handle reviewer comments</a></li></ol></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/index.html"><strong aria-hidden="true">2.3.</strong> How to do a code review</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../../en/review/reviewer/standard.html"><strong aria-hidden="true">2.3.1.</strong> The Standard of Code Review</a></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/looking-for.html"><strong aria-hidden="true">2.3.2.</strong> What to look for in a code review</a></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/navigate.html"><strong aria-hidden="true">2.3.3.</strong> Navigating a CL in review</a></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/speed.html"><strong aria-hidden="true">2.3.4.</strong> Speed of Code Reviews</a></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/comments.html"><strong aria-hidden="true">2.3.5.</strong> How to write code review comments</a></li><li class="chapter-item expanded "><a href="../../../en/review/reviewer/pushback.html"><strong aria-hidden="true">2.3.6.</strong> Handling pushback in code reviews</a></li></ol></li><li class="chapter-item expanded "><a href="../../../en/review/emergencies.html"><strong aria-hidden="true">2.4.</strong> Emergencies</a></li></ol></li></ol>
-            </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
-                <div class="sidebar-resize-indicator"></div>
-            </div>
-        </nav>
+		<nav id="sidebar" class="sidebar" aria-label="Table of contents">
+			<div class="sidebar-scrollbox">
+				<ol class="chapter"><li class="chapter-item expanded "><a href="../../index.html"><strong aria-hidden="true">1.</strong> Googleのエンジニアリングプラクティスドキュメント</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../review/index.html"><strong aria-hidden="true">1.1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="../../review/developer/index.html"><strong aria-hidden="true">1.2.</strong> CL作成者のコードレビューを乗り越えるためのガイド</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../review/developer/cl-descriptions.html"><strong aria-hidden="true">1.2.1.</strong> 良いCLの説明文を書く</a></li><li class="chapter-item expanded "><a href="../../review/developer/small-cls.html"><strong aria-hidden="true">1.2.2.</strong> 小さなCLs</a></li><li class="chapter-item expanded "><a href="../../review/developer/handling-comments.html"><strong aria-hidden="true">1.2.3.</strong> レビューコメントの扱い方</a></li></ol></li><li class="chapter-item expanded "><a href="../../review/reviewer/index.html"><strong aria-hidden="true">1.3.</strong> どのようにコードリビューするか</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../review/reviewer/standard.html"><strong aria-hidden="true">1.3.1.</strong> コードレビューの基準</a></li><li class="chapter-item expanded "><a href="../../review/reviewer/looking-for.html"><strong aria-hidden="true">1.3.2.</strong> コードレビューで注目すべきポイント</a></li><li class="chapter-item expanded "><a href="../../review/reviewer/navigate.html"><strong aria-hidden="true">1.3.3.</strong> レビュー中のCLのナビゲーション</a></li><li class="chapter-item expanded "><a href="../../review/reviewer/speed.html" class="active"><strong aria-hidden="true">1.3.4.</strong> コードレビューの速度</a></li><li class="chapter-item expanded "><a href="../../review/reviewer/comments.html"><strong aria-hidden="true">1.3.5.</strong> コードレビューコメントの書き方</a></li><li class="chapter-item expanded "><a href="../../review/reviewer/pushback.html"><strong aria-hidden="true">1.3.6.</strong> コードレビューでの反発の扱い</a></li></ol></li><li class="chapter-item expanded "><a href="../../review/emergencies.html"><strong aria-hidden="true">1.4.</strong> 緊急事態</a></li></ol></li></ol>
+			</div>
+			<div id="sidebar-resize-handle" class="sidebar-resize-handle">
+				<div class="sidebar-resize-indicator"></div>
+			</div>
+		</nav>
 
-        <!-- Track and set sidebar scroll position -->
-        <script>
-            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
-            sidebarScrollbox.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A') {
-                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
-                }
-            }, { passive: true });
-            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
-            sessionStorage.removeItem('sidebar-scroll');
-            if (sidebarScrollTop) {
-                // preserve sidebar scroll position when navigating via links within sidebar
-                sidebarScrollbox.scrollTop = sidebarScrollTop;
-            } else {
-                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
-                var activeSection = document.querySelector('#sidebar .active');
-                if (activeSection) {
-                    activeSection.scrollIntoView({ block: 'center' });
-                }
-            }
-        </script>
+		<!-- Track and set sidebar scroll position -->
+		<script>
+			var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+			sidebarScrollbox.addEventListener('click', function(e) {
+				if (e.target.tagName === 'A') {
+					sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+				}
+			}, { passive: true });
+			var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+			sessionStorage.removeItem('sidebar-scroll');
+			if (sidebarScrollTop) {
+				// preserve sidebar scroll position when navigating via links within sidebar
+				sidebarScrollbox.scrollTop = sidebarScrollTop;
+			} else {
+				// scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+				var activeSection = document.querySelector('#sidebar .active');
+				if (activeSection) {
+					activeSection.scrollIntoView({ block: 'center' });
+				}
+			}
+		</script>
 
-        <div id="page-wrapper" class="page-wrapper">
+		<div id="page-wrapper" class="page-wrapper">
 
-            <div class="page">
-                                <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky">
-                    <div class="left-buttons">
-                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
-                        </label>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
-                        </button>
-                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                        </ul>
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
+			<div class="page">
+								<div id="menu-bar-hover-placeholder"></div>
+				<div id="menu-bar" class="menu-bar sticky">
+					<div class="left-buttons">
+						<label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+							<i class="fa fa-bars"></i>
+						</label>
+						<button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+							<i class="fa fa-paint-brush"></i>
+						</button>
+						<ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+							<li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+							<li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+							<li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+							<li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+							<li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+						</ul>
+						<button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+							<i class="fa fa-search"></i>
+						</button>
+					</div>
 
-                    <h1 class="menu-title">Google Engineering Practices Documentation</h1>
+					<h1 class="menu-title">Google Engineering Practices Documentation</h1>
 
-                    <div class="right-buttons">
-                        <a href="../../../print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
-                        </a>
+					<div class="right-buttons">
 
-                    </div>
-                </div>
+						<!-- start: language picker -->
+						<!-- https://github.com/google/comprehensive-rust/blob/main/theme/index.hbs#L172-L227 -->
+						<button id="language-toggle" class="icon-button" type="button"
+								title="Change language" aria-label="Change language"
+								aria-haspopup="true" aria-expanded="false"
+								aria-controls="language-list">
+							<i class="fa fa-globe"></i>
+						</button>
+						<ul id="language-list" class="theme-popup" aria-label="Languages" role="menu">
+							<li role="none"><button role="menuitem" class="theme">
+								<a id="en">English</a>
+							</button></li>
+							<li role="none"><button role="menuitem" class="theme">
+								<a id="ja">Japanease (日本語)</a>
+							</button></li>
+						</ul>
 
-                <div id="search-wrapper" class="hidden">
-                    <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
-                    </form>
-                    <div id="searchresults-outer" class="searchresults-outer hidden">
-                        <div id="searchresults-header" class="searchresults-header"></div>
-                        <ul id="searchresults">
-                        </ul>
-                    </div>
-                </div>
+						<script>
+							let langToggle = document.getElementById("language-toggle");
+							let langList = document.getElementById("language-list");
+							langToggle.addEventListener("click", (event) => {
+								langList.style.display = langList.style.display == "block" ? "none" : "block";
+							});
+							let selectedLang = document.getElementById("ja");
+							if (selectedLang) {
+								selectedLang.parentNode.classList.add("theme-selected");
+							}
+							// The path to the root, taking the current language into account.
+							let full_path_to_root = "../../../";
+							// The page path (mdbook only gives us
+							// access to the path to the Markdown file).
+							let path = "review/reviewer/speed.md".replace(/\.md$/, ".html");
+							for (let lang of langList.querySelectorAll("a")) {
+								if (lang.id == "en") {
+									lang.href = `${full_path_to_root}${path}`;
+								} else {
+									lang.href = `${full_path_to_root}${lang.id}/${path}`;
+								}
+							}
+						</script>
+						<!-- end: language picker -->
 
-                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script>
-                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
-                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
-                    });
-                </script>
+						<a href="../../print.html" title="Print this book" aria-label="Print this book">
+							<i id="print-button" class="fa fa-print"></i>
+						</a>
+						<a href="https://github.com/xcd0/eng-practices-ja" title="Git repository" aria-label="Git repository">
+							<i id="git-repository-button" class="fa fa-github"></i>
+						</a>
 
-                <div id="content" class="content">
-                    <main>
-                        <h1 id="コードレビューの速度について"><a class="header" href="#コードレビューの速度について">コードレビューの速度について</a></h1>
+					</div>
+				</div>
+
+				<div id="search-wrapper" class="hidden">
+					<form id="searchbar-outer" class="searchbar-outer">
+						<input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+					</form>
+					<div id="searchresults-outer" class="searchresults-outer hidden">
+						<div id="searchresults-header" class="searchresults-header"></div>
+						<ul id="searchresults">
+						</ul>
+					</div>
+				</div>
+
+				<!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+				<script>
+					document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+					document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+					Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+						link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+					});
+				</script>
+
+				<div id="content" class="content">
+					<main>
+						<h1 id="コードレビューの速度"><a class="header" href="#コードレビューの速度">コードレビューの速度</a></h1>
 <h2 id="why"><a class="header" href="#why">なぜコードレビューを迅速に行うべきか</a></h2>
 <p><strong>Googleでは、開発者チームが一緒に製品を生産する速度を最適化します</strong>。これは、個々の開発者がコードを書く速度を最適化することとは対照的です。個々の開発速度も重要ですが、チーム全体の速度ほどではありません。</p>
 <p>コードレビューが遅いと、いくつかの問題が生じます：</p>
 <ul>
 <li><strong>チーム全体の速度が低下します。</strong> レビューにすぐに対応しない個人は他の仕事を進めるかもしれません。しかし、チームの残りの部分にとっての新機能やバグ修正は、各CLがレビューと再レビューを待つ間、日、週、または月単位で遅れます。</li>
-<li><strong>開発者がコードレビュープロセスに抗議し始めます。</strong> レビュアーが数日おきにしか反応せず、その都度CLに大きな変更を要求する場合、それは開発者にとってイライラすることであり、困難です。しばしば、これは「レビュアーが厳しすぎる」という不満として表現されます。レビュアーが開発者が更新を行うたびに<em>迅速に</em>同じ重要な変更（実際にコードの健全性を向上させる変更）を要求する場合、不満は消える傾向があります。<strong>コードレビュープロセスに関するほとんどの不満は、プロセスを迅速にすることで実際に解決されます。</strong></li>
+<li><strong>開発者がコードレビュープロセスに抗議し始めます。</strong> リビューアが数日おきにしか反応せず、その都度CLに大きな変更を要求する場合、それは開発者にとってイライラすることであり、困難です。しばしば、これは「リビューアが厳しすぎる」という不満として表現されます。リビューアが開発者が更新を行うたびに_迅速に_同じ重要な変更（実際にコードの健全性を向上させる変更）を要求する場合、不満は消える傾向があります。<strong>コードレビュープロセスに関するほとんどの不満は、プロセスを迅速にすることで実際に解決されます。</strong></li>
 <li><strong>コードの健全性に影響を与える可能性があります。</strong> レビューが遅いと、開発者がそれほど良くないCLを提出する圧力が増します。遅いレビューは、コードのクリーンアップ、リファクタリング、および既存のCLへのさらなる改善を抑制する傾向があります。</li>
 </ul>
 <h2 id="fast"><a class="header" href="#fast">コードレビューはどれくらいの速さであるべきか</a></h2>
 <p>集中しているタスクの最中でない限り、<strong>コードレビューは受け取った直後に行うべきです。</strong></p>
 <p>コードレビュー要求に対して反応する最大時間は<strong>1営業日です</strong>（つまり、翌朝の最初の時間）。</p>
 <p>これらのガイドラインに従うと、典型的なCLは必要に応じて1日以内に複数ラウンドのレビューを受けることになります。</p>
-<h2 id="interruption"><a class="header" href="#interruption">Speed vs. Interruption</a></h2>
-<p>個人の作業速度がチームの速度を上回るべき唯一の時があります。<strong>コードを書くなど、集中している作業の最中に、自分を中断してコードレビューを行うべきではありません。</strong>
-研究によると、中断された後に開発のスムーズな流れに戻るまでには、開発者に長い時間がかかることが示されています。従って、コーディング中に自分自身を中断することは、他の開発者がコードレビューを少し待たされることよりも、実際にはチームにとって<em>より</em>コストがかかることになります。</p>
+<h2 id="interruption"><a class="header" href="#interruption">速度 vs. 中断</a></h2>
+<p>個人の作業速度がチームの速度を上回るべき唯一の時があります。<strong>コードを書くなど、集中している作業の最中に、自分を中断してコードレビューを行うべきではありません。</strong> 研究によると、中断された後に開発のスムーズな流れに戻るまでには、開発者に長い時間がかかることが示されています。従って、コーディング中に自分自身を中断することは、他の開発者がコードレビューを少し待たされることよりも、実際にはチームにとって_より_コストがかかることになります。</p>
 <p>代わりに、作業の中断点でレビューの依頼に応答することを待ちます。これは、現在のコーディングタスクが完了した時、ランチ後、会議から戻った時、休憩室から戻ってきた時などが該当します。</p>
 <h2 id="responses"><a class="header" href="#responses">迅速な対応</a></h2>
-<p>コードレビューの速度について話す際、私たちが関心を持っているのは、CLがレビューを通過して提出されるまでにかかる時間ではなく、<em>対応</em>の時間です。全プロセスも理想的には速いべきですが、<strong>個々の対応が迅速に行われることの方が、全プロセスが迅速に行われることよりもさらに重要です。</strong></p>
-<p>たとえ全体のレビュー<em>プロセス</em>を通過するのに時々長い時間がかかる場合でも、プロセス全体を通じてレビュアーからの迅速な対応があることで、「遅い」と感じる開発者のフラストレーションが大幅に軽減されます。</p>
-<p>CLが到着した時に完全なレビューを行うのにあまりにも忙しい場合でも、いつ対応できるか開発者に知らせる迅速な返答を送ったり、より迅速に対応できる可能性のある他のレビュアーを提案したり、<a href="navigate.html">いくつかの初期の広範なコメントを提供する</a>ことができます。（注意：これは、このような返答を送るためにさえコーディングを中断すべきだという意味ではありません。作業の合理的な中断点で返答を送ってください。）</p>
-<p><strong>レビュアーがレビューに十分な時間を費やし、「LGTM」が「このコードは<a href="standard.html">私たちの基準</a>を満たしている」ということを確信していることが重要です。</strong> しかし、個々の対応は理想的には<a href="#fast">迅速</a>であるべきです。</p>
+<p>コードレビューの速度について話す際、私たちが関心を持っているのは、CLがレビューを通過して提出されるまでにかかる時間ではなく、_対応_の時間です。全プロセスも理想的には速いべきですが、<strong>個々の対応が迅速に行われることの方が、全プロセスが迅速に行われることよりもさらに重要です。</strong></p>
+<p>たとえ全体のレビュー_プロセス_を通過するのに時々長い時間がかかる場合でも、プロセス全体を通じてリビューアからの迅速な対応があることで、「遅い」と感じる開発者のフラストレーションが大幅に軽減されます。</p>
+<p>CLが到着した時に完全なレビューを行うのにあまりにも忙しい場合でも、いつ対応できるか開発者に知らせる迅速な返答を送ったり、より迅速に対応できる可能性のある他のリビューアを提案したり、<a href="navigate.html">いくつかの初期の広範なコメントを提供する</a>ことができます。（注意：これは、このような返答を送るためにさえコーディングを中断すべきだという意味ではありません。作業の合理的な中断点で返答を送ってください。）</p>
+<p><strong>リビューアがレビューに十分な時間を費やし、「LGTM」が「このコードは<a href="standard.html">私たちの基準</a>を満たしている」ということを確信していることが重要です。</strong> しかし、個々の対応は理想的には<a href="#fast">迅速</a>であるべきです。</p>
 <h2 id="tz"><a class="header" href="#tz">時差を考慮したレビュー</a></h2>
 <p>時差の差を扱う際は、彼らがその日の業務時間内に返答できるように、著者に返答しようと努めてください。彼らがすでにその日の業務を終えていた場合は、彼らが翌日の業務を開始する前にレビューを完了させるようにしてください。</p>
 <h2 id="lgtm-with-comments"><a class="header" href="#lgtm-with-comments">コメント付きLGTM</a></h2>
-<p>コードレビューを迅速に進めるため、レビュアーが未解決のコメントを残しつつもLGTM/承認を出すべき特定の状況があります。これは以下のいずれかの場合に行われます：</p>
+<p>コードレビューを迅速に進めるため、リビューアが未解決のコメントを残しつつもLGTM/承認を出すべき特定の状況があります。これは以下のいずれかの場合に行われます：</p>
 <ul>
-<li>レビュアーが開発者が全ての残りのコメントを適切に対処すると確信している場合。</li>
+<li>リビューアが開発者が全ての残りのコメントを適切に対処すると確信している場合。</li>
 <li>残りの変更が些細で、開発者が必ずしも行う必要はない場合。</li>
 </ul>
-<p>レビュアーは、どちらのオプションを意図しているかを明確に指定すべきです（それが明確でない場合）。</p>
-<p>開発者とレビュアーが異なるタイムゾーンにいて、開発者が「LGTM、承認」を得るために1日待たなければならない場合には、特にコメント付きLGTMを検討する価値があります。</p>
+<p>リビューアは、どちらのオプションを意図しているかを明確に指定すべきです（それが明確でない場合）。</p>
+<p>開発者とリビューアが異なるタイムゾーンにいて、開発者が「LGTM、承認」を得るために1日待たなければならない場合には、特にコメント付きLGTMを検討する価値があります。</p>
 <h2 id="large"><a class="header" href="#large">大きなCL</a></h2>
-<p>あなたにとても大きなコードレビューが送られてきて、いつレビューできるか分からない場合、通常の対応は開発者に<a href="../developer/small-cls.html">CLをいくつかの小さなCLに分割する</a>よう依頼することです。これは、開発者に追加の作業が必要であっても、通常は可能であり、レビュアーにとって非常に役立ちます。</p>
-<p>CLを小さなCLに分割<em>できない</em>場合、そしてあなたがすぐに全体をレビューする時間がない場合は、少なくともCLの全体的な設計についていくつかのコメントを書き、改善のために開発者に返送してください。レビュアーとしてのあなたの目標の1つは、コードの健全性を犠牲にすることなく、常に開発者のブロックを解除するか、迅速に何らかの行動を取ることができるようにすることです。</p>
+<p>あなたにとても大きなコードレビューが送られてきて、いつレビューできるか分からない場合、通常の対応は開発者に<a href="../developer/small-cls.html">CLをいくつかの小さなCLに分割する</a>よう依頼することです。これは、開発者に追加の作業が必要であっても、通常は可能であり、リビューアにとって非常に役立ちます。</p>
+<p>CLを小さなCLに分割_できない_場合、そしてあなたがすぐに全体をレビューする時間がない場合は、少なくともCLの全体的な設計についていくつかのコメントを書き、改善のために開発者に返送してください。リビューアとしてのあなたの目標の1つは、コードの健全性を犠牲にすることなく、常に開発者のブロックを解除するか、迅速に何らかの行動を取ることができるようにすることです。</p>
 <h2 id="time"><a class="header" href="#time">時間と共に改善されるコードレビュー</a></h2>
-<p>これらのガイドラインに従い、コードレビューに厳格であれば、コードレビュープロセス全体が時間とともにますます速くなることがわかるでしょう。開発者は健全なコードに必要なことを学び、最初から素晴らしいCLを送ってくるようになり、レビュー時間がますます少なくなります。レビュアーは迅速に対応し、レビュープロセスに不必要な遅延を加えないように学びます。
-しかし、<strong>速度の想像される改善のために<a href="standard.html">コードレビュー基準</a>や品質を妥協しないでください</strong>—それは実際には何も早く進めることはありません、長い目で見れば。</p>
+<p>これらのガイドラインに従い、コードレビューに厳格であれば、コードレビュープロセス全体が時間とともにますます速くなることがわかるでしょう。開発者は健全なコードに必要なことを学び、最初から素晴らしいCLを送ってくるようになり、レビュー時間がますます少なくなります。リビューアは迅速に対応し、レビュープロセスに不必要な遅延を加えないように学びます。 しかし、<strong>速度の想像される改善のために<a href="standard.html">コードレビュー基準</a>や品質を妥協しないでください</strong>—それは実際には何も早く進めることはありません、長い目で見れば。</p>
 <h2 id="緊急事態"><a class="header" href="#緊急事態">緊急事態</a></h2>
-<p>CLが非常に迅速に<em>全</em>レビュープロセスを通過しなければならない<a href="../emergencies.html">緊急事態</a>もあり、その場合は品質ガイドラインが緩和されるかもしれません。しかし、どの状況が実際に緊急事態として資格があるか、そしてどれがそうでないかについての説明は、<a href="../emergencies.html#what">何が緊急事態か？</a>をご覧ください。</p>
+<p>CLが非常に迅速に_全_レビュープロセスを通過しなければならない<a href="../emergencies.html">緊急事態</a>もあり、その場合は品質ガイドラインが緩和されるかもしれません。しかし、どの状況が実際に緊急事態として資格があるか、そしてどれがそうでないかについての説明は、<a href="../emergencies.html#what">何が緊急事態か？</a>をご覧ください。</p>
 <p>次: <a href="comments.html">コードレビューコメントの書き方</a></p>
 
-                    </main>
+					</main>
 
-                    <nav class="nav-wrapper" aria-label="Page navigation">
-                        <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../../../ja/review/reviewer/navigate.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
+					<nav class="nav-wrapper" aria-label="Page navigation">
+						<!-- Mobile navigation buttons -->
+							<a rel="prev" href="../../review/reviewer/navigate.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+								<i class="fa fa-angle-left"></i>
+							</a>
 
-                            <a rel="next prefetch" href="../../../ja/review/reviewer/comments.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
+							<a rel="next prefetch" href="../../review/reviewer/comments.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+								<i class="fa fa-angle-right"></i>
+							</a>
 
-                        <div style="clear: both"></div>
-                    </nav>
-                </div>
-            </div>
+						<div style="clear: both"></div>
+					</nav>
+				</div>
+			</div>
 
-            <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../../../ja/review/reviewer/navigate.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
+			<nav class="nav-wide-wrapper" aria-label="Page navigation">
+					<a rel="prev" href="../../review/reviewer/navigate.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+						<i class="fa fa-angle-left"></i>
+					</a>
 
-                    <a rel="next prefetch" href="../../../ja/review/reviewer/comments.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-            </nav>
+					<a rel="next prefetch" href="../../review/reviewer/comments.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+						<i class="fa fa-angle-right"></i>
+					</a>
+			</nav>
 
-        </div>
-
-
+		</div>
 
 
-        <script>
-            window.playground_copyable = true;
-        </script>
 
 
-        <script src="../../../elasticlunr.min.js"></script>
-        <script src="../../../mark.min.js"></script>
-        <script src="../../../searcher.js"></script>
-
-        <script src="../../../clipboard.min.js"></script>
-        <script src="../../../highlight.js"></script>
-        <script src="../../../book.js"></script>
-
-        <!-- Custom JS scripts -->
+		<script>
+			window.playground_copyable = true;
+		</script>
 
 
-    </div>
-    </body>
+		<script src="../../elasticlunr.min.js"></script>
+		<script src="../../mark.min.js"></script>
+		<script src="../../searcher.js"></script>
+
+		<script src="../../clipboard.min.js"></script>
+		<script src="../../highlight.js"></script>
+		<script src="../../book.js"></script>
+
+		<!-- Custom JS scripts -->
+
+
+	</div>
+	</body>
 </html>

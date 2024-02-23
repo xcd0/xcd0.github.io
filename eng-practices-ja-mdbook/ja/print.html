@@ -1,0 +1,782 @@
+<!DOCTYPE HTML>
+<html lang="ja" class="light" dir="ltr">
+	<head>
+		<!-- Book generated using mdBook -->
+		<meta charset="UTF-8">
+		<title>Google Engineering Practices Documentation</title>
+		<meta name="robots" content="noindex">
+
+
+		<!-- Custom HTML head -->
+		
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#ffffff">
+
+		<link rel="icon" href="favicon.svg">
+		<link rel="shortcut icon" href="favicon.png">
+		<link rel="stylesheet" href="css/variables.css">
+		<link rel="stylesheet" href="css/general.css">
+		<link rel="stylesheet" href="css/chrome.css">
+		<link rel="stylesheet" href="css/print.css" media="print">
+
+		<!-- Fonts -->
+		<link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+		<link rel="stylesheet" href="fonts/fonts.css">
+
+		<!-- Highlight.js Stylesheets -->
+		<link rel="stylesheet" href="highlight.css">
+		<link rel="stylesheet" href="tomorrow-night.css">
+		<link rel="stylesheet" href="ayu-highlight.css">
+
+		<!-- Custom theme stylesheets -->
+		<link rel="stylesheet" href="theme/css/language-picker.css">
+
+	</head>
+	<body class="sidebar-visible no-js">
+	<div id="body-container">
+		<!-- Provide site root to javascript -->
+		<script>
+			var path_to_root = "";
+			var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+		</script>
+
+		<!-- Work around some values being stored in localStorage wrapped in quotes -->
+		<script>
+			try {
+				var theme = localStorage.getItem('mdbook-theme');
+				var sidebar = localStorage.getItem('mdbook-sidebar');
+
+				if (theme.startsWith('"') && theme.endsWith('"')) {
+					localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+				}
+
+				if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+					localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+				}
+			} catch (e) { }
+		</script>
+
+		<!-- Set the theme before any content is loaded, prevents flash -->
+		<script>
+			var theme;
+			try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+			if (theme === null || theme === undefined) { theme = default_theme; }
+			var html = document.querySelector('html');
+			html.classList.remove('light')
+			html.classList.add(theme);
+			var body = document.querySelector('body');
+			body.classList.remove('no-js')
+			body.classList.add('js');
+		</script>
+
+		<input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+		<!-- Hide / unhide sidebar before it is displayed -->
+		<script>
+			var body = document.querySelector('body');
+			var sidebar = null;
+			var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+			if (document.body.clientWidth >= 1080) {
+				try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+				sidebar = sidebar || 'visible';
+			} else {
+				sidebar = 'hidden';
+			}
+			sidebar_toggle.checked = sidebar === 'visible';
+			body.classList.remove('sidebar-visible');
+			body.classList.add("sidebar-" + sidebar);
+		</script>
+
+		<nav id="sidebar" class="sidebar" aria-label="Table of contents">
+			<div class="sidebar-scrollbox">
+				<ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> Googleのエンジニアリングプラクティスドキュメント</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="review/index.html"><strong aria-hidden="true">1.1.</strong> はじめに</a></li><li class="chapter-item expanded "><a href="review/developer/index.html"><strong aria-hidden="true">1.2.</strong> CL作成者のコードレビューを乗り越えるためのガイド</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="review/developer/cl-descriptions.html"><strong aria-hidden="true">1.2.1.</strong> 良いCLの説明文を書く</a></li><li class="chapter-item expanded "><a href="review/developer/small-cls.html"><strong aria-hidden="true">1.2.2.</strong> 小さなCLs</a></li><li class="chapter-item expanded "><a href="review/developer/handling-comments.html"><strong aria-hidden="true">1.2.3.</strong> レビューコメントの扱い方</a></li></ol></li><li class="chapter-item expanded "><a href="review/reviewer/index.html"><strong aria-hidden="true">1.3.</strong> どのようにコードリビューするか</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="review/reviewer/standard.html"><strong aria-hidden="true">1.3.1.</strong> コードレビューの基準</a></li><li class="chapter-item expanded "><a href="review/reviewer/looking-for.html"><strong aria-hidden="true">1.3.2.</strong> コードレビューで注目すべきポイント</a></li><li class="chapter-item expanded "><a href="review/reviewer/navigate.html"><strong aria-hidden="true">1.3.3.</strong> レビュー中のCLのナビゲーション</a></li><li class="chapter-item expanded "><a href="review/reviewer/speed.html"><strong aria-hidden="true">1.3.4.</strong> コードレビューの速度</a></li><li class="chapter-item expanded "><a href="review/reviewer/comments.html"><strong aria-hidden="true">1.3.5.</strong> コードレビューコメントの書き方</a></li><li class="chapter-item expanded "><a href="review/reviewer/pushback.html"><strong aria-hidden="true">1.3.6.</strong> コードレビューでの反発の扱い</a></li></ol></li><li class="chapter-item expanded "><a href="review/emergencies.html"><strong aria-hidden="true">1.4.</strong> 緊急事態</a></li></ol></li></ol>
+			</div>
+			<div id="sidebar-resize-handle" class="sidebar-resize-handle">
+				<div class="sidebar-resize-indicator"></div>
+			</div>
+		</nav>
+
+		<!-- Track and set sidebar scroll position -->
+		<script>
+			var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+			sidebarScrollbox.addEventListener('click', function(e) {
+				if (e.target.tagName === 'A') {
+					sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+				}
+			}, { passive: true });
+			var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+			sessionStorage.removeItem('sidebar-scroll');
+			if (sidebarScrollTop) {
+				// preserve sidebar scroll position when navigating via links within sidebar
+				sidebarScrollbox.scrollTop = sidebarScrollTop;
+			} else {
+				// scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+				var activeSection = document.querySelector('#sidebar .active');
+				if (activeSection) {
+					activeSection.scrollIntoView({ block: 'center' });
+				}
+			}
+		</script>
+
+		<div id="page-wrapper" class="page-wrapper">
+
+			<div class="page">
+								<div id="menu-bar-hover-placeholder"></div>
+				<div id="menu-bar" class="menu-bar sticky">
+					<div class="left-buttons">
+						<label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+							<i class="fa fa-bars"></i>
+						</label>
+						<button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+							<i class="fa fa-paint-brush"></i>
+						</button>
+						<ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+							<li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+							<li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+							<li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+							<li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+							<li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+						</ul>
+						<button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+							<i class="fa fa-search"></i>
+						</button>
+					</div>
+
+					<h1 class="menu-title">Google Engineering Practices Documentation</h1>
+
+					<div class="right-buttons">
+
+						<!-- start: language picker -->
+						<!-- https://github.com/google/comprehensive-rust/blob/main/theme/index.hbs#L172-L227 -->
+						<button id="language-toggle" class="icon-button" type="button"
+								title="Change language" aria-label="Change language"
+								aria-haspopup="true" aria-expanded="false"
+								aria-controls="language-list">
+							<i class="fa fa-globe"></i>
+						</button>
+						<ul id="language-list" class="theme-popup" aria-label="Languages" role="menu">
+							<li role="none"><button role="menuitem" class="theme">
+								<a id="en">English</a>
+							</button></li>
+							<li role="none"><button role="menuitem" class="theme">
+								<a id="ja">Japanease (日本語)</a>
+							</button></li>
+						</ul>
+
+						<script>
+							let langToggle = document.getElementById("language-toggle");
+							let langList = document.getElementById("language-list");
+							langToggle.addEventListener("click", (event) => {
+								langList.style.display = langList.style.display == "block" ? "none" : "block";
+							});
+							let selectedLang = document.getElementById("ja");
+							if (selectedLang) {
+								selectedLang.parentNode.classList.add("theme-selected");
+							}
+							// The path to the root, taking the current language into account.
+							let full_path_to_root = "../";
+							// The page path (mdbook only gives us
+							// access to the path to the Markdown file).
+							let path = "print.md".replace(/\.md$/, ".html");
+							for (let lang of langList.querySelectorAll("a")) {
+								if (lang.id == "en") {
+									lang.href = `${full_path_to_root}${path}`;
+								} else {
+									lang.href = `${full_path_to_root}${lang.id}/${path}`;
+								}
+							}
+						</script>
+						<!-- end: language picker -->
+
+						<a href="print.html" title="Print this book" aria-label="Print this book">
+							<i id="print-button" class="fa fa-print"></i>
+						</a>
+						<a href="https://github.com/xcd0/eng-practices-ja" title="Git repository" aria-label="Git repository">
+							<i id="git-repository-button" class="fa fa-github"></i>
+						</a>
+
+					</div>
+				</div>
+
+				<div id="search-wrapper" class="hidden">
+					<form id="searchbar-outer" class="searchbar-outer">
+						<input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+					</form>
+					<div id="searchresults-outer" class="searchresults-outer hidden">
+						<div id="searchresults-header" class="searchresults-header"></div>
+						<ul id="searchresults">
+						</ul>
+					</div>
+				</div>
+
+				<!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+				<script>
+					document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+					document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+					Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+						link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+					});
+				</script>
+
+				<div id="content" class="content">
+					<main>
+						<h1 id="googleのエンジニアリングプラクティスドキュメント"><a class="header" href="#googleのエンジニアリングプラクティスドキュメント">Googleのエンジニアリングプラクティスドキュメント</a></h1>
+<p>Googleは、すべての言語とプロジェクトに適用される多くの一般的なエンジニアリングプラクティスを持っています。これらのドキュメントは、私たちが時間をかけて開発してきたさまざまなベストプラクティスの集合的な経験を表しています。オープンソースプロジェクトや他の組織も、この知識を活用できる可能性があるため、できる限り公開するように取り組んでいます。</p>
+<p>現在、以下のドキュメントが含まれています：</p>
+<ul>
+<li><a href="review/index.html">Googleのコードレビューガイドライン</a>（実際には2つの別々のドキュメントです）：
+<ul>
+<li><a href="review/reviewer/index.html">コードリビューアのガイド</a></li>
+<li><a href="review/developer/index.html">変更作成者のガイド</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="用語"><a class="header" href="#用語">用語</a></h2>
+<p>これらのドキュメントの一部には、Google内部の用語が使用されていますが、外部の読者のためにここで説明します：</p>
+<ul>
+<li><strong>CL</strong>：「changelist」の略で、バージョン管理に提出されたまたはコードレビュー中の、1つの自己完結型の変更を意味します。他の組織では、これを「変更」、「パッチ」、または「プルリクエスト」と呼ぶことがよくあります。</li>
+<li><strong>LGTM</strong>：「Looks Good to Me」の略で、コードリビューアがCLを承認する際に言う言葉です。</li>
+</ul>
+<h2 id="ライセンス"><a class="header" href="#ライセンス">ライセンス</a></h2>
+<p>このプロジェクトのドキュメントは、<a href="LICENSE">CC-By 3.0ライセンス</a>の下でライセンスされています。このライセンスでは、これらのドキュメントを共有することを奨励しています。詳細については、<a href="https://creativecommons.org/licenses/by/3.0/">https://creativecommons.org/licenses/by/3.0/</a>を参照してください。</p>
+<p><a rel="license" href="https://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a></p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="intro"><a class="header" href="#intro">はじめに</a></h2>
+<p>コードレビューとは、コードの著者以外の人がそのコードを検討するプロセスです。</p>
+<p>Googleでは、コードレビューを通じてコードと製品の品質を維持しています。</p>
+<p>このドキュメントは、Googleのコードレビューのプロセスとポリシーの正式な説明です。</p>
+<p>このページは、コードレビューのプロセスの概要です。このガイドの一部となる他の2つの大きなドキュメントがあります。</p>
+<ul>
+<li><strong><a href="review/reviewer/index.html">コードレビューの方法</a></strong>: コードリビューアのための詳細なガイドです。</li>
+<li><strong><a href="review/developer/index.html">CL著者ガイド</a></strong>: レビューを受けるCLを作成する開発者のための詳細なガイドです。</li>
+</ul>
+<h2 id="look_for"><a class="header" href="#look_for">コードリビューアは何を見るのか？</a></h2>
+<p>コードレビューでは以下の点に注意する必要があります：</p>
+<ul>
+<li><strong>デザイン</strong>：コードはシステムに適切に設計されていますか？</li>
+<li><strong>機能性</strong>：コードは作者の意図通りに動作していますか？コードの動作はユーザーにとって良いですか？</li>
+<li><strong>複雑さ</strong>：コードはもっとシンプルにできますか？他の開発者が将来このコードに出くわしたときに簡単に理解して使用できますか？</li>
+<li><strong>テスト</strong>：コードには正しい自動テストがありますか？それらは設計が良いですか？</li>
+<li><strong>命名</strong>：開発者は変数、クラス、メソッドなどに明確な名前を選びましたか？</li>
+<li><strong>コメント</strong>：コメントは明確で有用ですか？</li>
+<li><strong>スタイル</strong>：コードは私たちの<a href="http://google.github.io/styleguide/">スタイルガイド</a>に従っていますか？</li>
+<li><strong>ドキュメンテーション</strong>：開発者は関連するドキュメントも更新しましたか？</li>
+</ul>
+<p>詳細については、**<a href="review/reviewer/index.html">コードレビューの方法</a>**を参照してください。</p>
+<h3 id="best_reviewers"><a class="header" href="#best_reviewers">最適なリビューアの選択</a></h3>
+<p>一般的には、できるだけ早くレビューに対応できる「最適な」リビューアを見つけることが望ましいです。</p>
+<p>最適なリビューアとは、あなたが書いているコードの部分に対して、最も詳細かつ正確なレビューをしてくれる人のことです。通常、これはコードの所有者であり、OWNERSファイルに記載されている人々かもしれません。時には、異なる人々に異なる部分のレビューを依頼することもあります。</p>
+<p>理想的なリビューアを見つけた場合でも、その人が利用できない場合は、少なくとも変更に関して彼らをCCに追加するべきです。</p>
+<h3 id="in_person"><a class="header" href="#in_person">直接対面でのレビュー（およびペアプログラミング）</a></h3>
+<p>もし、コードの一部を資格のある人とペアプログラミングで行い、そのコードに対して良いコードレビューが行われた場合、そのコードはレビュー済みとみなされます。</p>
+<p>また、対面でのコードレビューも行うことができます。リビューアが質問をし、変更を行った開発者は問われたときにのみ話すことができます。</p>
+<h2 id="seealso"><a class="header" href="#seealso">関連情報</a></h2>
+<ul>
+<li><a href="review/reviewer/index.html">コードレビューの方法</a>: コードリビューアのための詳細なガイド。</li>
+<li><a href="review/developer/index.html">CL作成者ガイド</a>: レビューを受けるCLを作成する開発者のための詳細なガイド。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cl作成者のコードレビューを乗り越えるためのガイド"><a class="header" href="#cl作成者のコードレビューを乗り越えるためのガイド">CL作成者のコードレビューを乗り越えるためのガイド</a></h1>
+<p>このセクションのページには、コードレビューを行う開発者のためのベストプラクティスが含まれています。これらのガイドラインは、レビューをより速く、より高品質な結果で終えるのに役立つはずです。すべてを読む必要はありませんが、これらはすべてのGoogleの開発者に適用されることを意図しており、多くの人々が全体を読むことが役立つと感じています。</p>
+<ul>
+<li><a href="review/developer/cl-descriptions.html">良いCLの説明の書き方</a></li>
+<li><a href="review/developer/small-cls.html">小さなCL</a></li>
+<li><a href="review/developer/handling-comments.html">レビューコメントの処理方法</a></li>
+</ul>
+<p>また、コードレビューを行う人には詳細なガイダンスを提供する<a href="review/developer/../reviewer/index.html">コードレビューの方法</a>も参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="良いclの説明文を書く"><a class="header" href="#良いclの説明文を書く">良いCLの説明文を書く</a></h1>
+<p>CLの説明文は、<strong>何が</strong>変更されているのかと、<strong>なぜ</strong>その変更が行われたのかを公に記録するものです。これは、バージョン管理の履歴の一部となり、レビュワー以外の数百人の人々によって何年もの間読まれる可能性があります。</p>
+<p>将来の開発者は、説明文に基づいてCLを検索するでしょう。将来の誰かが、関連性のある変更のかすかな記憶を持っているが、具体的な情報が手元にないために、あなたの変更を探しているかもしれません。重要な情報がコードではなく説明文にある場合、彼らがあなたのCLを見つけるのはずっと難しくなります。</p>
+<h2 id="firstline"><a class="header" href="#firstline">最初の行</a></h2>
+<ul>
+<li>行われていることの短い要約。</li>
+<li>命令として書かれた完全な文。</li>
+<li>空行で区切る。</li>
+</ul>
+<p>CLの説明の<strong>最初の行</strong>は、具体的にCLによって<strong>何が行われているか</strong>の短い要約である。その後に空行を置く。これはバージョン管理の履歴の要約に表示されるため、将来のコード検索者があなたのCLやその説明全体を読まなくても、実際にCLが何をしたのか、他のCLとどのように異なるのかを理解するのに十分な情報であるべきです。つまり、最初の行は単独で成立し、読者がコードの履歴をスキャンするのをはるかに速くすることができるようにする必要があります。</p>
+<p>最初の行を短く、焦点を絞り、要点に留めるようにしてください。読者への明確さと有用性が最優先です。</p>
+<p>伝統的に、CLの説明の最初の行は、命令文（命令文）として書かれた完全な文です。例えば、「FizzBuzz RPCを<strong>削除</strong>し、新しいシステムで<strong>置き換える</strong>」と言う代わりに、「FizzBuzz RPCを<strong>削除して</strong>新しいシステムで<strong>置き換える</strong>」と書きます。ただし、説明の残りを命令文として書く必要はありません。</p>
+<h2 id="informative"><a class="header" href="#informative">本文は情報提供です</a></h2>
+<p><a href="review/developer/cl-descriptions.html#firstline">最初の行</a>は短く、焦点を絞った要約であるべきです。その他の説明では、変更リストを全体的に理解するために読者が必要とする補足情報や詳細を含めるべきです。解決されている問題の簡単な説明や、なぜこれが最善のアプローチなのかを含めることがあります。アプローチの欠点がある場合は、それも述べるべきです。関連する場合、バグ番号やベンチマーク結果、設計文書へのリンクなどの背景情報も含めることができます。</p>
+<p>外部リソースへのリンクを含める場合、アクセス制限や保持ポリシーにより将来の読者には表示されない可能性があることを考慮してください。可能な限り、レビュワーや将来の読者がCLを理解するための十分な文脈を含めてください。</p>
+<p>小さなCLでも細部に注意を払う価値があります。CLを文脈に置いてください。</p>
+<h2 id="bad"><a class="header" href="#bad">不適切なCLの説明</a></h2>
+<p>「バグを修正する」というCLの説明は不十分です。どのバグですか？それを修正するために何をしましたか？ 同様に不適切な説明には以下のものがあります：</p>
+<ul>
+<li>「ビルドを修正する」</li>
+<li>「パッチを追加する」</li>
+<li>「コードをAからBに移動する」</li>
+<li>「フェーズ1」</li>
+<li>「便利な関数を追加する」</li>
+<li>「奇妙なURLを削除する」</li>
+</ul>
+<p>これらのいくつかは実際のCLの説明です。短いですが、十分な有用な情報を提供していません。</p>
+<h2 id="good"><a class="header" href="#good">良いCLの説明例</a></h2>
+<p>以下に、良い説明の例をいくつか示します。</p>
+<h3 id="機能変更"><a class="header" href="#機能変更">機能変更</a></h3>
+<p>例：</p>
+<blockquote>
+<p>RPC: RPCサーバーメッセージフリーリストのサイズ制限を削除します。</p>
+<p>FizzBuzzのようなサーバーは非常に大きなメッセージを持っており、再利用することで利益を得ることができます。 フリーリストを大きくし、フリーリストのエントリを時間をかけて解放するゴルーチンを追加します。 これにより、アイドル状態のサーバーは最終的にすべてのフリーリストエントリを解放します。</p>
+</blockquote>
+<p>最初の数語でCLが実際に何をするのかを説明します。残りの説明では、解決される問題、これがなぜ良い解決策なのか、そして具体的な実装についてもう少し情報を話します。</p>
+<h3 id="リファクタリング"><a class="header" href="#リファクタリング">リファクタリング</a></h3>
+<p>例：</p>
+<blockquote>
+<p>タスクを構築し、そのTimeStrメソッドとNowメソッドを使用するために、TimeKeeperを使用します。</p>
+<p>タスクにNowメソッドを追加し、borglet()のゲッターメソッドを削除します（これは、OOMCandidateがborgletのNowメソッドを呼び出すためにのみ使用されていました）。これにより、Borgletに委譲するメソッドが置き換えられます。</p>
+<p>タスクがNowを提供できるようにすることは、Borgletへの依存を排除するための一歩です。最終的には、タスクからNowを取得する依存関係を直接TimeKeeperを使用するように変更する必要がありますが、これはリファクタリングを段階的に行うための配慮です。</p>
+<p>Borgletの階層を長期的にリファクタリングする目標を続けます。</p>
+</blockquote>
+<p>最初の行は、CLが何を行い、これが過去からの変更であることを説明しています。説明の残りの部分は、具体的な実装、CLの文脈、解決策が理想的ではないこと、および将来の方向性について説明しています。また、なぜこの変更が行われるのかも説明しています。</p>
+<h3 id="コンテキストが必要な小さなcl"><a class="header" href="#コンテキストが必要な小さなcl">コンテキストが必要な小さなCL</a></h3>
+<p>例：</p>
+<blockquote>
+<p>status.pyのためのPython3のビルドルールを作成します。</p>
+<p>これにより、既にPython3を使用しているコンシューマーは、元のstatusのビルドルールの隣にあるルールに依存することができます。これは、自分自身のツリーのどこかではなく、元のビルドルールの隣に依存することを意味します。これにより、新しいコンシューマーは、可能な限りPython3を使用することが奨励され、現在作業中のいくつかの自動ビルドファイルのリファクタリングツールが大幅に簡素化されます。</p>
+</blockquote>
+<p>最初の文は実際に何が行われているかを説明しています。残りの説明は、変更がなぜ行われているのかを説明し、レビュアーに多くの文脈を提供します。</p>
+<h2 id="tags"><a class="header" href="#tags">タグの使用</a></h2>
+<p>タグは手動で入力されるラベルであり、CL（変更リスト）を分類するために使用できます。これらはツールによってサポートされる場合もありますし、チームの慣習として使用される場合もあります。</p>
+<p>例：</p>
+<ul>
+<li>"[tag]"</li>
+<li>"[a longer tag]"</li>
+<li>"#tag"</li>
+<li>"tag:"</li>
+</ul>
+<p>タグの使用は任意です。</p>
+<p>タグを追加する際には、<a href="review/developer/cl-descriptions.html#informative">CLの説明の本文</a>または<a href="review/developer/cl-descriptions.html#firstline">最初の行</a>に配置するかどうかを考慮してください。最初の行でのタグの使用は、内容をわかりにくくする可能性があるため、制限してください。</p>
+<p>タグの使用例（タグありとタグなし）：</p>
+<pre><code class="language-{.good}">// タグは最初の行に短く保つ場合は問題ありません。
+[banana] バナナを食べる前に皮をむいてください。
+
+// タグはコンテンツ内にインラインで配置することもできます。
+バナナを食べる前に #banana をむいてください。
+
+// タグは任意です。
+バナナを食べる前に皮をむいてください。
+
+// タグが短く保たれている場合、複数のタグを使用することもできます。
+#banana #apple: 果物のかごを組み立てる。
+
+// タグはCLの説明のどこにでも配置できます。
+&gt; 果物のかごを組み立てる。
+&gt;
+&gt; #banana #apple
+</code></pre>
+<pre><code class="language-{.bad}">// タグが多すぎる（または長すぎる）と最初の行が混雑します。
+//
+// 代わりに、タグを説明の本文に移動したり、短縮したりできるかどうかを検討してください。
+[banana peeler factory factory][apple picking service] 果物のかごを組み立てる。
+</code></pre>
+<h2 id="生成されたclの説明"><a class="header" href="#生成されたclの説明">生成されたCLの説明</a></h2>
+<p>一部のCLはツールによって生成されます。できる限り、その説明もここでのアドバイスに従うべきです。つまり、最初の行は短く、焦点を絞り、単独で成立し、CLの説明本文には、レビュワーや将来のコード検索者が各CLの効果を理解するのに役立つ情報を含めるべきです。</p>
+<h2 id="clを提出する前に説明を確認してください"><a class="header" href="#clを提出する前に説明を確認してください">CLを提出する前に説明を確認してください</a></h2>
+<p>CLはレビュー中に大きな変更が加えられることがあります。CLを提出する前に、CLの説明を再確認して、説明がCLの内容を正確に反映していることを確認することが価値があります。</p>
+<p>次: <a href="review/developer/small-cls.html">小さなCL</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="小さなcls"><a class="header" href="#小さなcls">小さなCLs</a></h1>
+<h2 id="why"><a class="header" href="#why">なぜ小さなCLを書くのか？</a></h2>
+<p>小さくてシンプルなCLの方が以下のような利点があります：</p>
+<ul>
+<li><strong>迅速にレビューされる</strong>：リビューアは小さなCLを数回に分けて5分ずつ見つける方が、1つの大きなCLを30分のブロックに割り当てるよりも簡単です。</li>
+<li><strong>徹底的にレビューされる</strong>：大きな変更では、詳細なコメントが行ったり来たりすることで、リビューアや著者はイライラし、重要なポイントが見落とされたり落とされたりすることがあります。</li>
+<li><strong>バグを導入する可能性が低い</strong>：変更が少ないため、CLの影響を効果的に推論し、バグが導入されていないかを確認することが容易です。</li>
+<li><strong>却下された場合の無駄な作業が少ない</strong>：巨大なCLを書いて、リビューアが全体的な方向性が間違っていると言った場合、多くの作業が無駄になります。</li>
+<li><strong>マージが容易</strong>：大きなCLで作業するのは時間がかかるため、マージする際に多くの競合が発生し、頻繁にマージする必要があります。</li>
+<li><strong>設計が容易</strong>：小さな変更の設計とコードの品質を磨く方が、大きな変更の詳細を洗練するよりも簡単です。</li>
+<li><strong>レビューにブロックされることが少ない</strong>：全体的な変更の自己完結した部分を送信することで、現在のCLがレビューされるのを待ちながらコーディングを続けることができます。</li>
+<li><strong>ロールバックが簡単</strong>：大きなCLは、初期のCLの提出とロールバックCLの間に更新されるファイルに触れる可能性が高く、ロールバックが複雑になります（中間のCLもロールバックする必要があるかもしれません）。</li>
+</ul>
+<p>なお、**リビューアはCLが大きすぎるために変更を拒否する権限を持っています。**通常、彼らはあなたの貢献に感謝し、それを一連の小さな変更にするように要求するでしょう。すでに書いた変更を分割するのは大変な作業であり、また、レビュアーが受け入れるべき理由について議論する時間がかかるかもしれません。</p>
+<h2 id="what_is_small"><a class="header" href="#what_is_small">Smallとは何ですか？</a></h2>
+<p>一般的に、CLの適切なサイズは<strong>1つの自己完結した変更</strong>です。つまり、以下のような特徴を持ちます。</p>
+<ul>
+<li>CLは、<strong>1つのこと</strong>に対処する最小限の変更を行います。通常、機能全体ではなく、機能の一部に対して行われます。一般的には、CLが大きすぎるよりも小さすぎるCLを書く方が良いです。受託者と協力して、受け入れ可能なサイズを見つけましょう。</li>
+<li>CLには、<a href="review/developer/small-cls.html#test_code">関連するテストコード</a>が含まれている必要があります。</li>
+<li>CLについて理解するためにリビューアが必要とする情報は、CL自体、CLの説明、既存のコードベース、または既にレビューされたCLに含まれています。</li>
+<li>CLがチェックインされた後も、システムはユーザーと開発者の両方にとってうまく機能し続けます。</li>
+<li>CLの影響が理解しにくいほど小さすぎるわけではありません。新しいAPIを追加する場合は、同じCL内でAPIの使用例を含めることで、リビューアがAPIの使用方法をより理解しやすくすることができます。これにより、未使用のAPIをチェックインすることも防げます。</li>
+</ul>
+<p>「大きすぎる」とは具体的な基準はありませんが、通常、100行程度のCLは適切なサイズであり、1000行は通常、大きすぎるとされます。ただし、これはリビューアの判断に委ねられます。変更が広範囲にわたるファイル数も「サイズ」に影響を与えます。1つのファイルで200行の変更は問題ないかもしれませんが、50のファイルに分散されると通常、大きすぎるとされます。</p>
+<p>自分がコードを書き始めた瞬間からコードに深く関与しているかもしれませんが、レビュアーにはその文脈がないことを念頭に置いてください。あなたにとっては受け入れ可能なサイズのCLでも、リビューアにとっては圧倒的なものに見えるかもしれません。迷った場合は、思ったよりも小さなCLを書くようにしましょう。リビューアは、あまり小さすぎるCLを受け取ったとは滅多に文句を言いません。</p>
+<h2 id="large_okay"><a class="header" href="#large_okay">大規模な変更が許容される場合</a></h2>
+<p>大規模な変更が問題にならない場合はいくつかあります。</p>
+<ul>
+<li>ファイル全体の削除は、リビューアがレビューするのにあまり時間がかからないため、1行の変更として数えることができます。</li>
+<li>時には、完全に信頼できる自動リファクタリングツールによって生成された大規模な変更があります。リビューアの仕事は、変更が本当に必要であることを確認し、承認することです。これらの変更は大きくなることがありますが、上記の注意事項（マージやテストなど）は依然として適用されます。</li>
+</ul>
+<h2 id="efficiently"><a class="header" href="#efficiently">効率的に小さなCLを書く方法</a></h2>
+<p>もし小さなCLを書いてからレビュワーに承認されるのを待ってから次のCLを書くとすると、多くの時間を無駄にすることになります。ですので、レビュー待ちの間にブロックされない方法を見つける必要があります。これには、同時に複数のプロジェクトに取り組む、即座に利用可能なレビュワーを見つける、対面でのレビュー、ペアプログラミング、またはCLを分割して即座に作業を続ける方法などが含まれるかもしれません。</p>
+<h2 id="splitting"><a class="header" href="#splitting">CLの分割</a></h2>
+<p>相互に依存関係がある可能性のある複数のCLを持つ作業を開始する際には、コーディングに入る前に、高レベルでCLを分割して組織する方法を考えることがしばしば役立ちます。</p>
+<p>CLの作成者として、CLを管理・組織するためにも便利ですし、コードリビューアにとっても作業を容易にし、コードレビューを効率化することができます。</p>
+<p>以下に、作業を異なるCLに分割するためのいくつかの戦略を示します。</p>
+<h3 id="stacking"><a class="header" href="#stacking">重ねて変更を積み重ねる</a></h3>
+<p>自分自身をブロックせずにCLを分割する方法の一つは、小さなCLを書いて、レビューに送り、すぐに最初のCLを基にした別のCLを書き始めることです。ほとんどのバージョン管理システムは、何らかの方法でこれを行うことができます。</p>
+<h3 id="splitting-files"><a class="header" href="#splitting-files">ファイルごとの分割</a></h3>
+<p>CLを分割する別の方法は、異なるレビュワーが必要ながらもそれ以外は独立した変更を必要とするファイルのグループによって行うことです。</p>
+<p>例えば、プロトコルバッファの修正のための1つのCLと、そのプロトを使用するコードの変更のための別のCLを送信します。コードのCLを送信する前にプロトのCLを提出する必要がありますが、両方のCLは同時にレビューできます。これを行う場合、自分が書いた他のCLについて両方のレビュワーに通知することが望ましいかもしれません。これにより、変更の文脈を持っていることができます。</p>
+<p>別の例として、コードの変更のための1つのCLと、そのコードを使用する設定や実験のための別のCLを送信します。必要に応じて、設定/実験ファイルはコードの変更よりも早く本番環境にプッシュされることがあるため、必要に応じて簡単に元に戻すこともできます。</p>
+<h3 id="splitting-horizontally"><a class="header" href="#splitting-horizontally">水平分割</a></h3>
+<p>テックスタックの各層間の変更を分離するのに役立つ共有コードやスタブを作成することを考えてみてください。これにより、開発を迅速化するだけでなく、各層間の抽象化も促進されます。</p>
+<p>例えば、クライアント、API、サービス、データモデルの各層を持つ電卓アプリを作成したとします。共有のプロト署名を使用することで、サービスとデータモデルの層を互いに分離することができます。同様に、APIスタブを使用することで、クライアントコードとサービスコードの実装を分割し、それぞれが独立して進めるようにすることができます。同様のアイデアは、より詳細な関数やクラスレベルの抽象化にも適用することができます。</p>
+<h3 id="splitting-vertically"><a class="header" href="#splitting-vertically">垂直に分割する</a></h3>
+<p>階層的で水平なアプローチとは異なり、コードを小さなフルスタックの垂直な機能に分割することもできます。これらの機能のそれぞれは独立した並行実装トラックとなります。これにより、一部のトラックがレビューやフィードバック待ちの間も前進することができます。</p>
+<p><a href="review/developer/small-cls.html#splitting-horizontally">水平に分割する</a>での計算機の例に戻りましょう。今度は、乗算や除算などの新しい演算子をサポートしたいとします。これを、乗算と除算を別々の垂直な機能やサブフィーチャーとして実装することで分割することができます。ただし、共有のボタンスタイリングや共有のバリデーションロジックなど、一部の重複があるかもしれません。</p>
+<h3 id="splitting-grid"><a class="header" href="#splitting-grid">水平および垂直に分割する</a></h3>
+<p>さらに進んで、これらのアプローチを組み合わせて、次のような実装計画を作成することができます。各セルは独立したCLです。 モデル（一番下）からクライアントまで進めるようにします。<blockquote>(訳注)<br>公式の表が崩れている。<br>
+<a href="https://google.github.io/eng-practices/review/developer/small-cls.html#splitting-grid">https://google.github.io/eng-practices/review/developer/small-cls.html#splitting-grid</a><br>githubの状態に合わせている。<br>
+<a href="https://github.com/google/eng-practices/blob/master/review/developer/small-cls.md#splitting-horizontally--vertically-splitting-grid">https://github.com/google/eng-practices/blob/master/review/developer/small-cls.md#splitting-horizontally--vertically-splitting-grid</a></blockquote></p>
+<div class="table-wrapper"><table><thead><tr><th>レイヤー</th><th>機能：乗算</th><th>機能：除算</th></tr></thead><tbody>
+<tr><td>クライアント</td><td>追加ボタン</td><td>追加ボタン</td></tr>
+<tr><td>API</td><td>エンドポイントを追加</td><td>エンドポイントを追加</td></tr>
+<tr><td>サービス</td><td>変換を実装</td><td>乗算と共有変換ロジックを</td></tr>
+<tr><td>:         :                           : 追加する :</td><td></td><td></td></tr>
+<tr><td>モデル</td><td>プロト定義を追加</td><td>プロト定義を追加</td></tr>
+</tbody></table>
+</div>
+<h2 id="refactoring"><a class="header" href="#refactoring">リファクタリングを分離する</a></h2>
+<p>リファクタリングは、通常、機能の変更やバグ修正とは別のCLで行うのが最善です。例えば、クラスの移動や名前の変更は、そのクラスのバグ修正とは別のCLで行うべきです。各CLごとに導入される変更をレビュワーが理解しやすくするためには、分離する方がはるかに簡単です。</p>
+<p>ただし、ローカル変数名の修正などの小さなクリーンアップは、機能の変更やバグ修正のCL内に含めることもできます。ただし、現在のCLに含めるとレビューがより困難になると判断される場合は、開発者とレビュワーの判断に委ねられます。</p>
+<h2 id="test_code"><a class="header" href="#test_code">関連するテストコードを同じCLにまとめる</a></h2>
+<p>CLには関連するテストコードを含めるべきです。ここでの「小ささ」とは、CLが焦点を絞っていることを指し、行数の単純な関数ではありません。</p>
+<p>すべてのGoogleの変更にはテストが必要です。</p>
+<p>ロジックを追加または変更するCLには、新しい動作に対応する新しいまたは更新されたテストが必要です。純粋なリファクタリングCL（動作を変更する意図のないもの）もテストでカバーする必要があります。理想的には、これらのテストはすでに存在しているはずですが、存在しない場合は追加する必要があります。</p>
+<p>独立したテストの変更は、まず別々のCLに入れることができます。<a href="review/developer/small-cls.html#refactoring">リファクタリングのガイドライン</a>と同様です。これには以下が含まれます：</p>
+<ul>
+<li>既存の提出済みコードを新しいテストで検証すること。
+<ul>
+<li>重要なロジックがテストでカバーされていることを確認します。</li>
+<li>影響を受けるコードの後続のリファクタリングに対する信頼性を高めます。たとえば、テストされていないコードをリファクタリングしたい場合、リファクタリングCLを提出する前にテストCLを提出することで、リファクタリング前後でテストされた動作が変わらないことを検証できます。</li>
+</ul>
+</li>
+<li>テストコードのリファクタリング（例：ヘルパー関数の導入）。</li>
+<li>大規模なテストフレームワークコードの導入（例：統合テスト）。</li>
+</ul>
+<h2 id="break"><a class="header" href="#break">ビルドを壊さないでください</a></h2>
+<p>もし複数のCLが互いに依存している場合、各CLが提出された後もシステム全体が正常に動作し続けるようにする必要があります。そうしないと、CLを提出するたびに他の開発者全員のビルドが数分間（もしくは後のCLの提出で何か予期せぬ問題が発生した場合はそれ以上の時間）壊れてしまう可能性があります。</p>
+<h2 id="cant"><a class="header" href="#cant">十分に小さくすることはできません</a></h2>
+<p>CLが大きくならざるを得ない状況に遭遇することがあります。しかし、これは非常に稀です。小さなCLを書くことに慣れた著者は、ほとんどの場合、機能を一連の小さな変更に分解する方法を見つけることができます。</p>
+<p>大きなCLを書く前に、リファクタリング専用のCLを前に置くことで、よりクリーンな実装の道を開くことができるかどうかを考えてみてください。チームメンバーと話し合い、機能を小さなCLに実装する方法についての意見を聞いてみてください。</p>
+<p>これらのオプションがすべて失敗した場合（非常に稀ですが）、事前にレビュワーの承諾を得て大きなCLをレビューするようにしてください。これにより、彼らは何が来るかについて警告されます。この状況では、長い時間をかけてレビュープロセスを進めることを予想し、バグを導入しないように注意し、テストの作成に特に注意してください。</p>
+<p>次: <a href="review/developer/handling-comments.html">レビューコメントの処理方法</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="レビューコメントの扱い方"><a class="header" href="#レビューコメントの扱い方">レビューコメントの扱い方</a></h1>
+<p>CL（変更リスト）をレビューに送信すると、リビューアから複数のコメントが返ってくることがあります。以下に、レビューコメントの扱いについて知っておくと役立つ情報をいくつか紹介します。</p>
+<h2 id="personal"><a class="header" href="#personal">個人的に受け取らないでください</a></h2>
+<p>レビューの目的は、コードベースと製品の品質を維持することです。 リビューアがあなたのコードに対して批判を行うときは、それをあなたやあなたの能力に対する個人攻撃ではなく、あなたやコードベース、Googleを助けるための試みと考えてください。</p>
+<p>時にはリビューアはイライラしており、コメントでそのイライラを表現することがあります。これはリビューアとしては良い慣行ではありませんが、開発者としてはそれに備えておくべきです。自分に対してリビューアが何を伝えようとしているのか、"リビューアが実際に言っていること"として行動してください。</p>
+<p><strong>コードレビューコメントに対して怒りで応答しないでください。</strong> それはプロのエチケットの重大な違反であり、コードレビューツールに永遠に残ります。もし怒りやイライラで親切に応答することができない場合は、しばらくコンピュータから離れるか、他の作業に取り組んで落ち着くまで待ってから丁寧に返信してください。</p>
+<p>一般的に、リビューアが建設的で礼儀正しい方法でフィードバックを提供していない場合は、直接話し合うことを説明してください。もし直接話すことができない場合やビデオ通話で話すことができない場合は、プライベートなメールで彼らに説明してください。嫌な点や異なる方法をお願いすることを親切に説明してください。もし彼らがこのプライベートな話し合いにも建設的でないように応答したり、意図した効果が得られない場合は、適切な場合には上司にエスカレーションしてください。</p>
+<h2 id="code"><a class="header" href="#code">コードの修正</a></h2>
+<p>もしリビューアがあなたのコードの何かを理解できないと言った場合、最初にするべきはコード自体を明確にすることです。もしコードを明確にすることができない場合、コードの存在理由を説明するコメントを追加してください。コメントが無意味に思える場合にのみ、コードレビューツールでの説明が適切な対応です。</p>
+<p>もしリビューアがあなたのコードの一部を理解できなかった場合、将来のコード読者も同様に理解できない可能性があります。コードレビューツールでの返答は将来のコード読者には役立ちませんが、コードを明確にするかコメントを追加することは役立ちます。</p>
+<h2 id="think"><a class="header" href="#think">協力的に考える</a></h2>
+<p>CLを書くのは大変な作業です。レビューのために送信し、完成したと感じ、さらなる作業は必要ないと確信することは、しばしば非常に満足感を得ることです。特に、自分が意見に同意しない場合、変更を求めるコメントを受け取ることは、イライラすることがあります。</p>
+<p>このような時には、一歩引いて考えてみてください。リビューアがコードベースやGoogleに役立つ有益なフィードバックを提供しているかどうかを考えてみてください。自分自身に最初に問いかけるべき質問は常に「リビューアが何を求めているのか理解できているか？」です。</p>
+<p>その質問に答えられない場合は、リビューアに明確化を求めてください。</p>
+<p>そして、コメントを理解しているが、それに同意しない場合は、協力的に考えることが重要です。攻撃的な態度や防御的な態度ではなく、協力的に考えることが重要です。</p>
+<p>悪い例: 「いや、それはやらない。」</p>
+<p>良い例: 「私はXを選んだ理由は、[これらの利点/欠点]と[これらのトレードオフ]です。私の理解では、Yを使用すると[これらの理由]で悪化すると考えています。Yが元のトレードオフにより適しているということですか？トレードオフを異なる視点で考慮すべきですか？それとも他の何かですか？」</p>
+<p>覚えておいてください、常に  <a href="https://chromium.googlesource.com/chromium/src/+/master/docs/cr_respect.md">礼儀と尊重</a>が最優先  です。リビューアと意見が異なる場合でも、協力する方法を見つけてください：明確化を求める、利点と欠点を議論する、コードベース、ユーザー、またはGoogleにとって自分の方法がより良い理由を説明するなど。</p>
+<p>時には、リビューアが知らないユーザーやコードベース、またはCLについての情報を持っているかもしれません。適切な場所でコードを修正し、リビューアとの議論に参加し、より多くの文脈を提供してください。通常、技術的な事実に基づいて、自分とリビューアの間で合意に達することができます。</p>
+<h2 id="conflicts"><a class="header" href="#conflicts">紛争の解決</a></h2>
+<p>紛争を解決するための最初のステップは、常にリビューアとの合意を図ることです。合意に達しない場合は、<a href="review/developer/../reviewer/standard.html">コードレビューの基準</a>を参照してください。この基準では、そのような状況で従うべき原則が示されています。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="どのようにコードリビューするか"><a class="header" href="#どのようにコードリビューするか">どのようにコードリビューするか</a></h1>
+<p>このセクションのページでは、長年の経験に基づいて、コードレビューの最良の方法に関する推奨事項が記載されています。これらはすべて、1つの完全なドキュメントを多くのセクションに分割したものです。すべてを読む必要はありませんが、多くの人々が、自分自身やチームにとって非常に役立つと感じています。</p>
+<ul>
+<li><a href="review/reviewer/standard.html">コードレビューの標準</a></li>
+<li><a href="review/reviewer/looking-for.html">コードレビューで探すべきもの</a></li>
+<li><a href="review/reviewer/navigate.html">レビュー中のCLのナビゲーション</a></li>
+<li><a href="review/reviewer/speed.html">コードレビューのスピード</a></li>
+<li><a href="review/reviewer/comments.html">コードレビューコメントの書き方</a></li>
+<li><a href="review/reviewer/pushback.html">コードレビューでの反対意見の扱い方</a></li>
+</ul>
+<p>また、<a href="review/reviewer/../developer/index.html">CL作成者ガイド</a>も参照してください。これは、CLがレビューを受けている開発者に詳細なガイダンスを提供しています。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コードレビューの基準"><a class="header" href="#コードレビューの基準">コードレビューの基準</a></h1>
+<p>コードレビューの主な目的は、Googleのコードベースの全体的なコードの健全性が時間とともに向上していることを確認することです。コードレビューのすべてのツールとプロセスは、この目的を達成するために設計されています。</p>
+<p>これを達成するためには、いくつかのトレードオフをバランスさせる必要があります。</p>
+<p>まず、開発者は自分のタスクを進めることができなければなりません。コードベースに改善を提出しなければ、コードベースは改善されません。また、レビュアが変更を非常に難しくすると、開発者は将来の改善をする意欲を失います。</p>
+<p>一方、レビュアの責任は、各CLがコードベースの全体的なコードの健全性が時間とともに低下しないようにすることです。これは難しいことです。なぜなら、コードベースはしばしば時間とともにコードの健全性がわずかに低下することで劣化するからです。特に、チームが時間的制約の下にあり、目標を達成するために手を抜かざるを得ないと感じている場合には、さらにそうなります。</p>
+<p>また、レビュアは自分がレビューしているコードに所有権と責任を持っています。彼らはコードベースが一貫性を保ち、保守可能であり、<a href="review/reviewer/looking-for.html">"コードレビューで探すべきもの"</a>で言及されている他のすべての要素を確保したいと考えています。</p>
+<p>したがって、コードレビューで期待される標準として次のルールが得られます。</p>
+<p><strong>一般的に、CLがシステム全体のコードの健全性を確実に向上させる状態になった時点で、レビュアはCLの承認を優先すべきです。CLが完璧でなくても構いません。</strong></p>
+<p>これは、すべてのコードレビューガイドラインの中での最も重要な原則です。</p>
+<p>もちろん、これには制約があります。たとえば、レビュアがシステムに追加したくない機能をCLが追加している場合、コードが設計されていても承認を拒否することができます。</p>
+<p>ここで重要なポイントは、「完璧な」コードというものは存在しないということです。ただし、より良いコードは存在します。レビュアは、著者に対してCLのすべての細部を磨くことを要求するべきではありません。代わりに、レビュアは前進する必要性と提案されている変更の重要性をバランスさせるべきです。完璧さを求めるのではなく、レビュアが求めるべきは「継続的な改善」です。システムの保守性、可読性、理解性を全体的に向上させるCLは、数日間遅延させるべきではありません。</p>
+<p>リビューアは、いつでも何かが改善できるというコメントを自由に残すことができるが、それが非常に重要でない場合は、「Nit: 」のような接頭辞を付けて、著者にそれを無視してもよいと伝えることができます。</p>
+<p>注意：このドキュメントには、システム全体のコードの健全性を明らかに悪化させるようなCLをチェックインすることを正当化するものはありません。それを行うのは、<a href="review/reviewer/../emergencies.html">緊急時</a>のみです。</p>
+<h2 id="メンタリング"><a class="header" href="#メンタリング">メンタリング</a></h2>
+<p>コードレビューは、開発者に言語、フレームワーク、または一般的なソフトウェア設計原則について新しいことを教える重要な機能を持つことがあります。開発者が新しいことを学ぶのに役立つコメントを残すことは常に良いことです。知識を共有することは、システムのコード品質を時間とともに向上させる一部です。ただし、コメントが純粋に教育的であり、このドキュメントで説明されている基準を満たすために必須ではない場合は、「Nit: 」という接頭辞を付けるか、それが著者が解決する必要がないことを示す他の方法を使用してください。</p>
+<h2 id="principles"><a class="header" href="#principles">原則</a></h2>
+<ul>
+<li>
+<p>技術的な事実とデータは、意見や個人の好みよりも優先される。</p>
+</li>
+<li>
+<p>スタイルに関する問題では、<a href="http://google.github.io/styleguide/">スタイルガイド</a>が絶対的な権威である。スタイルガイドにない純粋なスタイルのポイント（空白など）は、個人の好みの問題である。スタイルは、既存のスタイルと一貫性があるべきである。既存のスタイルがない場合は、著者のスタイルを受け入れる。</p>
+</li>
+<li>
+<p>**ソフトウェア設計の側面は、ほとんど常に純粋なスタイルの問題や個人の好みだけではありません。**それらは基本原則に基づいており、その原則に基づいて評価するべきです。時にはいくつかの妥当な選択肢があります。著者が（データまたは堅実なエンジニアリング原則に基づいて）いくつかのアプローチが同じくらい妥当であることを示すことができれば、リビューアは著者の好みを受け入れるべきです。そうでない場合は、ソフトウェア設計の標準的な原則によって選択されます。</p>
+</li>
+<li>
+<p>他のルールが適用されない場合、リビューアは、システム全体のコードの健全性を悪化させない限り、現在のコードベースに一貫性を求めることができます。</p>
+</li>
+</ul>
+<h2 id="conflicts"><a class="header" href="#conflicts">紛争の解決</a></h2>
+<p>コードレビューにおけるいかなる紛争においても、最初のステップは常に開発者とレビュアーがこのドキュメントや他のドキュメント（<a href="review/reviewer/../developer/index.html">CL作成者ガイド</a>および<a href="review/reviewer/index.html">リビューアガイド</a>）の内容に基づいて合意を図ることです。</p>
+<p>合意に達することが特に困難な場合、コードレビューコメントだけで紛争を解決しようとする代わりに、リビューアと作成者の間で対面会議やビデオ会議を行うことが役立つ場合があります。（ただし、その場合は議論の結果をCLのコメントとして記録しておくことを忘れないでください。将来の読者のために。）</p>
+<p>それでも状況が解決しない場合、最も一般的な解決方法はエスカレーションです。しばしばエスカレーションの経路は、より広範なチームの議論、テクニカルリードの意見、コードのメンテナからの決定の要求、またはエンジニアリングマネージャーの助けを求めることです。<strong>作者とリビューアが合意に達しないためにCLを放置しないでください。</strong></p>
+<p>次: <a href="review/reviewer/looking-for.html">コードレビューで探すべきポイント</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コードレビューで注目すべきポイント"><a class="header" href="#コードレビューで注目すべきポイント">コードレビューで注目すべきポイント</a></h1>
+<p>注意：これらのポイントを考慮する際には、常に<a href="review/reviewer/standard.html">コードレビューの標準</a>を参考にしてください。</p>
+<h2 id="デザイン"><a class="header" href="#デザイン">デザイン</a></h2>
+<p>レビューで最も重要なのは、CLの全体的なデザインです。 CL内のさまざまなコードの相互作用は意味をなしていますか？この変更は、コードベースではなくライブラリに属していますか？システム全体との統合はうまくいっていますか？この機能を追加するのに適切な時期ですか？</p>
+<h2 id="機能性"><a class="header" href="#機能性">機能性</a></h2>
+<p>このCLは、開発者が意図した通りの動作をしていますか？開発者が意図したことは、このコードのユーザーにとって良いものですか？「ユーザー」とは、通常、エンドユーザー（変更の影響を受ける場合）と開発者（将来このコードを「使用」する必要がある）の両方を指します。</p>
+<p>ほとんどの場合、開発者はCLを十分にテストして、コードレビューに到達するまでに正しく動作するようにすることが期待されます。ただし、リビューアとしては、エッジケースを考え、並行性の問題を探し、ユーザーのように考え、コードを読むだけで見えるバグがないか確認する必要があります。</p>
+<p>CLの動作を検証することもできますが、リビューアがCLの動作をチェックするのは、<strong>UIの変更</strong>など、ユーザーに影響を与える変更の場合が最も重要です。コードを読むだけでは、どのような変更がユーザーにどのような影響を与えるかを理解するのは難しいです。そのような変更の場合、開発者にデモをしてもらうか、CLにパッチを当てて試すことができない場合は、機能のデモをしてもらうことができます。</p>
+<p>また、コードレビュー中に特に機能性について考える必要があるのは、CLに理論的にデッドロックや競合状態を引き起こす可能性のある<strong>並行プログラミング</strong>が行われている場合です。これらの問題は、コードを実行するだけでは検出するのが非常に難しく、問題が導入されていないことを確認するために、開発者とリビューアの両方が注意深く考える必要があります。（競合状態やデッドロックが発生する可能性のある並行性モデルを使用しないことは、コードレビューやコードの理解を非常に複雑にする可能性があるため、非常に重要な理由です。）</p>
+<h2 id="複雑さ"><a class="header" href="#複雑さ">複雑さ</a></h2>
+<p>CLは必要以上に複雑ですか？CLの各レベルで確認してください。個々の行は複雑すぎますか？関数は複雑すぎますか？クラスは複雑すぎますか？「複雑すぎる」とは通常、「コード読み手がすぐに理解できない」という意味です。また、「開発者がこのコードを呼び出したり変更しようとすると、バグを発生させる可能性が高い」という意味もあります。</p>
+<p>特定のタイプの複雑さは「過剰設計」です。開発者がコードを必要以上に一般化したり、現在のシステムで必要のない機能を追加したりしている場合です。リビューアは特に過剰設計に対して警戒すべきです。開発者に対して、現在解決する必要のある問題を解決するように促し、将来解決するかもしれない問題ではなく、現在の問題を解決するようにしましょう。将来の問題は、実際の形状と要件を物理的な宇宙で確認できるようになった時に解決すべきです。</p>
+<h2 id="テスト"><a class="header" href="#テスト">テスト</a></h2>
+<p>変更に適した単体テスト、統合テスト、エンドツーエンドテストを要求してください。一般的には、テストは本番コードと同じCLに追加する必要がありますが、CLが<a href="review/reviewer/../emergencies.html">緊急事態</a>を処理している場合を除きます。</p>
+<p>CL内のテストが正確で、意味のある、有用なものであることを確認してください。テストは自己テストを行いませんし、テストのためにテストを書くことはほとんどありません。人間がテストが有効であることを確認する必要があります。</p>
+<p>コードが壊れたときにテストは実際に失敗しますか？コードが変更された場合、テストは誤った結果を出力し始めますか？各テストは単純で有用なアサーションを行っていますか？テストは異なるテストメソッド間で適切に分離されていますか？</p>
+<p>テストもメンテナンスが必要なコードですので、メインのバイナリの一部ではないためにテストに複雑さを受け入れないでください。</p>
+<h2 id="名前付け"><a class="header" href="#名前付け">名前付け</a></h2>
+<p>開発者はすべての要素に適切な名前を選びましたか？適切な名前は、アイテムの内容や機能を完全に伝えるのに十分な長さであり、読みにくくなるほど長くなっていませんか？</p>
+<h2 id="コメント"><a class="header" href="#コメント">コメント</a></h2>
+<p>開発者は理解しやすい英語で明確なコメントを書いていますか？すべてのコメントが実際に必要ですか？通常、コメントはコードが存在する理由を説明するために使用され、コードが何をしているかを説明するためには使用されません。コード自体が十分に明確でない場合は、コードをよりシンプルにする必要があります。ただし、正規表現や複雑なアルゴリズムなどの場合は、自身のコードに含まれていない情報を説明するコメントが非常に役立つことがあります。ただし、ほとんどの場合、コメントは意思決定の背後にある理由など、コード自体に含まれない情報のために使用されます。</p>
+<p>また、この変更リストの前にあったコメントも参考になる場合があります。今は削除できるTODOコメントや、この変更を行わないように忠告するコメントなどがあるかもしれません。</p>
+<p>コメントは、クラス、モジュール、または関数のドキュメントとは異なり、コードの目的、使用方法、使用時の動作などを表現するべきです。</p>
+<h2 id="スタイル"><a class="header" href="#スタイル">スタイル</a></h2>
+<p>Googleでは、主要な言語だけでなく、ほとんどのマイナーな言語に対しても<a href="http://google.github.io/styleguide/">スタイルガイド</a>があります。適切なスタイルガイドに従ってCLを作成してください。</p>
+<p>スタイルガイドにないスタイルの改善をしたい場合は、「Nit:」という接頭辞をコメントに付けて、開発者にそれがコードを改善するための細かい指摘であることを伝えてください。個人的なスタイルの好みだけでCLの提出をブロックしないでください。</p>
+<p>CLの作者は、主要なスタイルの変更を他の変更と組み合わせてはいけません。CLで何が変更されているかがわかりにくくなり、マージやロールバックが複雑になり、他の問題を引き起こします。たとえば、ファイル全体の書式を変更したい場合は、まず書式変更のみを含んだ別のCLを送り、その後に機能的な変更を含んだ別のCLを送ってください。</p>
+<h2 id="一貫性"><a class="header" href="#一貫性">一貫性</a></h2>
+<p>既存のコードがスタイルガイドと一貫していない場合はどうなりますか？<a href="review/reviewer/standard.html#principles">コードレビューの原則</a>によれば、スタイルガイドが絶対的な権威です。つまり、スタイルガイドで要求されているものは、CL（変更リスト）はガイドラインに従うべきです。</p>
+<p>一部の場合、スタイルガイドは要件ではなく、推奨事項を示しています。これらの場合、新しいコードが推奨事項に従うべきか、周囲のコードに一貫性を持たせるべきかは判断に委ねられます。ローカルな一貫性が混乱を招く場合を除き、スタイルガイドに従うことを優先しましょう。</p>
+<p>他のルールが適用されない場合は、著者は既存のコードと一貫性を保つべきです。</p>
+<p>いずれの場合でも、著者に対してバグの報告と既存のコードの整理のためのTODOの追加を促してください。</p>
+<h2 id="ドキュメンテーション"><a class="header" href="#ドキュメンテーション">ドキュメンテーション</a></h2>
+<p>もしCLがユーザーがコードをビルド、テスト、操作、リリースする方法に変更を加える場合、関連するドキュメンテーション（README、g3docページ、生成されたリファレンスドキュメントなど）も更新されているか確認してください。もしCLがコードを削除または非推奨化する場合、ドキュメンテーションも削除すべきかどうか考えてください。 もしドキュメンテーションが不足している場合は、それを要求してください。</p>
+<h2 id="every-line"><a class="header" href="#every-line">すべての行</a></h2>
+<p>一般的な場合、レビューすることに割り当てられた_すべて_のコードの行を見てください。データファイルや生成されたコード、大きなデータ構造などは、時々スキャンすることができますが、人間が書いたクラス、関数、またはコードブロックをスキャンして、その中身が問題ないと仮定しないでください。 明らかに、あるコードは他のコードよりも注意深く調査する価値がありますが、それはあなたが判断しなければならないことです。少なくとも、すべてのコードが何をしているのかを_理解_していることを確認してください。</p>
+<p>もしコードを読むのが難しく、それがレビューを遅らせている場合は、開発者にそれを伝えて、レビューする前にそれを明確にしてもらうように待ってください。Googleでは、優れたソフトウェアエンジニアを採用しています。あなたもその一人です。もしコードが理解できない場合、他の開発者も理解できない可能性が非常に高いです。ですので、開発者にそれを明確にしてもらうことで、将来の開発者がこのコードを理解するのを助けることにもなります。</p>
+<p>もしコードが理解できるけれども、レビューの一部を適任と感じない場合は、<a href="review/reviewer/looking-for.html#every-line-exceptions">レビュアーがいることを確認してください</a>。特にプライバシーやセキュリティ、並行性、アクセシビリティ、国際化などの複雑な問題については、適任なリビューアがいることを確認してください。</p>
+<h3 id="every-line-exceptions"><a class="header" href="#every-line-exceptions">例外</a></h3>
+<p>もし、すべての行をレビューすることが意味をなさない場合はどうなりますか？ 例えば、あなたがCLの複数のレビュワーのうちの一人であり、次のような要求がある場合です。</p>
+<ul>
+<li>大きな変更の一部である特定のファイルのみをレビューするように求められる場合。</li>
+<li>高レベルの設計、プライバシーやセキュリティの影響など、CLの特定の側面のみをレビューするように求められる場合。</li>
+</ul>
+<p>これらの場合、レビューした部分をコメントで明記してください。<a href="review/reviewer/speed.html#lgtm-with-comments">コメント付きのLGTM</a>を優先してください。</p>
+<p>もし、他のレビュワーがCLの他の部分をレビューしたことを確認した後にLGTMを与えたい場合は、それを明示的にコメントで記述して、期待値を設定してください。CLが望ましい状態に達したら、<a href="review/reviewer/speed.html#responses">迅速に応答</a>することを目指してください。</p>
+<h2 id="文脈"><a class="header" href="#文脈">文脈</a></h2>
+<p>CLを広い文脈で見ることは、しばしば役立ちます。通常、コードレビューツールは、変更される部分の周りの数行のコードしか表示しません。実際に変更が意味をなしているかどうかを確認するには、ファイル全体を見る必要があることもあります。たとえば、追加されるのはわずか4行のコードだけかもしれませんが、ファイル全体を見ると、その4行が50行のメソッドにあることがわかり、このメソッドをより小さなメソッドに分割する必要があることがわかります。</p>
+<p>また、CLをシステム全体の文脈で考えることも有用です。このCLはシステムのコードの健全性を向上させているのか、システム全体をより複雑にしたり、テストが少なくなったりしているのか、などを考えると良いでしょう。**システムのコードの健全性を損なうCLは受け入れないでください。**ほとんどのシステムは、多くの小さな変更を通じて複雑になっていくため、新しい変更においても小さな複雑さを防ぐことが重要です。</p>
+<h2 id="good-things"><a class="header" href="#good-things">良いこと</a></h2>
+<p>もしCLで素敵なものを見つけたら、開発者に伝えてください。特に、彼らがあなたのコメントに素晴らしい方法で対応した場合は。コードレビューはしばしばミスに焦点を当てますが、良い実践に対する励ましと感謝も提供すべきです。開発者に何が間違っているかを伝えるよりも、彼らが何を正しく行ったかを伝える方が、メンタリングの観点からはさらに価値があります。</p>
+<h2 id="概要"><a class="header" href="#概要">概要</a></h2>
+<p>コードレビューを行う際には、以下の点に注意してください：</p>
+<ul>
+<li>コードがよく設計されていること。</li>
+<li>機能がコードのユーザーにとって良いものであること。</li>
+<li>UIの変更が合理的で見栄えが良いこと。</li>
+<li>並行プログラミングが安全に行われていること。</li>
+<li>コードが必要以上に複雑でないこと。</li>
+<li>開発者が将来必要になるかもしれないものを実装していないこと。</li>
+<li>コードに適切な単体テストがあること。</li>
+<li>テストがよく設計されていること。</li>
+<li>開発者がすべての要素にわかりやすい名前を付けていること。</li>
+<li>コメントが明確で有用であり、主に「なぜ」を説明していること。</li>
+<li>コードが適切にドキュメント化されていること（一般的にはg3docで）。</li>
+<li>コードがスタイルガイドに準拠していること。</li>
+</ul>
+<p>レビューを依頼されたコードの<strong>すべての行</strong>を確認し、<strong>文脈</strong>を考慮し、コードの健全性を<strong>向上</strong>させ、開発者が行った<strong>良い点</strong>を褒めるようにしてください。</p>
+<p>次: <a href="review/reviewer/navigate.html">レビュー中のCLのナビゲーション</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="レビュー中のclのナビゲーション"><a class="header" href="#レビュー中のclのナビゲーション">レビュー中のCLのナビゲーション</a></h1>
+<h2 id="概要-1"><a class="header" href="#概要-1">概要</a></h2>
+<p>これで<a href="review/reviewer/looking-for.html">何を探すべきか</a>がわかりました。それでは、複数のファイルにまたがるレビューを最も効率的に管理する方法は何でしょうか？</p>
+<ol>
+<li>変更内容は理解できますか？<a href="review/reviewer/../developer/cl-descriptions.html">説明</a>は適切ですか？</li>
+<li>変更の最も重要な部分を最初に見てください。全体的には設計が良いですか？</li>
+<li>適切な順序でCLの残りの部分を見てください。</li>
+</ol>
+<h2 id="step_one"><a class="header" href="#step_one">ステップ1: 変更の広い視点を持つ</a></h2>
+<p>まず、<a href="review/reviewer/../developer/cl-descriptions.html">CLの説明</a>を見て、このCLが一般的に意味をなしているかどうかを確認してください。この変更が最初から行われるべきではなかった場合は、なぜこの変更が行われるべきではないのかについてすぐに説明してください。このような変更を拒否する際には、開発者に代わりに何をすべきかを提案することも良いアイデアです。</p>
+<p>例えば、「この変更には良い仕事がされているようですね、ありがとうございます！ただし、私たちは実際にはここで修正しているFooWidgetシステムを削除する方向に進んでいるため、現在それに新たな修正を加えたくありません。代わりに、新しいBarWidgetクラスをリファクタリングすることはいかがでしょうか？」</p>
+<p>リビューアは現在のCLを拒否し、代わりの提案を行っただけでなく、それを_礼儀正しく_行いました。このような礼儀正しさは重要です。なぜなら、私たちは意見が異なる場合でも、開発者として互いを尊重することを示したいからです。</p>
+<p>もし、望ましくない変更を表すCLが数多くある場合は、チームの開発プロセスや外部貢献者向けの投稿プロセスを見直し、CLが書かれる前により多くのコミュニケーションが行われるようにすることを検討してください。人々に「いいえ」と伝えることは、彼らが大量の作業を行い、それを捨てるか大幅に書き直さなければならなくなる前に伝える方が良いです。</p>
+<h2 id="step_two"><a class="header" href="#step_two">ステップ2: CLの主要な部分を調べる</a></h2>
+<p>このCLの「主要な」部分となるファイルまたはファイルを見つけてください。通常、論理的な変更が最も多いファイルがあり、それがCLの主要な部分です。まずはこれらの主要な部分を見てください。これにより、CLのすべての小さな部分の文脈がわかり、コードレビューのスピードが向上します。CLが大きすぎて、どの部分が主要な部分かわからない場合は、開発者に最初に何を見るべきか尋ねるか、<a href="review/reviewer/../developer/small-cls.html">CLを複数のCLに分割する</a>.ように依頼してください。</p>
+<p>この部分のCLに重大な設計上の問題が見つかった場合は、すぐにそれらのコメントを送信してください。今すぐCLの残りをレビューする時間がなくても、重要な設計上の問題がある場合は、CLの残りのコードをレビューすることは時間の無駄かもしれません。実際、重大な設計上の問題がある場合、レビュー対象の他のコードの多くは消えて問題にならない可能性があります。</p>
+<p>これらの重大な設計上のコメントをすぐに送信することが非常に重要な理由は2つあります：</p>
+<ul>
+<li>開発者は通常、CLをメールで送信した後、レビューを待ちながら新しい作業をすぐに開始します。レビュー中のCLに重大な設計上の問題がある場合、後のCLの再作業も行わなければなりません。問題のある設計の上に余分な作業を行う前に、それらを見つける必要があります。</li>
+<li>大規模な設計変更は、小規模な変更よりも時間がかかります。開発者はほぼすべての締め切りを持っています。それらの締め切りを守りながら、コードベースに品質の高いコードを残すためには、開発者はCLの重大な再作業をできるだけ早く開始する必要があります。</li>
+</ul>
+<h2 id="step_three"><a class="header" href="#step_three">ステップ3: 適切な順序でCLの残りを確認する</a></h2>
+<p>CL全体に大きな設計上の問題がないことを確認したら、各ファイルを見逃さずにレビューするための論理的な順序を考えてみてください。通常、主要なファイルを見た後は、コードレビューツールが提示する順序で各ファイルを見るのが最も簡単です。時には、メインのコードを読む前にテストを先に読むと、変更が何をするものかのアイデアが得られることもあります。</p>
+<p>次: <a href="review/reviewer/speed.html">コードレビューの速度</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コードレビューの速度"><a class="header" href="#コードレビューの速度">コードレビューの速度</a></h1>
+<h2 id="why"><a class="header" href="#why">なぜコードレビューを迅速に行うべきか</a></h2>
+<p><strong>Googleでは、開発者チームが一緒に製品を生産する速度を最適化します</strong>。これは、個々の開発者がコードを書く速度を最適化することとは対照的です。個々の開発速度も重要ですが、チーム全体の速度ほどではありません。</p>
+<p>コードレビューが遅いと、いくつかの問題が生じます：</p>
+<ul>
+<li><strong>チーム全体の速度が低下します。</strong> レビューにすぐに対応しない個人は他の仕事を進めるかもしれません。しかし、チームの残りの部分にとっての新機能やバグ修正は、各CLがレビューと再レビューを待つ間、日、週、または月単位で遅れます。</li>
+<li><strong>開発者がコードレビュープロセスに抗議し始めます。</strong> リビューアが数日おきにしか反応せず、その都度CLに大きな変更を要求する場合、それは開発者にとってイライラすることであり、困難です。しばしば、これは「リビューアが厳しすぎる」という不満として表現されます。リビューアが開発者が更新を行うたびに_迅速に_同じ重要な変更（実際にコードの健全性を向上させる変更）を要求する場合、不満は消える傾向があります。<strong>コードレビュープロセスに関するほとんどの不満は、プロセスを迅速にすることで実際に解決されます。</strong></li>
+<li><strong>コードの健全性に影響を与える可能性があります。</strong> レビューが遅いと、開発者がそれほど良くないCLを提出する圧力が増します。遅いレビューは、コードのクリーンアップ、リファクタリング、および既存のCLへのさらなる改善を抑制する傾向があります。</li>
+</ul>
+<h2 id="fast"><a class="header" href="#fast">コードレビューはどれくらいの速さであるべきか</a></h2>
+<p>集中しているタスクの最中でない限り、<strong>コードレビューは受け取った直後に行うべきです。</strong></p>
+<p>コードレビュー要求に対して反応する最大時間は<strong>1営業日です</strong>（つまり、翌朝の最初の時間）。</p>
+<p>これらのガイドラインに従うと、典型的なCLは必要に応じて1日以内に複数ラウンドのレビューを受けることになります。</p>
+<h2 id="interruption"><a class="header" href="#interruption">速度 vs. 中断</a></h2>
+<p>個人の作業速度がチームの速度を上回るべき唯一の時があります。<strong>コードを書くなど、集中している作業の最中に、自分を中断してコードレビューを行うべきではありません。</strong> 研究によると、中断された後に開発のスムーズな流れに戻るまでには、開発者に長い時間がかかることが示されています。従って、コーディング中に自分自身を中断することは、他の開発者がコードレビューを少し待たされることよりも、実際にはチームにとって_より_コストがかかることになります。</p>
+<p>代わりに、作業の中断点でレビューの依頼に応答することを待ちます。これは、現在のコーディングタスクが完了した時、ランチ後、会議から戻った時、休憩室から戻ってきた時などが該当します。</p>
+<h2 id="responses"><a class="header" href="#responses">迅速な対応</a></h2>
+<p>コードレビューの速度について話す際、私たちが関心を持っているのは、CLがレビューを通過して提出されるまでにかかる時間ではなく、_対応_の時間です。全プロセスも理想的には速いべきですが、<strong>個々の対応が迅速に行われることの方が、全プロセスが迅速に行われることよりもさらに重要です。</strong></p>
+<p>たとえ全体のレビュー_プロセス_を通過するのに時々長い時間がかかる場合でも、プロセス全体を通じてリビューアからの迅速な対応があることで、「遅い」と感じる開発者のフラストレーションが大幅に軽減されます。</p>
+<p>CLが到着した時に完全なレビューを行うのにあまりにも忙しい場合でも、いつ対応できるか開発者に知らせる迅速な返答を送ったり、より迅速に対応できる可能性のある他のリビューアを提案したり、<a href="review/reviewer/navigate.html">いくつかの初期の広範なコメントを提供する</a>ことができます。（注意：これは、このような返答を送るためにさえコーディングを中断すべきだという意味ではありません。作業の合理的な中断点で返答を送ってください。）</p>
+<p><strong>リビューアがレビューに十分な時間を費やし、「LGTM」が「このコードは<a href="review/reviewer/standard.html">私たちの基準</a>を満たしている」ということを確信していることが重要です。</strong> しかし、個々の対応は理想的には<a href="review/reviewer/speed.html#fast">迅速</a>であるべきです。</p>
+<h2 id="tz"><a class="header" href="#tz">時差を考慮したレビュー</a></h2>
+<p>時差の差を扱う際は、彼らがその日の業務時間内に返答できるように、著者に返答しようと努めてください。彼らがすでにその日の業務を終えていた場合は、彼らが翌日の業務を開始する前にレビューを完了させるようにしてください。</p>
+<h2 id="lgtm-with-comments"><a class="header" href="#lgtm-with-comments">コメント付きLGTM</a></h2>
+<p>コードレビューを迅速に進めるため、リビューアが未解決のコメントを残しつつもLGTM/承認を出すべき特定の状況があります。これは以下のいずれかの場合に行われます：</p>
+<ul>
+<li>リビューアが開発者が全ての残りのコメントを適切に対処すると確信している場合。</li>
+<li>残りの変更が些細で、開発者が必ずしも行う必要はない場合。</li>
+</ul>
+<p>リビューアは、どちらのオプションを意図しているかを明確に指定すべきです（それが明確でない場合）。</p>
+<p>開発者とリビューアが異なるタイムゾーンにいて、開発者が「LGTM、承認」を得るために1日待たなければならない場合には、特にコメント付きLGTMを検討する価値があります。</p>
+<h2 id="large"><a class="header" href="#large">大きなCL</a></h2>
+<p>あなたにとても大きなコードレビューが送られてきて、いつレビューできるか分からない場合、通常の対応は開発者に<a href="review/reviewer/../developer/small-cls.html">CLをいくつかの小さなCLに分割する</a>よう依頼することです。これは、開発者に追加の作業が必要であっても、通常は可能であり、リビューアにとって非常に役立ちます。</p>
+<p>CLを小さなCLに分割_できない_場合、そしてあなたがすぐに全体をレビューする時間がない場合は、少なくともCLの全体的な設計についていくつかのコメントを書き、改善のために開発者に返送してください。リビューアとしてのあなたの目標の1つは、コードの健全性を犠牲にすることなく、常に開発者のブロックを解除するか、迅速に何らかの行動を取ることができるようにすることです。</p>
+<h2 id="time"><a class="header" href="#time">時間と共に改善されるコードレビュー</a></h2>
+<p>これらのガイドラインに従い、コードレビューに厳格であれば、コードレビュープロセス全体が時間とともにますます速くなることがわかるでしょう。開発者は健全なコードに必要なことを学び、最初から素晴らしいCLを送ってくるようになり、レビュー時間がますます少なくなります。リビューアは迅速に対応し、レビュープロセスに不必要な遅延を加えないように学びます。 しかし、<strong>速度の想像される改善のために<a href="review/reviewer/standard.html">コードレビュー基準</a>や品質を妥協しないでください</strong>—それは実際には何も早く進めることはありません、長い目で見れば。</p>
+<h2 id="緊急事態"><a class="header" href="#緊急事態">緊急事態</a></h2>
+<p>CLが非常に迅速に_全_レビュープロセスを通過しなければならない<a href="review/reviewer/../emergencies.html">緊急事態</a>もあり、その場合は品質ガイドラインが緩和されるかもしれません。しかし、どの状況が実際に緊急事態として資格があるか、そしてどれがそうでないかについての説明は、<a href="review/reviewer/../emergencies.html#what">何が緊急事態か？</a>をご覧ください。</p>
+<p>次: <a href="review/reviewer/comments.html">コードレビューコメントの書き方</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コードレビューコメントの書き方"><a class="header" href="#コードレビューコメントの書き方">コードレビューコメントの書き方</a></h1>
+<h2 id="概要-2"><a class="header" href="#概要-2">概要</a></h2>
+<ul>
+<li>優しくあれ。</li>
+<li>理由を説明せよ。</li>
+<li>問題を指摘するだけでなく、明確な指示と開発者が自分で決めることのバランスを取ろう。</li>
+<li>複雑さを説明するだけでなく、開発者にコードを簡素化したり、コメントを追加するように促そう。</li>
+</ul>
+<h2 id="礼儀"><a class="header" href="#礼儀">礼儀</a></h2>
+<p>一般的に、<a href="https://chromium.googlesource.com/chromium/src/+/master/docs/cr_respect.md">礼儀正しく尊重する</a>ことは重要です。同時に、コードをレビューしている開発者に対して明確かつ助けになるコメントをすることも重要です。これを実践する方法の一つは、常にコードについてコメントをすることであり、開発者についてのコメントは避けることです。常にこの慣行に従う必要はありませんが、不快感や論争を引き起こす可能性のあることを言う場合には、特にこの慣行を使用するべきです。例えば：</p>
+<p>悪い例: "なぜ<strong>あなた</strong>はここでスレッドを使用したのですか？明らかに並行性から得られる利益はありません。"</p>
+<p>良い例: "ここでの並行性モデルは、実際のパフォーマンスの利益が見当たらないまま、システムに複雑さを追加しています。パフォーマンスの利益がないため、このコードは複数のスレッドを使用するのではなく、シングルスレッドであることが最善です。"</p>
+<h2 id="why"><a class="header" href="#why">なぜ説明するのか</a></h2>
+<p>上記の「良い」例について気づくことがあるでしょう。それは、コメントをする理由を開発者に理解させるのに役立つということです。レビューコメントにこの情報を常に含める必要はありませんが、時には意図やベストプラクティス、提案がコードの品質向上にどのように寄与するかについて少し説明することが適切な場合もあります。</p>
+<h2 id="guidance"><a class="header" href="#guidance">ガイダンスの提供</a></h2>
+<p><strong>一般的に、CLの修正は開発者の責任であり、リビューアの責任ではありません。</strong> 解決策の詳細な設計や開発者のためのコードの記述は必要ありません。</p>
+<p>ただし、リビューアは無力ではあってはなりません。一般的には、問題を指摘し、直接的なガイダンスを提供する適切なバランスを取るべきです。問題を指摘し、開発者に決定を任せることは、開発者が学ぶのに役立ち、コードレビューを行いやすくすることができます。また、開発者はリビューアよりもコードに近いため、より良い解決策につながることもあります。</p>
+<p>ただし、時には直接的な指示、提案、またはコードの提供の方が役立つこともあります。コードレビューの主な目標は、最も優れたCLを得ることです。第二の目標は、開発者のスキルを向上させ、時間の経過とともにますます少ないレビューが必要となるようにすることです。</p>
+<p>人々は、自分がうまくやっていることを強化されることから学びます。ただし、改善できる点だけでなく、CLで好きな点もコメントしてください！例えば、開発者が乱雑なアルゴリズムを整理した、模範的なテストカバレッジを追加した、またはレビュアー自身がCLから何かを学んだなどです。すべてのコメントと同様に、なぜそのような点が好きなのかを含めて、開発者に良い慣行を続けるようにさらに促すことが重要です。</p>
+<h2 id="label-comment-severity"><a class="header" href="#label-comment-severity">ラベルコメントの重要度</a></h2>
+<p>コメントの重要度をラベル付けして、必要な変更とガイドラインや提案を区別することを検討してください。</p>
+<p>いくつかの例</p>
+<blockquote>
+<p>Nit: これは小さなことです。技術的にはやるべきですが、大きな影響はありません。</p>
+<p>Optional (または Consider): これは良いアイデアかもしれませんが、厳密には必要ではありません。</p>
+<p>FYI: このCLではこれをやることは期待していませんが、将来的に考えるのに興味深いかもしれません。</p>
+</blockquote>
+<p>これにより、レビューの意図が明確になり、著者がさまざまなコメントの重要性を優先順位付けするのに役立ちます。また、誤解を避けるのにも役立ちます。たとえば、コメントにラベルがない場合、著者はすべてのコメントを必須と解釈するかもしれませんが、実際には情報提供やオプションのコメントである場合もあります。</p>
+<h2 id="explanations"><a class="header" href="#explanations">説明の受け入れ</a></h2>
+<p>もし開発者に理解できないコードの説明を求めると、通常は彼らが<strong>コードをより明確に書き直す</strong>ことになるはずです。 時には、コードにコメントを追加することも適切な対応ですが、それが単に過度に複雑なコードを説明するだけでない限りです。</p>
+<p><strong>コードレビューツールだけで書かれた説明は、将来のコード読者にとって役に立ちません。</strong> それらは、通常のコードの読者が既に知っていることを開発者が説明する場合など、一部の状況でのみ受け入れられます。</p>
+<p>次: <a href="review/reviewer/pushback.html">コードレビューでの反対意見の扱い方</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="コードレビューでの反発の扱い"><a class="header" href="#コードレビューでの反発の扱い">コードレビューでの反発の扱い</a></h1>
+<p>時には、開発者がコードレビューに反発することがあります。彼らはあなたの提案に同意しないか、一般的にあなたが厳しすぎると不満を述べるかもしれません。</p>
+<h2 id="who_is_right"><a class="header" href="#who_is_right">誰が正しいのか？</a></h2>
+<p>開発者があなたの提案に反対する場合、まず彼らが正しいかどうかを考えてみてください。彼らはあなたよりもコードに近いことが多いため、特定の側面についてより良い洞察を持っているかもしれません。彼らの主張は理にかなっていますか？コードの健全性の観点からも理にかなっていますか？もしそうなら、彼らに正しいと伝え、問題を解決させましょう。</p>
+<p>しかし、開発者が常に正しいわけではありません。この場合、リビューアはなぜ自分の提案が正しいと考えているのか、さらに説明する必要があります。良い説明は、開発者の返信を理解していることと、変更がなぜ要求されているのかについての追加情報を示します。</p>
+<p>特に、リビューアが自分の提案がコードの健全性を向上させると信じている場合、結果としてのコード品質の向上が追加の作業を正当化すると考えるなら、変更を推進し続けるべきです。<strong>コードの健全性の向上は、小さなステップで行われる傾向があります。</strong></p>
+<p>時には、提案を説明するのに数回のやり取りが必要なこともあります。ただし、常に<a href="review/reviewer/comments.html#courtesy">礼儀正しく</a>、開発者に彼らの言っていることを_聞いている_ことを伝え、ただ_同意しない_ことを伝えましょう。</p>
+<h2 id="upsetting_developers"><a class="header" href="#upsetting_developers">開発者を不快にさせること</a></h2>
+<p>リビューアは、開発者が改善を求められると不快になると考えることがあります。開発者は時には不快になることもありますが、それは一時的なものであり、後であなたが彼らのコードの品質向上に役立ったことに非常に感謝します。通常、コメントが<a href="review/reviewer/comments.html#courtesy">礼儀正しい</a>場合、開発者は実際には全く不快にならず、心配はリビューアの心の中にあるだけです。不快感は通常、コメントの書き方よりもコードの品質に対するリビューアの主張に関連しています。</p>
+<h2 id="later"><a class="header" href="#later">後で片付ける</a></h2>
+<p>開発者たちは（当然のことながら）仕事を進めたいと思っているため、抵抗が生じることがよくあります。彼らはこのCLを提出するためにもう一度レビューを受けたくないのです。そのため、後で何かをきれいにすると言って、今すぐこのCLを承認してほしいと言います。一部の開発者はこれに非常にうまく対応し、すぐに問題を修正するための追加のCLを書きます。しかし、経験からわかるように、開発者が元のCLを書いた後に時間が経つほど、このクリーンアップが行われる可能性は低くなります。実際、開発者が現在のCLの直後にクリーンアップを行わない限り、ほとんど行われません。これは開発者が無責任なわけではなく、他の仕事の中でクリーンアップが見失われたり忘れられたりするためです。したがって、コードがコードベースに組み込まれて「完了」する前に、開発者にCLのクリーンアップを行うように強く求めるのが通常最善です。後で「片付ける」ということを許すことは、コードベースが劣化する一般的な方法です。</p>
+<p>もしCLが新たな複雑さを導入する場合、<a href="review/reviewer/../emergencies.html">緊急事態</a>でない限り、提出前にクリーンアップする必要があります。もしCLが周囲の問題を露呈し、現時点では対処できない場合、開発者はクリーンアップのためのバグを報告し、自分自身に割り当てるべきです。また、コードにTODOコメントを書いて、報告されたバグを参照することもできます。</p>
+<h2 id="strictness"><a class="header" href="#strictness">厳格さに関する一般的な苦情</a></h2>
+<p>以前は比較的緩いコードレビューを行っていた場合、厳格なレビューに切り替えると、一部の開発者は非常に大きな苦情を言うことがあります。コードレビューの<a href="review/reviewer/speed.html">速度</a>を改善することで、これらの苦情はしだいに薄れていくことがあります。</p>
+<p>これらの苦情が薄れるまでには、数ヶ月かかることもありますが、開発者たちは徐々に厳格なコードレビューの価値を認識し、優れたコードを生成するのにどれほど役立つかを見るようになります。時には、一番声の大きい抗議者が、厳格さによって提供される価値を本当に理解するきっかけが起きたときに、最も強力な支持者になることさえあります。</p>
+<h2 id="conflicts"><a class="header" href="#conflicts">紛争の解決</a></h2>
+<p>もし上記のすべてを守っているにもかかわらず、解決できない開発者との紛争に直面した場合は、 紛争を解決するのに役立つガイドラインと原則については、<a href="review/reviewer/standard.html">コードレビューの基準</a>を参照してください。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="緊急事態-1"><a class="header" href="#緊急事態-1">緊急事態</a></h1>
+<p>時には、できるだけ早く全体のコードレビュープロセスを通過する必要がある緊急CLがあります。</p>
+<h2 id="what"><a class="header" href="#what">緊急事態とは何ですか？</a></h2>
+<p>緊急事態のCLは、以下のような<strong>小さな</strong>変更です：メジャーローンチをロールバックせずに続行できるようにする、本番環境のユーザーに重大な影響を与えるバグを修正する、緊急の法的問題を処理する、重大なセキュリティホールを閉じるなどです。</p>
+<p>緊急事態では、コードレビュー全体のスピードに本当に気を使います。ただし、<a href="review/reviewer/speed.html">レビュアーのスピード</a>だけでなく、コードの正確性（緊急事態を解決するかどうか）についても、他の何よりも重視すべきです。また、（おそらく明らかですが）このようなレビューは、発生した場合には他のすべてのコードレビューよりも優先されるべきです。</p>
+<p>ただし、緊急事態が解決された後は、緊急事態のCLを再度見直し、<a href="review/reviewer/looking-for.html">より詳細なレビュー</a>を行う必要があります。</p>
+<h2 id="not"><a class="header" href="#not">緊急ではないものは何ですか？</a></h2>
+<p>明確に述べると、以下の場合は_緊急ではありません_：</p>
+<ul>
+<li>来週ではなく今週にローンチしたいということ（ただし、パートナーとの合意など、実際の<a href="review/emergencies.html#deadlines">厳しい締切</a>がある場合を除く）。</li>
+<li>開発者が長い時間をかけて機能を開発し、CLを取得したいと思っている場合。</li>
+<li>レビューアーが現在夜間である別のタイムゾーンにいるか、オフサイトで不在である場合。</li>
+<li>金曜日の終わりであり、開発者が週末に出発する前にこのCLを取得するのが良いと思われる場合。</li>
+<li>マネージャーが、<a href="review/emergencies.html#deadlines">ソフト（厳しいではない）締切</a>のため、このレビューを完了し、CLを今日中にチェックインする必要があると言っている場合。</li>
+<li>テストの失敗やビルドの破損を引き起こしているCLをロールバックする場合。</li>
+</ul>
+<p>などなど。</p>
+<h2 id="deadlines"><a class="header" href="#deadlines">ハードデッドラインとは何ですか？</a></h2>
+<p>ハードデッドラインとは、もしもそれを逃すと<strong>何か災害的なことが起こる</strong>というものです。例えば：</p>
+<ul>
+<li>特定の日までにCLを提出することは契約上の義務です。</li>
+<li>特定の日までに製品をリリースしなければ、市場で完全に失敗します。</li>
+<li>一部のハードウェアメーカーは年に一度しか新しいハードウェアを出荷しません。彼らにコードを提出する期限を逃すと、提出しようとしているコードの種類によっては、それが災害的な結果をもたらす可能性があります。</li>
+</ul>
+<p>リリースを1週間遅らせることは災害的ではありません。重要な会議を逃すことは災害的かもしれませんが、しばしばそうではありません。</p>
+<p>ほとんどの締め切りは、ハードデッドラインではなく、ソフトデッドラインです。それらは特定の時間までに機能が完了することを望んでいます。重要ですが、それを達成するためにコードの品質を犠牲にするべきではありません。</p>
+<p>リリースサイクルが長い（数週間）場合、次のサイクルの前に機能を追加するためにコードレビューの品質を犠牲にすることは誘惑されるかもしれません。しかし、このパターンは、プロジェクトが圧倒的な技術的負債を蓄積する一般的な方法です。開発者がサイクルの終わり近くに「絶対に入れなければならない」という理由だけで表面的なレビューだけでCLを提出し続ける場合、チームはプロセスを変更して、大規模な機能変更がサイクルの初めに行われ、十分な時間があるようにすべきです。</p>
+
+					</main>
+
+					<nav class="nav-wrapper" aria-label="Page navigation">
+						<!-- Mobile navigation buttons -->
+
+
+						<div style="clear: both"></div>
+					</nav>
+				</div>
+			</div>
+
+			<nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+			</nav>
+
+		</div>
+
+
+
+
+		<script>
+			window.playground_copyable = true;
+		</script>
+
+
+		<script src="elasticlunr.min.js"></script>
+		<script src="mark.min.js"></script>
+		<script src="searcher.js"></script>
+
+		<script src="clipboard.min.js"></script>
+		<script src="highlight.js"></script>
+		<script src="book.js"></script>
+
+		<!-- Custom JS scripts -->
+
+		<script>
+		window.addEventListener('load', function() {
+			window.setTimeout(window.print, 100);
+		});
+		</script>
+
+	</div>
+	</body>
+</html>
