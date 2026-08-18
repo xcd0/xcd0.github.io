@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#07111f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>qft — Offline QR File Transfer</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icons/icon-192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="./icons/icon-180.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="qft ホーム"><span class="brand-mark">QF</span><span>qft</span></a>
+      <div class="privacy"><span class="dot"></span>完全オフライン <span class="muted">· データは端末外へ送信されません</span></div>
+      <button id="diagnosticsButton" class="icon-button" type="button" aria-expanded="false">通信診断</button>
+    </header>
+
+    <main>
+      <!-- PWA_ONLY_START -->
+      <section id="offlinePanel" class="offline-panel" data-state="checking" aria-live="polite">
+        <span class="offline-indicator" aria-hidden="true"></span>
+        <div><strong id="offlineStatus">オフライン準備を確認中</strong><small id="offlineDetail">初回はオンラインのまま、この表示が完了に変わるまでお待ちください。</small></div>
+        <button id="applyPwaUpdate" class="secondary" type="button" hidden>更新して再起動</button>
+      </section>
+      <!-- PWA_ONLY_END -->
+      <section class="hero">
+        <div>
+          <p class="eyebrow">OFFLINE QR FILE TRANSFER <span>PROTOCOL 1.1</span></p>
+          <h1>画面とカメラだけで、<br /><em>ファイルを安全に。</em></h1>
+          <p class="lead">ネットワークもクラウドも不要。双方向QR通信が、環境に合わせて速度と信頼性を自動調整します。</p>
+        </div>
+        <div class="phase-card" aria-live="polite">
+          <span class="phase-index">PHASE <strong id="phaseNumber">0</strong> / 6</span>
+          <strong id="phaseLabel">接続待ち</strong>
+          <div class="phase-track"><i id="phaseProgress"></i></div>
+          <small id="phaseHint">相手の端末を接続してください</small>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <article class="panel optical-panel">
+          <div class="panel-heading">
+            <div><span class="step">01</span><h2>光学リンク</h2></div>
+            <span id="cameraBadge" class="badge neutral">カメラ未接続</span>
+          </div>
+          <div class="optical-grid">
+            <div class="qr-stage">
+              <canvas id="qrCanvas" width="560" height="560" aria-label="送信用QRコード"></canvas>
+              <div class="scan-corners" aria-hidden="true"></div>
+              <span class="qr-caption">CP0 · CONTROL CHANNEL</span>
+            </div>
+            <div class="camera-stage">
+              <video id="cameraVideo" aria-label="相手端末QRコード読取カメラ" autoplay muted playsinline></video>
+              <div id="placementReticle" class="placement-reticle" data-guidance="searching" aria-hidden="true"><i></i><span>QRを枠内へ</span></div>
+              <div id="cameraEmpty" class="camera-empty">
+                <div class="lens"></div>
+                <strong>相手のQRを読み取る</strong>
+                <span>カメラへのアクセスが必要です</span>
+                <button id="cameraButton" class="primary" type="button">カメラ開始</button>
+              </div>
+              <div class="camera-label"><span></span> LIVE CAMERA</div>
+            </div>
+          </div>
+          <div class="link-feedback" aria-live="polite">
+            <span id="incomingSight" class="link-indicator">○ 相手QRを探索中</span>
+            <span id="outgoingSight" class="link-indicator">○ 相手側の読取待ち</span>
+            <span id="placementState" class="placement-state">0/8 観測</span>
+            <strong id="placementHint">相手のQRをカメラに入れてください</strong>
+            <small id="opticalMetrics">受信カメラ: 未取得 / 相手側観測: 未取得</small>
+          </div>
+          <div id="linkComplete" class="link-complete" hidden role="status"><b>✓ 双方向リンク確立</b><span>両端末の静置と読み取りを確認しました。音は鳴りません。</span></div>
+          <div class="camera-controls">
+            <label>Camera device
+              <select id="cameraDevice" aria-label="使用するカメラ">
+                <option value="">Front camera（自動）</option>
+              </select>
+            </label>
+            <button id="refreshCameraDevices" class="secondary" type="button">一覧を更新</button>
+            <button id="restartCameraButton" class="secondary" type="button">カメラを再初期化</button>
+            <span>Status: <strong id="cameraStatus" role="status">Camera stopped</strong></span>
+          </div>
+          <p id="cameraError" class="notice" hidden></p>
+          <p id="cameraPrerequisite" class="notice warning" hidden></p>
+          <div class="fallback-row">
+            <span>カメラを使用できませんか？</span>
+            <button id="photoQrButton" class="text-button" type="button">写真でQRを読み取る</button>
+            <input id="qrImageInput" type="file" accept="image/*" capture="environment" hidden />
+            <button id="fallbackButton" class="text-button" type="button">一方向互換モード（DM255）で続行 →</button>
+          </div>
+          <div id="generalQrResult" class="general-qr-result" hidden>
+            <div><strong id="generalQrTitle">一般QRを読み取りました</strong><small id="generalQrMeta"></small></div>
+            <textarea id="generalQrText" readonly aria-label="読み取ったQRコードの内容"></textarea>
+            <button id="copyGeneralQrButton" class="secondary" type="button">内容をコピー</button>
+          </div>
+          <div id="roleChooser" class="role-chooser" hidden aria-labelledby="roleTitle">
+            <div><strong id="roleTitle">この端末の役割を選択</strong><small>一方向モードでは役割を途中で入れ替えません</small></div>
+            <button id="senderRoleButton" class="role-button" type="button"><b>送信専用</b><span>TM255 でファイルを繰り返し表示</span></button>
+            <button id="receiverRoleButton" class="role-button" type="button"><b>受信専用</b><span>カルーセルを読み取り、検証後に保存</span></button>
+          </div>
+        </article>
+
+        <article class="panel transfer-panel">
+          <div class="panel-heading">
+            <div><span class="step">02</span><h2>ファイル転送</h2></div>
+            <span id="transferBadge" class="badge neutral">待機中</span>
+          </div>
+          <label id="dropzone" class="dropzone">
+            <input id="fileInput" type="file" multiple />
+            <span class="upload-icon">↑</span>
+            <strong>送信するファイルを選択</strong>
+            <span>またはここへドラッグ＆ドロップ</span>
+            <small>ファイルはメモリ上で処理され、外部へアップロードされません</small>
+          </label>
+          <div id="fileList" class="file-list" aria-live="polite"></div>
+          <div class="transfer-actions">
+            <button id="sendButton" class="primary" type="button" disabled>送信開始</button>
+            <button id="pauseButton" class="secondary" type="button" disabled>一時停止</button>
+            <button id="cancelButton" class="secondary" type="button" disabled>中止</button>
+            <button id="safeButton" class="secondary safety" type="button">安全モードに戻す</button>
+            <button id="downloadButton" class="primary" type="button" disabled>受信ファイルを保存</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="directions" aria-label="方向別通信状態">
+        <div class="section-title"><span>03</span><h2>双方向リンク状態</h2><label>プロファイル <select id="profileLock"><option value="auto">自動</option><option>DP0</option><option>DP1</option><option>DP2</option><option>DP3</option><option>DP4</option></select></label><label class="toggle">自動最適化 <input id="autoOptimize" type="checkbox" checked /><i></i></label></div>
+        <div class="direction-grid">
+          <article class="direction-card" data-direction="out">
+            <header><div class="endpoint">A <span>この端末</span></div><div class="arrow">━━━━━━▶</div><div class="endpoint faded">B <span>相手端末</span></div></header>
+            <dl><div><dt>接続状態</dt><dd class="status-value">待機中</dd></div><div><dt>プロファイル</dt><dd>DP0 <small>Safe</small></dd></div><div><dt>転送方式</dt><dd>TM1</dd></div><div><dt>表示速度</dt><dd id="outDisplaySpeed">1.1 <small>fps</small></dd></div><div><dt>相手側QR比</dt><dd id="outQrRatio">—</dd></div><div><dt>推定速度</dt><dd>—</dd></div></dl>
+          </article>
+          <article class="direction-card" data-direction="in">
+            <header><div class="endpoint faded">A <span>この端末</span></div><div class="arrow reverse">◀━━━━━━</div><div class="endpoint">B <span>相手端末</span></div></header>
+            <dl><div><dt>接続状態</dt><dd class="status-value">待機中</dd></div><div><dt>プロファイル</dt><dd>DP0 <small>Safe</small></dd></div><div><dt>転送方式</dt><dd>TM1</dd></div><div><dt>カメラ速度</dt><dd id="inCameraSpeed">—</dd></div><div><dt>QR見かけ比</dt><dd id="inQrRatio">—</dd></div><div><dt>復号時間</dt><dd id="inDecodeMs">—</dd></div></dl>
+          </article>
+        </div>
+      </section>
+
+      <aside id="diagnostics" class="diagnostics" hidden>
+        <header><strong>通信診断</strong><button id="closeDiagnostics" aria-label="通信診断を閉じる" type="button">×</button></header>
+        <p>時系列ログと実行環境を、文字・ファイル・単一QRのいずれでも外部へ持ち出せます。</p>
+        <div class="diagnostics-actions">
+          <button id="copyDiagnosticsButton" class="secondary" type="button">ログをコピー</button>
+          <button id="downloadDiagnosticsButton" class="secondary" type="button">ログを保存</button>
+          <button id="showDiagnosticsQrButton" class="primary" type="button">診断QRを表示</button>
+        </div>
+        <small id="diagnosticsActionStatus" role="status"></small>
+        <pre id="diagnosticsLog"></pre>
+      </aside>
+      <div id="diagnosticsQrOverlay" class="diagnostics-qr-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="diagnosticsQrTitle">
+        <div class="diagnostics-qr-card">
+          <header><strong id="diagnosticsQrTitle">オフライン診断QR</strong><button id="closeDiagnosticsQrButton" aria-label="診断QRを閉じる" type="button">×</button></header>
+          <canvas id="diagnosticsQrCanvas" aria-label="診断情報を格納した高密度QRコード"></canvas>
+          <p id="diagnosticsQrSummary"></p>
+          <small>別端末のqftまたは一般的なQRリーダーで読み取り、表示された文字列をコピーしてください。</small>
+        </div>
+      </div>
+    </main>
+    <footer><span>qft 1.1 · qft-SPEC-002</span><span>制御チャネル CP0 / CRC32C / SHA-256</span></footer>
+    <script defer src="./app.js"></script>
+  </body>
+</html>

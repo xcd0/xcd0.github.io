@@ -1,0 +1,27 @@
+{
+	"id": ".",
+	"name": "qft — Offline QR File Transfer",
+	"short_name": "qft",
+	"description": "画面とカメラだけで動作するオフラインQRファイル転送",
+	"lang": "ja",
+	"start_url": ".",
+	"scope": ".",
+	"display": "standalone",
+	"background_color": "#07111f",
+	"theme_color": "#07111f",
+	"orientation": "any",
+	"icons": [
+		{
+			"src": "./icons/icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "./icons/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
+		}
+	]
+}
