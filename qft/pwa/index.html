@@ -41,20 +41,34 @@
         </div>
       </section>
 
+      <section class="optical-launch" aria-label="光学レイアウト設定">
+        <label>レイアウト
+          <select id="layoutMode"><option value="auto">自動</option><option value="pc">PCレイアウト</option><option value="phone">スマートフォンレイアウト</option></select>
+        </label>
+        <label>PCプレビュー位置
+          <select id="previewSide"><option value="right">右</option><option value="left">左</option></select>
+        </label>
+        <button id="opticalStartButton" class="primary" type="button">光学リンク開始</button>
+        <small>PCは上端中央、スマートフォンは画面下部へ送信用QRを固定します。</small>
+      </section>
+
       <section class="workspace">
         <article class="panel optical-panel">
           <div class="panel-heading">
             <div><span class="step">01</span><h2>光学リンク</h2></div>
+            <span id="opticalChannelLabel" class="optical-channel-label">CP0 · CONTROL CHANNEL</span>
             <span id="cameraBadge" class="badge neutral">カメラ未接続</span>
+            <button id="opticalExitButton" class="secondary optical-exit" type="button" hidden>操作画面へ戻る</button>
           </div>
           <div class="optical-grid">
             <div class="qr-stage">
-              <canvas id="qrCanvas" width="560" height="560" aria-label="送信用QRコード"></canvas>
-              <div class="scan-corners" aria-hidden="true"></div>
-              <span class="qr-caption">CP0 · CONTROL CHANNEL</span>
+              <div id="qrReplicaField" class="qr-replica-field" data-grid="1x1" aria-label="同一フレームの送信用QRコード複製">
+                <canvas id="qrCanvas" width="560" height="560" aria-label="送信用QRコード"></canvas>
+              </div>
             </div>
             <div class="camera-stage">
               <video id="cameraVideo" aria-label="相手端末QRコード読取カメラ" autoplay muted playsinline></video>
+              <svg id="candidateOverlay" class="candidate-overlay" aria-hidden="true"><polygon id="candidatePolygon"></polygon></svg>
               <div id="placementReticle" class="placement-reticle" data-guidance="searching" aria-hidden="true"><i></i><span>QRを枠内へ</span></div>
               <div id="cameraEmpty" class="camera-empty">
                 <div class="lens"></div>
@@ -71,6 +85,7 @@
             <span id="placementState" class="placement-state">0/8 観測</span>
             <strong id="placementHint">相手のQRをカメラに入れてください</strong>
             <small id="opticalMetrics">受信カメラ: 未取得 / 相手側観測: 未取得</small>
+            <output id="opticalCalibrationMetrics" hidden>配置確認: 復号待ち</output>
           </div>
           <div id="linkComplete" class="link-complete" hidden role="status"><b>✓ 双方向リンク確立</b><span>両端末の静置と読み取りを確認しました。音は鳴りません。</span></div>
           <div class="camera-controls">
@@ -149,6 +164,13 @@
           <button id="showDiagnosticsQrButton" class="primary" type="button">診断QRを表示</button>
         </div>
         <small id="diagnosticsActionStatus" role="status"></small>
+        <section class="calibration-controls" aria-labelledby="calibrationTitle">
+          <strong id="calibrationTitle">配置確認モード</strong>
+          <label>QR種別 <select id="calibrationPayload"><option value="bootstrap">Bootstrap Version 3/H</option><option value="observation">Observation Version 4/H</option><option value="current">現在のDP相当</option></select></label>
+          <label>複製配置 <select id="calibrationGrid"><option value="auto">自動</option><option value="1x1">1×1</option><option value="2x1">2×1</option><option value="3x1">3×1</option><option value="2x2">2×2</option><option value="3x2">3×2</option></select></label>
+          <button id="calibrationToggle" class="secondary" type="button" aria-pressed="false">配置確認を開始</button>
+          <output id="calibrationMetrics">成功 0 / 失敗 0 · 復号 — · r — · 候補 — · camera —</output>
+        </section>
         <pre id="diagnosticsLog"></pre>
       </aside>
       <div id="diagnosticsQrOverlay" class="diagnostics-qr-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="diagnosticsQrTitle">
