@@ -25,11 +25,22 @@ jobs:
         with:
           ref: master
 
+      - name: qft用トークンを確認
+        shell: sh
+        env:
+          QFT_READ_TOKEN: ${{ secrets.QFT_READ_TOKEN }}
+        run: |
+          if [ -z "$QFT_READ_TOKEN" ]; then
+            echo "::error::Actions Secret QFT_READ_TOKENを設定してください。"
+            exit 1
+          fi
+
       - name: qftを取得
         uses: actions/checkout@v4
         with:
           repository: xcd0/qft
           ref: main
+          token: ${{ secrets.QFT_READ_TOKEN }}
           path: .qft-source
           persist-credentials: false
 
