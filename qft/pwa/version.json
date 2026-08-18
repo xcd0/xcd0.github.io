@@ -1,8 +1,8 @@
 {
 	"name": "qft",
 	"version": "1.1.0",
-	"buildId": "d4f0995807695542",
-	"cacheName": "qft-pwa-1.1.0-d4f0995807695542",
+	"buildId": "9e3fb208a9fe4518",
+	"cacheName": "qft-pwa-1.1.0-9e3fb208a9fe4518",
 	"assets": [
 		"./",
 		"./index.html",

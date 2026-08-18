@@ -1,5 +1,5 @@
-const CACHE = "qft-pwa-1.1.0-d4f0995807695542";
-const VERSION = "d4f0995807695542";
+const CACHE = "qft-pwa-1.1.0-9e3fb208a9fe4518";
+const VERSION = "9e3fb208a9fe4518";
 const ASSETS = ["./","./index.html","./styles.css","./app.js","./manifest.webmanifest","./version.json","./THIRD_PARTY_LICENSES.txt","./icons/icon-180.png","./icons/icon-192.png","./icons/icon-512.png"];
 const assetUrl = (asset) => new URL(asset, self.registration.scope).href;
 
