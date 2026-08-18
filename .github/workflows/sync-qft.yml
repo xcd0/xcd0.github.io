@@ -1,0 +1,55 @@
+name: qft公開物を同期
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - ".github/workflows/sync-qft.yml"
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-qft
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 公開リポジトリを取得
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: qftを取得
+        uses: actions/checkout@v4
+        with:
+          repository: xcd0/qft
+          ref: main
+          path: .qft-source
+          persist-credentials: false
+
+      - name: 配布物を検証して同期
+        shell: sh
+        run: |
+          set -eu
+          test -f .qft-source/dist/minimal/qft.html
+          test -f .qft-source/dist/vanilla/qft.html
+          test -f .qft-source/dist/pwa/index.html
+          test -f .qft-source/dist/pwa/sw.js
+          source_sha="$(git -C .qft-source rev-parse HEAD)"
+          mkdir -p qft
+          rsync -a --delete .qft-source/dist/ qft/
+          if [ -z "$(git status --porcelain -- qft)" ]; then
+            echo "qft公開物は最新です。"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- qft
+          git commit -m "deploy: qft ${source_sha}"
+          git push origin HEAD:master
