@@ -19,7 +19,7 @@
 	- サイズと構成を抑えた単一HTML版です。
 - [ソースコード](https://github.com/xcd0/qft)
 
-`qft/` はGitHub Actionsにより、`xcd0/qft` の `main` ブランチにある `dist/` から5分間隔および手動実行時に自動同期されます。
+`qft/` は `xcd0/qft` の `main` ブランチ更新時に、GitHub Actionsから `dist/` の内容を自動配置します。
 
 ### Google Engineering Practices Documentationの和訳
 
