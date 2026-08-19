@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="color-scheme" content="dark">
+	<title>qft 配布版を選ぶ</title>
+	<style>
+		:root{color-scheme:dark;--bg:#07111f;--panel:#0c1929;--line:#284058;--ink:#f2f6fa;--muted:#aab7c6;--cyan:#20d7d0;--green:#4ee69b}
+		*{box-sizing:border-box}
+		body{margin:0;background:radial-gradient(circle at 75% -10%,#12334a 0,transparent 35%),var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,sans-serif}
+		main{width:min(1080px,calc(100% - 32px));margin:0 auto;padding:56px 0 72px}
+		header{margin-bottom:30px}
+		h1{margin:0 0 8px;font-size:clamp(32px,6vw,54px)}
+		header p{max-width:760px;margin:0;color:var(--muted)}
+		.versions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+		article{display:flex;flex-direction:column;min-height:100%;padding:24px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,#0e1d2e,#091624)}
+		article.recommended{border-color:var(--cyan);box-shadow:0 0 0 1px #20d7d044}
+		.badge{align-self:flex-start;margin-bottom:14px;padding:4px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px}
+		.recommended .badge{border-color:var(--green);color:var(--green)}
+		h2{margin:0;font-size:25px}
+		.subtitle{margin:0 0 16px;color:var(--cyan);font-weight:700}
+		.description{margin:0 0 20px;color:var(--muted)}
+		.actions{display:grid;gap:9px;margin-top:auto}
+		a{display:block;padding:10px 14px;border:1px solid var(--line);border-radius:7px;color:var(--ink);text-align:center;text-decoration:none;font-weight:700}
+		a.primary{border-color:var(--cyan);background:var(--cyan);color:#001b1d}
+		a:hover{border-color:var(--cyan)}
+		.notice{margin:24px 0 0;padding:16px;border-left:3px solid var(--cyan);background:#0c1929;color:var(--muted)}
+		code{color:var(--ink)}
+		@media(max-width:800px){.versions{grid-template-columns:1fr}article{min-height:auto}}
+	</style>
+</head>
+<body>
+	<main>
+		<header>
+			<h1>qft 配布版を選ぶ</h1>
+			<p>迷った場合はPWA版を使用してください。PC上のローカルHTMLとして単一ファイルで扱いたい場合はStandard版、ファイルサイズを最優先する場合はMini版が適しています。</p>
+		</header>
+		<section class="versions" aria-label="qft配布版">
+			<article class="recommended">
+				<span class="badge">推奨・フルスペック</span>
+				<h2>PWA</h2>
+				<p class="subtitle">PC・スマートフォン向け</p>
+				<p class="description">フルスペック版です。PCとスマートフォンの双方でオフライン動作できます。単一ファイルではありません。PWAとして利用する場合は、下の「開く」からページを開き、「ホーム画面に追加」してください。</p>
+				<div class="actions">
+					<a class="primary" href="./pwa/index.html">PWA版を開く</a>
+					<a href="./qft-pwa.zip" download>qft-pwa.zipをダウンロード</a>
+				</div>
+			</article>
+			<article>
+				<span class="badge">単一HTML・標準版</span>
+				<h2>Standard</h2>
+				<p class="subtitle">PWA版と同等の外観</p>
+				<p class="description">PWA版を単一HTMLファイルにしたものです。PCのローカル環境でオフライン動作させることを想定しています。スマートフォンでのオフライン動作には適していません。</p>
+				<div class="actions">
+					<a class="primary" href="./standard/qft-standard.html">Standard版を開く</a>
+					<a href="./download.html?variant=standard">qft-standard.htmlをダウンロード</a>
+				</div>
+			</article>
+			<article>
+				<span class="badge">単一HTML・最小サイズ</span>
+				<h2>Mini</h2>
+				<p class="subtitle">外観よりファイルサイズを優先</p>
+				<p class="description">外観を妥協し、ファイルサイズを最小化したものです。PCでのローカル環境でオフライン動作させることを想定しています。スマートフォンでのオフラインには適していません。</p>
+				<div class="actions">
+					<a class="primary" href="./mini/qft-mini.html">Mini版を開く</a>
+					<a href="./download.html?variant=mini">qft-mini.htmlをダウンロード</a>
+				</div>
+			</article>
+		</section>
+		<p class="notice"><strong>PWAのZIPについて:</strong> <code>qft-pwa.zip</code>はWebサーバーへ展開するための配布物です。ZIPをダウンロードまたは展開しただけではPWAとしてホーム画面へ導入されません。</p>
+	</main>
+</body>
+</html>
